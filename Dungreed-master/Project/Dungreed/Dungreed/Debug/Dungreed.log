@@ -1,0 +1,30 @@
+﻿  player.cpp
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(21): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(37): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(61): warning C4244: '인수': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(86): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(89): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(110): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(126): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(140): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(166): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(179): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(196): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(210): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(220): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(221): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(233): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(251): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(258): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(273): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(274): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(292): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(306): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(330): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(355): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(360): warning C4244: '-=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(379): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(384): warning C4244: '+=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(410): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\github\dungreed\project\dungreed\dungreed\player.cpp(412): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Dungreed.vcxproj -> C:\Github\Dungreed\Project\Dungreed\Debug\Dungreed.exe
