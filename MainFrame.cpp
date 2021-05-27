@@ -1,8 +1,6 @@
-#include <iostream>
-#include <fstream>
 #include <windows.h>
-#include <atlimage.h>
 #include <tchar.h>
+#include "FileUtility.h"
 
 RECT client;
 HWND h_wnd;
@@ -21,11 +19,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 void PrepareToDoubleBuffering();
 void DoubleBuffering();
 void CleanUpAfterDoubleBuffering();
-void RenderAllAtHDCBuffer();
 void CopyHDCBufferToRealHDC();
 void TestRender();
-void LoadCImage(CImage& image, const TCHAR* file_name);
-void CheckFileNameValidity(const TCHAR* file_name);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -92,7 +87,8 @@ void PrepareToDoubleBuffering()
 
 void DoubleBuffering()
 {
-	RenderAllAtHDCBuffer();
+	//Scene.render();
+	TestRender();
 	CopyHDCBufferToRealHDC();
 }
 
@@ -102,11 +98,6 @@ void CleanUpAfterDoubleBuffering()
 	DeleteObject(h_bit_buf);
 	DeleteDC(h_dc_buf);
 	EndPaint(h_wnd, &ps);
-}
-
-void RenderAllAtHDCBuffer()
-{
-	TestRender();
 }
 
 void CopyHDCBufferToRealHDC()
@@ -126,21 +117,5 @@ void TestRender()
 	}
 	catch (const TCHAR* error_message) {
 		MessageBox(h_wnd, error_message, L"Error", MB_OK);
-	}
-}
-
-void LoadCImage(CImage& image, const TCHAR* file_name)
-{
-	CheckFileNameValidity(file_name);
-	image.Load(file_name);
-}
-
-void CheckFileNameValidity(const TCHAR* file_name)
-{
-	std::ifstream in{ file_name };
-	if (!in) {
-		TCHAR error_message[200];
-		wsprintf(error_message, L"File \"%s\" has not found", file_name);
-		throw error_message;
 	}
 }
