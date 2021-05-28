@@ -6,6 +6,11 @@
 #include <atlimage.h>
 #include <tchar.h>
 
-void LoadCImage(CImage& image, const TCHAR* file_name);
+class Image : public CImage
+{
+public:
+	void Load(const TCHAR* file_name);
+};
+
 void CheckFileNameValidity(const TCHAR* file_name);
 #endif

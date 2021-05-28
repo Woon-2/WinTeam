@@ -1,9 +1,9 @@
 #include "FileUtility.h"
 
-void LoadCImage(CImage& image, const TCHAR* file_name)
+void Image::Load(const TCHAR* file_name)
 {
 	CheckFileNameValidity(file_name);
-	image.Load(file_name);
+	this->CImage::Load(file_name);
 }
 
 void CheckFileNameValidity(const TCHAR* file_name)

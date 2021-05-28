@@ -19,7 +19,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 void PrepareToDoubleBuffering();
 void DoubleBuffering();
 void CleanUpAfterDoubleBuffering();
-void CopyHDCBufferToRealHDC();
+void TransmitHDCBufferToRealHDC();
 void TestRender();
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
@@ -89,7 +89,7 @@ void DoubleBuffering()
 {
 	//Scene.render();
 	TestRender();
-	CopyHDCBufferToRealHDC();
+	TransmitHDCBufferToRealHDC();
 }
 
 void CleanUpAfterDoubleBuffering()
@@ -100,7 +100,7 @@ void CleanUpAfterDoubleBuffering()
 	EndPaint(h_wnd, &ps);
 }
 
-void CopyHDCBufferToRealHDC()
+void TransmitHDCBufferToRealHDC()
 {
 	BitBlt(h_dc, 0, 0, client.right, client.bottom, h_dc_buf, 0, 0, SRCCOPY);
 }
@@ -108,8 +108,8 @@ void CopyHDCBufferToRealHDC()
 void TestRender()
 {
 	try {
-		CImage test;
-		LoadCImage(test, L"TestImage.png");
+		Image test;
+		test.Load(L"TestImage.png");
 		int test_image_width = test.GetWidth();
 		int test_image_height = test.GetHeight();
 		test.Draw(h_dc_buf, 0, 0, client.right, client.bottom, 0, 0, test_image_width, test_image_height);
