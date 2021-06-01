@@ -15,7 +15,7 @@ HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";
 LPCTSTR lpszWindowName = L"windows program";
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param);
 void PrepareToDoubleBuffering();
 void DoubleBuffering();
 void CleanUpAfterDoubleBuffering();
