@@ -10,8 +10,8 @@ dungeon_width 1022
 dungeon_height 320
 next_dungeon_id 2378173
 prev_dungeon_id 0
-camera_x_half_range
-camera_y_half_range
+camera_x_half_range 480
+camera_y_half_range 270
 
 2378173
 
@@ -25,8 +25,8 @@ dungeon_width 1398
 dungeon_height 392
 next_dungeon_id 5438013
 prev_dungeon_id 2147017
-camera_x_half_range
-camera_y_half_range
+camera_x_half_range 560
+camera_y_half_range 315
 
 5438013
 
@@ -40,8 +40,8 @@ dungeon_width 716
 dungeon_height 258
 next_dungeon_id 9872417
 prev_dungeon_id 2378173
-camera_x_half_range
-camera_y_half_range
+camera_x_half_range 352
+camera_y_half_range 198
 
 9872417
 
@@ -55,5 +55,5 @@ dungeon_width 564
 dungeon_height 296
 next_dungeon_id 0
 prev_dungeon_id 5438013
-camera_x_half_range
-camera_y_half_range
+camera_x_half_range 564
+camera_y_half_range 296

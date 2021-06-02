@@ -1,9 +1,7 @@
-﻿  Character.cpp
-  Dungeon.cpp
-  FileUtility.cpp
-  MainFrame.cpp
-  Monster.cpp
+﻿  Camera.cpp
   Player.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(5,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(6,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Scene.cpp
   코드를 생성하고 있습니다...
-  DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈도우프로그래밍\윈도우프로그래밍 팀프로젝트\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe
+  DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe

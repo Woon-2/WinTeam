@@ -2,15 +2,16 @@
 #ifndef _character
 #define _character
 #include <windows.h>
+#include "Dungeon.h"
 
 class Character
 {
-private:
+protected:
 	int width;
 	int height;
 	POINT pos;
 public:
-	inline void SetPos(POINT pos) { this->pos = pos; }
-	inline const POINT GetPos() const { return pos; }
+	Character(const Dungeon* dungeon);
+	virtual void Render() = 0;
 };
 #endif

@@ -22,8 +22,11 @@ public:
 
 	int next_dungeon_id;
 	int prev_dungeon_id;
-	
+
+	int camera_x_half_range;
+	int camera_y_half_range;
+
 	Dungeon() = default;
-	Dungeon(const int dungeon_id, int& camera_x_half_range, int& camera_y_half_range);
+	Dungeon(const int dungeon_id);
 };
 #endif
