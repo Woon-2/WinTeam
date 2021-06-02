@@ -5,6 +5,10 @@
 #include <windows.h>
 #include <atlimage.h>
 #include <tchar.h>
+#include <string>
+#include <math.h>
+
+const int ID_DIGIT = 7;
 
 class Image : public CImage
 {
@@ -13,4 +17,9 @@ public:
 };
 
 void CheckFileNameValidity(const TCHAR* file_name);
+bool IsID(const std::string& id_string);
+bool IsStringInt(const std::string& str);
+bool IsLineTypeWithData(const std::string& line);
+const std::string GetHeadString(const std::string& line);
+const std::string GetRestString(const std::string& line);
 #endif

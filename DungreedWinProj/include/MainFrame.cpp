@@ -10,7 +10,6 @@ HDC h_dc_buf;
 HBITMAP h_bit_buf;
 HBITMAP old_bit_buf;
 
-
 HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";
 LPCTSTR lpszWindowName = L"windows program";

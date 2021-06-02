@@ -11,6 +11,7 @@ extern HWND h_wnd;
 class Scene
 {
 private:
+
 	Dungeon* dungeon;
 	Player* player;
 	// Monster mosnters[];
