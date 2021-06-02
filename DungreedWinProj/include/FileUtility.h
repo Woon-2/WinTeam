@@ -19,7 +19,7 @@ public:
 void CheckFileNameValidity(const TCHAR* file_name);
 bool IsID(const std::string& id_string);
 bool IsStringInt(const std::string& str);
-bool IsLineTypeWithData(const std::string& line);
+bool IsLineFieldWithData(const std::string& line);
 const std::string GetHeadString(const std::string& line);
 const std::string GetRestString(const std::string& line);
 #endif

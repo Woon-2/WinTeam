@@ -44,7 +44,7 @@ bool IsStringInt(const std::string& str)
 		return false;
 }
 
-bool IsLineTypeWithData(const std::string& line)
+bool IsLineFieldWithData(const std::string& line)
 {
 	if (GetHeadString(line) == line)
 		return false;

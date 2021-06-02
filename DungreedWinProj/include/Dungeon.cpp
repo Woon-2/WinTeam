@@ -21,7 +21,7 @@ void Dungeon::LoadData(std::ifstream& in)
 	while (std::getline(in, line))
 		if (IsID(line))
 			break;
-		else if (IsLineTypeWithData(line))
+		else if (IsLineFieldWithData(line))
 			InterpretLine(line);
 	is_loaded = true;
 }
