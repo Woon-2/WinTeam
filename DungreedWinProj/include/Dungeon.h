@@ -8,6 +8,7 @@ class Dungeon
 {
 private:
 	int dungeon_id;
+	bool is_loaded;
 
 	void LoadData(std::ifstream& in);
 	void InterpretLine(const std::string& line);

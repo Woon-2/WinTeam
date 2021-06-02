@@ -9,6 +9,9 @@ Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 	while (std::getline(in, line))
 		if (IsID(line))
 			LoadData(in);
+
+	if (!is_loaded)
+		throw L"Dungeon Is Not Loaded";
 }
 
 void Dungeon::LoadData(std::ifstream& in)
@@ -16,8 +19,11 @@ void Dungeon::LoadData(std::ifstream& in)
 	std::string line;
 
 	while (std::getline(in, line))
-		if (IsLineTypeWithData(line))
+		if (IsID(line))
+			break;
+		else if (IsLineTypeWithData(line))
 			InterpretLine(line);
+	is_loaded = true;
 }
 
 void Dungeon::InterpretLine(const std::string& line)
