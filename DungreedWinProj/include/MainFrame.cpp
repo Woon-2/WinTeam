@@ -74,7 +74,7 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 		return 0;
 	case WM_TIMER:
 		h_dc = BeginPaint(h_wnd, &ps);
-		scene.PlayerMove(h_dc, L"map_png\\map1-지형.png");
+		scene.PlayerMove(h_dc, L"map_png\\map2-지형.png");
 		EndPaint(h_wnd, &ps);
 		InvalidateRect(h_wnd, NULL, FALSE);
 		return 0;
@@ -117,7 +117,7 @@ void TestRender()
 {
 	try {
 		Image test;
-		test.Load(L"map_png\\map1.png");
+		test.Load(L"map_png\\map2.png");
 		//test.Load(L"map_png\\map4-지형.png");
 		int test_image_width = test.GetWidth();
 		int test_image_height = test.GetHeight();
