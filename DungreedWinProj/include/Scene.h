@@ -4,24 +4,27 @@
 #include "Dungeon.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Camera.h"
 
 extern HWND h_wnd;
 
 class Scene
 {
 private:
+
 	Dungeon* dungeon;
 	Player* player;
+	// Monster mosnters[];
+	Camera* camera;
 
-	int camera_x;
-	int camera_y;
-
-	int camera_x_half_range;
-	int camera_y_half_range;
-
-	void CameraUpdate(); // player À§Ä¡¿¡ µû¶ó camera_x, camera_y¸¦ ¹Ù²ãÁÜ
-public:
 	HRESULT Init();
+
+	void ChangeDungeon(const int dungeon_id);
+
+public:
+	Scene(const int dungeon_id);
+	~Scene();
+
 	void Render();
 	void Update();
 

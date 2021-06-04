@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\Camera.cpp" />
     <ClCompile Include="include\Character.cpp" />
     <ClCompile Include="include\Dungeon.cpp" />
     <ClCompile Include="include\FileUtility.cpp" />
@@ -148,6 +149,7 @@
     <ClCompile Include="include\Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Character.h" />
     <ClInclude Include="include\Dungeon.h" />
     <ClInclude Include="include\FileUtility.h" />
