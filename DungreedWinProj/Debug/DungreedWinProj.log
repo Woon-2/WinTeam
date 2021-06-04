@@ -1,0 +1,16 @@
+﻿  Camera.cpp
+  Character.cpp
+  Dungeon.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Dungeon.cpp(82,22): warning C4101: 'error_message' :참조되지 않은 지역 변수입니다.
+  FileUtility.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(28,35): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(57,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(65,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  MainFrame.cpp
+  Monster.cpp
+  Player.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(5,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(6,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
+  코드를 생성하고 있습니다...
+  DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe
