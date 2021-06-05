@@ -3,7 +3,7 @@
 Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 {
 	CheckFileNameValidity(L"DungeonData.txt");
-	std::ifstream in{ "DungeonData.txt" };
+	std::ifstream in{ "Dungeonata.txt" };
 	std::string line;
 
 	if (!in)
