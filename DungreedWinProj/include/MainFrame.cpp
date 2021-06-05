@@ -1,6 +1,8 @@
 #include <windows.h>
 #include <tchar.h>
 #include "FileUtility.h"
+#include "Scene.h"
+#include "Character.h"
 
 RECT client;
 HWND h_wnd;
@@ -9,6 +11,7 @@ HDC h_dc;
 HDC h_dc_buf;
 HBITMAP h_bit_buf;
 HBITMAP old_bit_buf;
+Scene scene;
 
 HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";
@@ -60,15 +63,20 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 	{
 	case WM_CREATE:
 		GetClientRect(h_wnd, &client);
-
+		SetTimer(h_wnd, 1, 30, 0);
+		scene.Init();
 		return 0;
-
 	case WM_PAINT:
 		PrepareToDoubleBuffering();
 		DoubleBuffering();
 		CleanUpAfterDoubleBuffering();
 		return 0;
-
+	case WM_TIMER:
+		h_dc = BeginPaint(h_wnd, &ps);
+		scene.PlayerMove(h_dc, L"map_png\\map2-지형.png");
+		EndPaint(h_wnd, &ps);
+		InvalidateRect(h_wnd, NULL, FALSE);
+		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
@@ -86,8 +94,8 @@ void PrepareToDoubleBuffering()
 
 void DoubleBuffering()
 {
-	//Scene.render();
 	TestRender();
+	scene.Render(h_dc_buf);
 	TransmitHDCBufferToRealHDC();
 }
 
@@ -108,7 +116,8 @@ void TestRender()
 {
 	try {
 		Image test;
-		test.Load(L"TestImage.png");
+		test.Load(L"map_png\\map2.png");
+		//test.Load(L"map_png\\map4-지형.png");
 		int test_image_width = test.GetWidth();
 		int test_image_height = test.GetHeight();
 		test.Draw(h_dc_buf, 0, 0, client.right, client.bottom, 0, 0, test_image_width, test_image_height);

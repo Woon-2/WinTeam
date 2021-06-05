@@ -17,6 +17,8 @@ public:
 	void Init(const Dungeon* dungeon);
 	void Render();
 
+	void KeyMove(HDC, const TCHAR*);
+
 	friend class Camera;
 };
 #endif

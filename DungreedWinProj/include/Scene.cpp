@@ -30,10 +30,9 @@ HRESULT Scene::Init()
 	return S_OK;
 }
 
-void Scene::Render()
+void Scene::Render(HDC& buf_m_dc)
 {
-	player->Render();
-	//monsterRender
+	player->Render(buf_m_dc);
 }
 
 void Scene::Update()
@@ -71,4 +70,10 @@ void Scene::ChangeDungeon(const int dungeon_id)
 {
 	delete(dungeon);
 	dungeon = new Dungeon(dungeon_id);
+}
+
+void Scene::PlayerMove(HDC h_dc, const TCHAR* map_name)
+{
+	player->KeyMove(h_dc, map_name);
+	player->Move(h_dc, map_name);
 }

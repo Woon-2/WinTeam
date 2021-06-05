@@ -17,7 +17,6 @@ private:
 	// Monster mosnters[];
 	Camera* camera;
 
-	HRESULT Init();
 
 	void ChangeDungeon(const int dungeon_id);
 
@@ -25,10 +24,13 @@ public:
 	Scene(const int dungeon_id);
 	~Scene();
 
-	void Render();
+	HRESULT Init();
+	void Render(HDC&);
 	void Update();
 
 	void GoNextDungeon();
 	void GoPrevDungeon();
+
+	void PlayerMove(HDC, const TCHAR*);
 };
 #endif
