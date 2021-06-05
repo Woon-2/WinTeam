@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(const Dungeon* dungeon) : Character(dungeon)
+Player::Player(const Dungeon* dungeon)
 {
 	width = dungeon->camera_x_half_range / PLAYER_WIDTH_PER_CAMERA_X_HALF_RANGE;
 	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
@@ -18,47 +18,38 @@ void Player::PlaceWithDungeonRight(const Dungeon* dungeon)
 
 void Player::Init(const Dungeon* dungeon)
 {
-
+	state = State::DOWN;
+	jump_power = 0;
+	width = dungeon->camera_x_half_range / PLAYER_WIDTH_PER_CAMERA_X_HALF_RANGE;
+	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
 }
 
-void Player::Render()
+void Player::KeyProc(const Dungeon* dungeon)
 {
+	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-}
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 
-
-void Player::KeyMove(HDC h_dc, const TCHAR* map_name)
-{
-	POINT pos = GetPos();
-	int state = GetState();
-	int jump_power;
-	int width = GetWidth();
-	int height = GetHeight();
-
-	if (GetAsyncKeyState('A') & 0x8000) {
-		if (!MapPixelCollision(map_name, RGB(255, 0, 0), pos.x - 10, pos.y, h_dc)) {
-			pos.x -= 10;
+	if (GetAsyncKeyState('A')) {
+		if (!MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 0), POINT{ pos.x - 10, pos.y })) {
+			MovePos(dungeon, Direction::LEFT, 10);
 		}
 	}
-	if (GetAsyncKeyState('D') & 0x8000) {
-		if (!MapPixelCollision(map_name, RGB(255, 0, 0), pos.x + width + 10, pos.y, h_dc)) {
-			pos.x += 10;
+	if (GetAsyncKeyState('D')) {
+		if (!MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 0), POINT{ pos.x + width + 10, pos.y })) {
+			MovePos(dungeon, Direction::RIGHT, 10);
 		}
 	}
 
-	if ((GetAsyncKeyState('S') & 0x8000) && (GetAsyncKeyState(VK_SPACE) & 0x8000)) {
-		if (MapPixelCollision(map_name, RGB(0, 255, 0), pos.x, pos.y + height, h_dc)) {
-			state = DOWNJUMP;
+	if ((GetAsyncKeyState('S')) && (GetAsyncKeyState(VK_SPACE))) {
+		if (MapPixelCollision(dc_set.buf_dc, RGB(0, 255, 0), POINT{ pos.x, pos.y + height })) {
+			state = State::DOWNJUMP;
 		}
 	}
-	else if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-		if (state == LANDING) {
-			state = UP;
+	else if (GetAsyncKeyState(VK_SPACE)) {
+		if (state == State::LANDING) {
+			state = State::UP;
 			jump_power = 25;
-			SetJumpPower(jump_power);
 		}
 	}
-
-	SetPos(pos);
-	SetState(state);
 }

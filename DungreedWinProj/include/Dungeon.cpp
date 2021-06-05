@@ -3,15 +3,20 @@
 Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 {
 	CheckFileNameValidity(L"DungeonData.txt");
-	std::ifstream in{ "DungoenData.txt" };
+	std::ifstream in{ "DungeonData.txt" };
 	std::string line;
 
+	if (!in)
+		throw L"Dungeon Is Not Loaded";
+
 	while (std::getline(in, line))
-		if (IsID(line))
+		if (IsID(line)) {
 			LoadData(in);
+			break;
+		}
 
 	if (!is_loaded)
-		throw L"Dungeon Is Not Loaded";
+		throw L"Cannot Find Dungeon ID";
 }
 
 void Dungeon::LoadData(std::ifstream& in)
@@ -48,9 +53,9 @@ void Dungeon::InputDataAtField(const std::string& data, const std::string& field
 	FetchFitArg(data, int_arg, str_arg);
 
 	if (field == "map_path")
-		dungeon_image.Load(str_arg);
+		dungeon_image = new Image(str_arg);
 	else if (field == "map_terrain_path")
-		dungeon_terrain_image.Load(str_arg);
+		dungeon_terrain_image = new Image(str_arg);
 	else if (field == "left_start_pos")
 		left_start_pos = { int_arg[0], int_arg[1] };
 	else if (field == "right_start_pos")
@@ -88,13 +93,20 @@ void Dungeon::FetchFitArg(const std::string& data, int int_arg[], TCHAR str_arg[
 	catch (const TCHAR* error_message) {
 		if (IsStringInt(data))
 			int_arg[0] = std::stoi(data);
-		else
-			wsprintf(str_arg, L"%s", data);
+		else {
+			const TCHAR* rearranged_data = str2Tstr(data);
+			wsprintf(str_arg, L"%s", rearranged_data);
+		}
 	}
 }
 
 Dungeon::~Dungeon()
 {
-	dungeon_image.Destroy();
-	dungeon_terrain_image.Destroy();
+	delete dungeon_image;
+	delete dungeon_terrain_image;
+}
+
+void Dungeon::Render(HDC scene_dc, const RECT& bit_rect)
+{
+	dungeon_image->Draw(scene_dc, 0, 0, bit_rect.right, bit_rect.bottom, 0, 0, dungeon_width, dungeon_height);
 }

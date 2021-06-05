@@ -3,8 +3,13 @@
 #define _dungeon
 #include <windows.h>
 #include "FileUtility.h"
+#include "Uncopyable.h"
 
-class Dungeon
+extern HDC buf_dc;
+extern RECT client;
+extern HWND h_wnd;
+
+class Dungeon : private Uncopyable
 {
 private:
 	int dungeon_id;
@@ -16,8 +21,8 @@ private:
 	void FetchFitArg(const std::string& data, int int_arg[], TCHAR str_arg[]);
 
 public:
-	Image dungeon_image;
-	Image dungeon_terrain_image;
+	Image* dungeon_image;
+	Image* dungeon_terrain_image;
 
 	POINT left_start_pos;
 	POINT right_start_pos;
@@ -33,8 +38,9 @@ public:
 	int camera_x_half_range;
 	int camera_y_half_range;
 
-	Dungeon() = default;
 	Dungeon(const int dungeon_id);
 	~Dungeon();
+
+	void Render(HDC scene_dc, const RECT& bit_rect);
 };
 #endif

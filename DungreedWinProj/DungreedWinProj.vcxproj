@@ -90,8 +90,9 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>WinMainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,6 +148,7 @@
     <ClCompile Include="include\Monster.cpp" />
     <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="include\Scene.cpp" />
+    <ClCompile Include="include\InstantDCSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Camera.h" />
@@ -156,6 +158,8 @@
     <ClInclude Include="include\Monster.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\Uncopyable.h" />
+    <ClInclude Include="include\InstantDCSet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

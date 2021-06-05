@@ -30,16 +30,25 @@ HRESULT Scene::Init()
 	return S_OK;
 }
 
-void Scene::Render(HDC& buf_m_dc)
+void Scene::Render()
 {
-	player->Render(buf_m_dc);
+	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
+	camera->Update(dungeon, player);
+
+	dungeon->Render(dc_set.buf_dc, dc_set.bit_rect);
+	player->Render(dc_set.buf_dc, dc_set.bit_rect);
+
+	//DrawBuffer(dc_set.buf_dc, dc_set.bit_rect);
+	DrawBuffer(dc_set.buf_dc, camera->Rect());
+
+	test();
 }
 
 void Scene::Update()
 {
 	// player, monster 업데이트 루틴
-
-	camera->Update(dungeon, player);
+	player->KeyProc(dungeon);
+	player->ForceGravity(dungeon);
 }
 
 void Scene::GoNextDungeon()
@@ -72,8 +81,9 @@ void Scene::ChangeDungeon(const int dungeon_id)
 	dungeon = new Dungeon(dungeon_id);
 }
 
-void Scene::PlayerMove(HDC h_dc, const TCHAR* map_name)
+void Scene::test()
 {
-	player->KeyMove(h_dc, map_name);
-	player->Move(h_dc, map_name);
+	RECT client = camera->Rect();
+	std::cout << "(" << player->pos.x << ", " << player->pos.y << ") (" << camera->pos.x << ", " << camera->pos.y << ")\n";
+	std::cout << "LT(" << client.left << ", " << client.top << "), RB(" << client.right << ", " << client.bottom << ")\n";
 }

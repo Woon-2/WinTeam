@@ -1,8 +1,8 @@
 First Dungeon
 2147017
 
-map_path ./map_png/map1
-map_terrain_path ./map_png/map1-지형
+map_path map_png/map1.png
+map_terrain_path map_png/map1-terrain.png
 left_start_pos 60 40
 right_start_pos 940 40
 prev_dungeon_portal_pos 10 70
@@ -11,13 +11,13 @@ dungeon_width 1022
 dungeon_height 320
 next_dungeon_id 2378173
 prev_dungeon_id 0
-camera_x_half_range 480
-camera_y_half_range 270
+camera_x_half_range 240
+camera_y_half_range 135
 
 2378173
 
-map_path ./map_png/map2
-map_terrain_path ./map_png/map2-지형
+map_path map_png/map2.png
+map_terrain_path map_png/map2-terrain.png
 left_start_pos 70 240
 right_start_pos 1310 240
 prev_dungeon_portal_pos 20 280
@@ -26,13 +26,13 @@ dungeon_width 1398
 dungeon_height 392
 next_dungeon_id 5438013
 prev_dungeon_id 2147017
-camera_x_half_range 560
-camera_y_half_range 315
+camera_x_half_range 280
+camera_y_half_range 165
 
 5438013
 
-map_path ./map_png/map3
-map_terrain_path ./map_png/map3-지형
+map_path map_png/map3.png
+map_terrain_path map_png/map3-terrain.png
 left_start_pos 30 100
 right_start_pos 665 100
 prev_dungeon_portal_pos 10 130
@@ -41,13 +41,13 @@ dungeon_width 716
 dungeon_height 258
 next_dungeon_id 9872417
 prev_dungeon_id 2378173
-camera_x_half_range 352
-camera_y_half_range 198
+camera_x_half_range 176
+camera_y_half_range 99
 
 9872417
 
-map_path ./map_png/map4
-map_terrain_path ./map_png/map4-지형
+map_path map_png/map4.png
+map_terrain_path map_png/map4-terrain.png
 left_start_pos 40 200
 right_start_pos 495 200
 prev_dungeon_portal_pos 20 245
@@ -56,5 +56,5 @@ dungeon_width 564
 dungeon_height 296
 next_dungeon_id 0
 prev_dungeon_id 5438013
-camera_x_half_range 564
-camera_y_half_range 296
+camera_x_half_range 232
+camera_y_half_range 148

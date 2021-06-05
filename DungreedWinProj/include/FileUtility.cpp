@@ -4,6 +4,31 @@ void Image::Load(const TCHAR* file_name)
 {
 	CheckFileNameValidity(file_name);
 	this->CImage::Load(file_name);
+	lstrcpy(image_name, file_name);
+}
+
+Image::Image(const TCHAR* file_name)
+{
+	Load(file_name);
+}
+
+Image::Image(const Image& source)
+{
+	Load(source.image_name);
+}
+
+Image& Image::operator=(const Image& source)
+{
+	if (this == &source)
+		return *this;
+	Load(source.image_name);
+	return *this;
+}
+
+Image::~Image()
+{
+	this->Destroy();
+	this->CImage::~CImage();
 }
 
 void CheckFileNameValidity(const TCHAR* file_name)
@@ -35,13 +60,12 @@ bool IsID(const std::string& id_string)
 
 bool IsStringInt(const std::string& str)
 {
-	std::string str_repaired;
-	int value = std::stoi(str);
-	str_repaired = std::to_string(value);
-	if (str_repaired == str)
-		return true;
-	else
+	if (str.empty())
 		return false;
+	for (int i = 0; i < str.length(); ++i)
+		if (str[i] < '0' || str[i] > '9')
+			return false;
+	return true;
 }
 
 bool IsLineFieldWithData(const std::string& line)
@@ -56,7 +80,7 @@ const std::string GetHeadString(const std::string& line)
 {
 	for (int i = 0; i < line.length(); ++i)
 		if (line[i] == ' ')
-			return line.substr(0, i - 1);
+			return line.substr(0, i);
 	return line;
 }
 
@@ -66,4 +90,13 @@ const std::string GetRestString(const std::string& line)
 		if (line[i] == ' ')
 			return line.substr(i+1);
 	throw L"GetRestString Failed";
+}
+
+TCHAR* str2Tstr(std::string str)
+{
+	TCHAR t_str[DEF_STR_LEN];
+	for (int i = 0; i < str.length(); ++i)
+		t_str[i] = str[i];
+	t_str[str.length()] = NULL;
+	return t_str;
 }
