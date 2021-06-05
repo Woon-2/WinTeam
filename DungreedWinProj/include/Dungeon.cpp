@@ -10,10 +10,11 @@ Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 		throw L"Dungeon Is Not Loaded";
 
 	while (std::getline(in, line))
-		if (IsID(line)) {
-			LoadData(in);
-			break;
-		}
+		if (IsID(line))
+			if (dungeon_id == std::stoi(line)) {
+				LoadData(in);
+				break;
+			}
 
 	if (!is_loaded)
 		throw L"Cannot Find Dungeon ID";

@@ -6,9 +6,6 @@
 #include "Monster.h"
 #include "Camera.h"
 #include "Uncopyable.h"
-//
-#include <iostream>
-//
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -34,7 +31,5 @@ public:
 
 	void GoNextDungeon();
 	void GoPrevDungeon();
-
-	void test();
 };
 #endif

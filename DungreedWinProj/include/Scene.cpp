@@ -38,10 +38,7 @@ void Scene::Render()
 	dungeon->Render(dc_set.buf_dc, dc_set.bit_rect);
 	player->Render(dc_set.buf_dc, dc_set.bit_rect);
 
-	//DrawBuffer(dc_set.buf_dc, dc_set.bit_rect);
 	DrawBuffer(dc_set.buf_dc, camera->Rect());
-
-	test();
 }
 
 void Scene::Update()
@@ -77,13 +74,8 @@ void Scene::GoPrevDungeon()
 
 void Scene::ChangeDungeon(const int dungeon_id)
 {
+	if (!dungeon_id)
+		throw L"Loaded Dungeon ID was 0";
 	delete(dungeon);
 	dungeon = new Dungeon(dungeon_id);
-}
-
-void Scene::test()
-{
-	RECT client = camera->Rect();
-	std::cout << "(" << player->pos.x << ", " << player->pos.y << ") (" << camera->pos.x << ", " << camera->pos.y << ")\n";
-	std::cout << "LT(" << client.left << ", " << client.top << "), RB(" << client.right << ", " << client.bottom << ")\n";
 }

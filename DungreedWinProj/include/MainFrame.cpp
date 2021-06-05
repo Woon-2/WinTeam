@@ -68,6 +68,16 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 		//
 		SetTimer(h_wnd, 1, 30, 0);
 		return 0;
+	case WM_KEYDOWN:
+		switch (w_param) {
+		case 'Q':
+			scene->GoPrevDungeon();
+			break;
+		case 'W':
+			scene->GoNextDungeon();
+			break;
+		}
+		return 0;
 	case WM_PAINT:
 		PrepareToDoubleBuffering();
 		DoubleBuffering();
