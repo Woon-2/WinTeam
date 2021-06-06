@@ -158,6 +158,8 @@ void DataBase::Match(std::string field, std::string data)
 			delete data_instance;
 			return;
 		}
+
+	delete data_instance;
 }
 
 DB_Data* DataBase::GetDataInstance(std::string data)
