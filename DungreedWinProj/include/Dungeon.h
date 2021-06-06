@@ -2,7 +2,7 @@
 #ifndef _dungeon
 #define _dungeon
 #include <windows.h>
-#include "FileUtility.h"
+#include "DataBase.h"
 #include "Uncopyable.h"
 
 extern HDC buf_dc;

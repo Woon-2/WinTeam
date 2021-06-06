@@ -4,7 +4,7 @@ Dungeon::Dungeon()
 {
 	DataBase* db = BuildDB();
 
-	db->LoadDataWithFirstID();
+	db->LoadDataByFirstID();
 
 	dungeon_image = new Image(map_path);
 	dungeon_terrain_image = new Image(map_terrain_path);
@@ -16,7 +16,7 @@ Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 {
 	DataBase* db = BuildDB();
 
-	db->LoadDataWithID(dungeon_id);
+	db->LoadDataByID(dungeon_id);
 
 	dungeon_image = new Image(map_path);
 	dungeon_terrain_image = new Image(map_terrain_path);

@@ -42,6 +42,9 @@
     <ClCompile Include="include\InstantDCSet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="include\DataBase.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Character.h">
@@ -69,6 +72,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\InstantDCSet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DataBase.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

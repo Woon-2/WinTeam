@@ -151,6 +151,7 @@
     <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="include\Scene.cpp" />
     <ClCompile Include="include\InstantDCSet.cpp" />
+    <ClCompile Include="include\DataBase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Camera.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Uncopyable.h" />
     <ClInclude Include="include\InstantDCSet.h" />
+    <ClInclude Include="include\DataBase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
