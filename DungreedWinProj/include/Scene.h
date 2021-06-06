@@ -23,6 +23,7 @@ private:
 	HRESULT Init();
 
 public:
+	Scene();
 	Scene(const int dungeon_id);
 	~Scene();
 

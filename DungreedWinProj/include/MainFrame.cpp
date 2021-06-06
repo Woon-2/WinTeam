@@ -63,9 +63,7 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 	{
 	case WM_CREATE:
 		GetClientRect(h_wnd, &client);
-		//
-		scene = new Scene(2147017);
-		//
+		scene = new Scene;
 		SetTimer(h_wnd, 1, 30, 0);
 		return 0;
 	case WM_KEYDOWN:
@@ -88,6 +86,7 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 		InvalidateRect(h_wnd, NULL, FALSE);
 		return 0;
 	case WM_DESTROY:
+		delete scene;
 		PostQuitMessage(0);
 		return 0;
 	}

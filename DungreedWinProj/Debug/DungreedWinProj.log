@@ -1,3 +1,8 @@
-﻿  Dungeon.cpp
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Dungeon.cpp(94,22): warning C4101: 'error_message' :참조되지 않은 지역 변수입니다.
+﻿  FileUtility.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(100,38): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(172,22): warning C4101: 'error_message' :참조되지 않은 지역 변수입니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(203,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(211,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(219,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(227,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe

@@ -13,16 +13,15 @@ class Dungeon : private Uncopyable
 {
 private:
 	int dungeon_id;
-	bool is_loaded;
 
-	void LoadData(std::ifstream& in);
-	void InterpretLine(const std::string& line);
-	void InputDataAtField(const std::string& data, const std::string& field);
-	void FetchFitArg(const std::string& data, int int_arg[], TCHAR str_arg[]);
+	DataBase* BuildDB();
 
 public:
 	Image* dungeon_image;
 	Image* dungeon_terrain_image;
+
+	TCHAR map_path[DEF_STR_LEN];
+	TCHAR map_terrain_path[DEF_STR_LEN];
 
 	POINT left_start_pos;
 	POINT right_start_pos;
@@ -38,6 +37,7 @@ public:
 	int camera_x_half_range;
 	int camera_y_half_range;
 
+	Dungeon();
 	Dungeon(const int dungeon_id);
 	~Dungeon();
 

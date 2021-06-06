@@ -1,5 +1,19 @@
 #include "Scene.h"
 
+Scene::Scene()
+{
+	try {
+		dungeon = new Dungeon;
+		player = new Player(dungeon);
+		player->PlaceWithDungeonLeft(dungeon);
+		// monsters = new Monster[];
+		camera = new Camera(dungeon, player);
+	}
+	catch (const TCHAR* error_message) {
+		MessageBox(h_wnd, error_message, L"Error", MB_OK);
+	}
+}
+
 Scene::Scene(const int dungeon_id)
 {
 	try {
