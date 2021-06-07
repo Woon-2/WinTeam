@@ -5,7 +5,7 @@ DataBase::DataBase(const TCHAR* file_name) : ReadMetIndividual{db_map}
 	lstrcpy(db_file_name, file_name);
 }
 
-void DataBase::RegisterField(std::string field_name, void* const field_address)
+void DataBase::RegisterField(std::string field_name, Field_Inst field_address)
 {
 	db_map.insert({ field_name, field_address });
 }
@@ -93,45 +93,44 @@ bool IDConfig::IsNumID(const int val) const
 
 
 
-DB_ReadMetIndividual::DB_ReadMetIndividual(std::map<const std::string, void* const>& db_map) : p_db_map{ &db_map }, begin_flag{ true }, end_flag{ false }
+DB_RMI::DB_ReadMetIndividual(DB_Map& db_map) : p_db_map{ &db_map }, begin_flag{ true }, end_flag{ false }
 {
 
 }
 
-DB_ReadMetIndividual::DB_ReadMetIndividual(const DB_ReadMetIndividual& source) : p_db_map{ source.p_db_map }, begin_flag{ true }, end_flag{ false }
+DB_RMI::DB_ReadMetIndividual(const DB_RMI& source) : p_db_map{ source.p_db_map }, begin_flag{ true }, end_flag{ false }
 {
 
 }
 
-DB_ReadMetIndividual& DB_ReadMetIndividual::operator=(const DB_ReadMetIndividual& source)
+DB_RMI& DB_RMI::operator=(const DB_RMI& source)
 {
 	this->p_db_map = p_db_map;
 	return *this;
 }
 
-void DB_ReadMetIndividual::operator()(IFStream& in)
+void DB_RMI::operator()(IFStream& in)
 {
 	if (begin_flag)
-		Begin();
+		MakeCheckList();
 	try {
 		InterpretLine(GetLine(in));
 	}
 	catch (const int error_code) {				// INVALID_FIELD 에러 코드는 굳이 처리하지 않음으로써 DB 작성 자유도를 높임
 		if (error_code == END_OF_SUBJ)
-			End(in.file_name);
+			Call_End();
 	}
-
 	if (!end_flag)
 		operator()(in);
 }
 
-void DB_ReadMetIndividual::Begin()
+void DB_RMI::MakeCheckList()
 {
 	assign_checklist.Make(*p_db_map);
 	begin_flag = false;
 }
 
-void DB_ReadMetIndividual::End(const TCHAR* db_name)
+void DB_RMI::End()
 {
 	if (!assign_checklist.IsCompletelyChecked()) {
 		TCHAR error_message[DEF_STR_LEN];
@@ -141,13 +140,13 @@ void DB_ReadMetIndividual::End(const TCHAR* db_name)
 	end_flag = true;
 }
 
-void DB_ReadMetIndividual::InterpretLine(std::string line)
+void DB_RMI::InterpretLine(std::string line)
 {
 	if (hasLineSpace(line))
 		AssignByCmdLine(line);
 }
 
-const std::string DB_ReadMetIndividual::GetLine(IFStream& in) const
+const std::string DB_RMI::GetLine(IFStream& in) const
 {
 	std::string line;
 
@@ -159,37 +158,37 @@ const std::string DB_ReadMetIndividual::GetLine(IFStream& in) const
 	return line;
 }
 
-void DB_ReadMetIndividual::AssignInstance(void* const field_instance, std::shared_ptr<DB_Data> data_instance) const
+void DB_RMI::AssignInstance(Field_Inst field_inst, Data_Inst data_inst) const
 {
-	if (std::dynamic_pointer_cast<DB_String>(data_instance))
-		lstrcpy(static_cast<TCHAR*>(field_instance), std::dynamic_pointer_cast<DB_String>(data_instance).get()->data);
+	if (Dy_P_Cast<DB_String>(data_inst))
+		lstrcpy(At_TStr, Dy_P_Cast<DB_String>(data_inst).get()->data);
 
-	else if (std::dynamic_pointer_cast<DB_Point>(data_instance))
-		*static_cast<POINT*>(field_instance) = std::dynamic_pointer_cast<DB_Point>(data_instance).get()->data;
+	else if (Dy_P_Cast<DB_Point>(data_inst))
+		At_Pt = Dy_P_Cast<DB_Point>(data_inst).get()->data;
 
-	else if (std::dynamic_pointer_cast<DB_Int>(data_instance))
-		*static_cast<int*>(field_instance) = std::dynamic_pointer_cast<DB_Int>(data_instance).get()->data;
+	else if (Dy_P_Cast<DB_Int>(data_inst))
+		At_Int = Dy_P_Cast<DB_Int>(data_inst).get()->data;
 }
 
-void DB_ReadMetIndividual::AssignByCmdLine(std::string line)
+void DB_RMI::AssignByCmdLine(std::string line)
 {
 	auto field_data_pair = Seperate(line);
-	auto field_instance = GetFieldInstance(field_data_pair.first, *p_db_map);
-	auto data_instance = GetDataInstance(field_data_pair.second);
+	auto field_inst = GetFieldInstance(field_data_pair.first, *p_db_map);
+	auto data_inst = GetDataInstance(field_data_pair.second);
 
-	AssignInstance(field_instance, data_instance);
+	AssignInstance(field_inst, data_inst);
 	assign_checklist.Check(field_data_pair.first);
 }
 
 
-std::pair<const std::string, const std::string> DB_ReadMetIndividual::Seperate(std::string line) const
+Str_Str_Pair DB_RMI::Seperate(std::string line) const
 {
 	std::string field = GetHeadString(line);
 	std::string data = GetRestString(line);
-	return std::pair<const std::string, const std::string>{field, data};
+	return Str_Str_Pair{field, data};
 }
 
-bool DB_ReadMetIndividual::hasLineSpace(const std::string& line) const
+bool DB_RMI::hasLineSpace(const std::string& line) const
 {
 	if (GetHeadString(line) == line)
 		return false;
@@ -197,7 +196,7 @@ bool DB_ReadMetIndividual::hasLineSpace(const std::string& line) const
 		return true;
 }
 
-void* const DB_ReadMetIndividual::GetFieldInstance(std::string field, const std::map<const std::string, void* const>& db_map) const
+Field_Inst DB_RMI::GetFieldInstance(std::string field, const DB_Map& db_map) const
 {
 	for (auto iter : db_map) {
 		std::string acc_str = iter.first;
@@ -209,22 +208,22 @@ void* const DB_ReadMetIndividual::GetFieldInstance(std::string field, const std:
 	throw INVALID_FIELD;
 }
 
-std::shared_ptr<DB_Data> DB_ReadMetIndividual::GetDataInstance(std::string data) const
+Data_Inst DB_RMI::GetDataInstance(std::string data) const
 {
 	std::string args_origin[2];
 	try {
 		args_origin[1] = GetRestString(data);
 		// GetRestString은 매개변수 string에 띄어쓰기가 없으면 오류를 던짐, 따라서 인자의 개수 구분 가능
 		args_origin[0] = GetHeadString(data);
-		return std::shared_ptr<DB_Data>{ new DB_Point{ std::stoi(args_origin[0]), std::stoi(args_origin[1]) } };
+		return Data_Inst{ new DB_Point{ std::stoi(args_origin[0]), std::stoi(args_origin[1]) } };
 	}
 	catch (const TCHAR* error_message) {
 		if (IsStringInt(data))
-			return std::shared_ptr<DB_Data>{ new DB_Int(std::stoi(data)) };
+			return Data_Inst{ new DB_Int(std::stoi(data)) };
 		else {
 			TCHAR rearranged_data[DEF_STR_LEN];
 			str2Tstr(data, rearranged_data);
-			return std::shared_ptr<DB_Data>{new DB_String(rearranged_data)};
+			return Data_Inst{new DB_String(rearranged_data)};
 		}
 	}
 }
