@@ -5,7 +5,6 @@
 #include "Uncopyable.h"
 #include <map>
 
-
 class DB_Data
 {
 public:
@@ -36,6 +35,7 @@ public:
 	DB_Int(const int val) : data{ val } {}
 };
 
+typedef std::shared_ptr<DB_Data> SP_DB_Data;
 
 
 
@@ -46,39 +46,49 @@ private:
 	const int ID_DIGIT = 7;
 
 public:
-	void FindFirstSubject(IFStream& in);
-	void FindSubject(IFStream& in, const int subject_id);
-	bool IsLineID(const std::string& str);
-	bool IsLineEqualsID(const std::string& line, const int id);
-	bool IsNumID(const int val);
+	void MeetFirstID(IFStream& in) const;
+	void MeetID(IFStream& in, const int subject_id) const;
+	bool IsLineID(const std::string& str) const;
+	bool IsLineEqualsID(const std::string& line, const int id) const;
+	bool IsNumID(const int val) const;
 };
 
 
 
 
 
-class DB_ReceiveSubject : private Uncopyable
+class DB_ReadMetIndividual : private Uncopyable
 {
 private:
-	IDConfig id_config;
 	const int END_OF_SUBJ = 1234;
-	std::map<std::string, void*>* p_db_map;
+	const int INVALID_FIELD = 4321;
 
-	const std::string GetLine(IFStream& in);
+	bool begin_flag;
+	bool end_flag;
 
-	bool IsLineFieldWithData(const std::string& line);
-	std::pair<const std::string, const std::string> Seperate(std::string line);
+	const IDConfig id_config;
+	const std::map<const std::string, void*>* p_db_map;
+	CheckList<const std::string> assign_checklist;
 
-	void* GetFieldInstance(std::string field, const std::map<std::string, void*>& db_map);
-	DB_Data* GetDataInstance(std::string data);
 
-	void Match(void* field_instance, DB_Data* p_data_instance);
+	void Begin();
+	void End(const TCHAR* db_name);
+	void InterpretLine(std::string line);
+	const std::string GetLine(IFStream& in) const;
+
+	bool hasLineSpace(const std::string& line) const;
+
+	void AssignInstance(void* const field_instance, SP_DB_Data p_data_instance) const;
+	void AssignByCmdLine(std::string line);
+
+	std::pair<const std::string, const std::string> Seperate(std::string line) const;
+	void* GetFieldInstance(std::string field, const std::map<const std::string, void*>& db_map) const;
+	SP_DB_Data GetDataInstance(std::string data) const;
 
 public:
-	DB_ReceiveSubject() = default;
-	DB_ReceiveSubject(std::map<std::string, void*>& db_map);
-	DB_ReceiveSubject(const DB_ReceiveSubject& source);
-	DB_ReceiveSubject& operator=(const DB_ReceiveSubject& source);
+	DB_ReadMetIndividual(std::map<const std::string, void*>& db_map);
+	DB_ReadMetIndividual(const DB_ReadMetIndividual& source);
+	DB_ReadMetIndividual& operator=(const DB_ReadMetIndividual& source);
 	void operator()(IFStream& in);
 };
 
@@ -91,9 +101,9 @@ class DataBase
 {
 private:
 	TCHAR db_file_name[FILE_NAME_LEN];
-	std::map<std::string, void*> db_map;
-	IDConfig id_config;
-	DB_ReceiveSubject ReceiveSubject{ db_map };
+	std::map<const std::string, void*> db_map;
+	const IDConfig id_config;
+	DB_ReadMetIndividual ReadMetIndividual;
 
 public:
 	DataBase(const TCHAR* db_file_name);

@@ -13,6 +13,7 @@ const double PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE = 5.0;
 class Player : private Uncopyable, public Character
 {
 private:
+	void KeyProc(const Dungeon* dungeon);
 
 public:
 	Player(const Dungeon* dungeon);
@@ -21,10 +22,9 @@ public:
 
 	void Init(const Dungeon* dungeon);
 
-	void KeyProc(const Dungeon* dungeon);
+	void Update(const Dungeon* dungeon);
 
 	friend class Camera;
-	friend class Scene;
 };
 #endif
 

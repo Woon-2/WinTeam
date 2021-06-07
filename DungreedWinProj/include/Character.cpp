@@ -63,7 +63,7 @@ void Character::MovePos(const Dungeon* dungeon, Direction direction, const int p
 	}
 }
 
-void Character::Render(HDC scene_dc, const RECT& bit_rect)
+void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	Image image(L"player - dungreed\\CharIdle0-resources.assets-2445.png");
 	int image_width = image.GetWidth();
@@ -71,12 +71,7 @@ void Character::Render(HDC scene_dc, const RECT& bit_rect)
 	image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 }
 
-void Character::Update()
-{
-
-}
-
-bool Character::MapPixelCollision(HDC terrain_dc, COLORREF val, POINT pt)	// 지형 표시 이미지를 사용해 충돌 확인, 오류 있음
+bool Character::MapPixelCollision(HDC terrain_dc, const COLORREF& val, const POINT& pt)	// 지형 표시 이미지를 사용해 충돌 확인, 오류 있음
 {
 	if (pt.x < client.left || pt.y > client.right)
 		return true;

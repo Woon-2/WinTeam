@@ -24,6 +24,12 @@ void Player::Init(const Dungeon* dungeon)
 	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
 }
 
+void Player::Update(const Dungeon* dungeon)
+{
+	KeyProc(dungeon);
+	ForceGravity(dungeon);
+}
+
 void Player::KeyProc(const Dungeon* dungeon)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });

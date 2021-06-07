@@ -27,8 +27,8 @@ public:
 	Scene(const int dungeon_id);
 	~Scene();
 
-	void Render();
-	void Update();
+	void Render() const;
+	void Update() const;
 
 	void GoNextDungeon();
 	void GoPrevDungeon();

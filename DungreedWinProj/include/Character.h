@@ -31,13 +31,13 @@ protected:
 	int motion_num;
 	Image* image;
 
-	bool MapPixelCollision(HDC terrain_dc, COLORREF val, POINT pt);
+	bool MapPixelCollision(HDC terrain_dc, const COLORREF& val, const POINT& pt);
 	void MovePos(const Dungeon* dungeon, Direction direction, const int px);
 public:
-	void Update();
+	virtual void Update(const Dungeon* dungeon) = 0;
 
 	void ForceGravity(const Dungeon* dungeon);
 
-	void Render(HDC scene_dc, const RECT& bit_rect);
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };
 #endif

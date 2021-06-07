@@ -44,7 +44,7 @@ HRESULT Scene::Init()
 	return S_OK;
 }
 
-void Scene::Render()
+void Scene::Render() const
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 	camera->Update(dungeon, player);
@@ -55,10 +55,10 @@ void Scene::Render()
 	DrawBuffer(dc_set.buf_dc, camera->Rect());
 }
 
-void Scene::Update()
+void Scene::Update() const
 {
 	// player, monster 업데이트 루틴
-	player->KeyProc(dungeon);
+	player->Update(dungeon);
 	player->ForceGravity(dungeon);
 }
 

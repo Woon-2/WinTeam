@@ -37,8 +37,6 @@ Image::~Image()
 
 
 
-
-
 void CheckFileNameValidity(const TCHAR* file_name)
 {
 	std::ifstream in{ file_name };
@@ -75,7 +73,7 @@ const std::string GetRestString(const std::string& line)
 	throw L"GetRestString Failed";
 }
 
-void str2Tstr(TCHAR t_str[], const std::string& str)
+void str2Tstr(const std::string& str, TCHAR t_str[])
 {
 	for (int i = 0; i < str.length(); ++i)
 		t_str[i] = str[i];

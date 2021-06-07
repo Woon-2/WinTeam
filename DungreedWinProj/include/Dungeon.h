@@ -41,6 +41,6 @@ public:
 	Dungeon(const int dungeon_id);
 	~Dungeon();
 
-	void Render(HDC scene_dc, const RECT& bit_rect);
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };
 #endif
