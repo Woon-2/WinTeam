@@ -16,6 +16,7 @@ typedef std::pair<const std::string, const std::string> Str_Str_Pair;
 typedef void* const Field_Inst;
 typedef std::map<const std::string, Field_Inst> DB_Map;
 typedef class DB_ReadMetIndividual DB_RMI;
+typedef CheckList<const std::string> DB_Checklist;
 
 
 
@@ -85,7 +86,7 @@ private:
 
 	const IDConfig id_config;
 	const DB_Map* p_db_map;
-	CheckList<const std::string> assign_checklist;
+	DB_Checklist assign_checklist;
 
 
 	void MakeCheckList();
