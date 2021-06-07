@@ -5,6 +5,9 @@
 #include "Uncopyable.h"
 #include <map>
 
+
+
+
 class DB_Data
 {
 public:
@@ -35,7 +38,7 @@ public:
 	DB_Int(const int val) : data{ val } {}
 };
 
-typedef std::shared_ptr<DB_Data> SP_DB_Data;
+
 
 
 
@@ -67,7 +70,7 @@ private:
 	bool end_flag;
 
 	const IDConfig id_config;
-	const std::map<const std::string, void*>* p_db_map;
+	const std::map<const std::string, void* const>* p_db_map;
 	CheckList<const std::string> assign_checklist;
 
 
@@ -78,15 +81,15 @@ private:
 
 	bool hasLineSpace(const std::string& line) const;
 
-	void AssignInstance(void* const field_instance, SP_DB_Data p_data_instance) const;
+	void AssignInstance(void* const field_instance, std::shared_ptr<DB_Data> p_data_instance) const;
 	void AssignByCmdLine(std::string line);
 
 	std::pair<const std::string, const std::string> Seperate(std::string line) const;
-	void* GetFieldInstance(std::string field, const std::map<const std::string, void*>& db_map) const;
-	SP_DB_Data GetDataInstance(std::string data) const;
+	void* const GetFieldInstance(std::string field, const std::map<const std::string, void* const>& db_map) const;
+	std::shared_ptr<DB_Data> GetDataInstance(std::string data) const;
 
 public:
-	DB_ReadMetIndividual(std::map<const std::string, void*>& db_map);
+	DB_ReadMetIndividual(std::map<const std::string, void* const>& db_map);
 	DB_ReadMetIndividual(const DB_ReadMetIndividual& source);
 	DB_ReadMetIndividual& operator=(const DB_ReadMetIndividual& source);
 	void operator()(IFStream& in);
@@ -101,14 +104,14 @@ class DataBase
 {
 private:
 	TCHAR db_file_name[FILE_NAME_LEN];
-	std::map<const std::string, void*> db_map;
+	std::map<const std::string, void* const> db_map;
 	const IDConfig id_config;
 	DB_ReadMetIndividual ReadMetIndividual;
 
 public:
 	DataBase(const TCHAR* db_file_name);
 
-	void RegisterField(std::string field_name, void* field_address);
+	void RegisterField(std::string field_name, void* const field_address);
 
 	void LoadDataByFirstID();
 	void LoadDataByID(const int id);

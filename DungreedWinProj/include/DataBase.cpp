@@ -5,7 +5,7 @@ DataBase::DataBase(const TCHAR* file_name) : ReadMetIndividual{db_map}
 	lstrcpy(db_file_name, file_name);
 }
 
-void DataBase::RegisterField(std::string field_name, void* field_address)
+void DataBase::RegisterField(std::string field_name, void* const field_address)
 {
 	db_map.insert({ field_name, field_address });
 }
@@ -93,7 +93,7 @@ bool IDConfig::IsNumID(const int val) const
 
 
 
-DB_ReadMetIndividual::DB_ReadMetIndividual(std::map<const std::string, void*>& db_map) : p_db_map{ &db_map }, begin_flag{ true }, end_flag{ false }
+DB_ReadMetIndividual::DB_ReadMetIndividual(std::map<const std::string, void* const>& db_map) : p_db_map{ &db_map }, begin_flag{ true }, end_flag{ false }
 {
 
 }
@@ -159,16 +159,16 @@ const std::string DB_ReadMetIndividual::GetLine(IFStream& in) const
 	return line;
 }
 
-void DB_ReadMetIndividual::AssignInstance(void* const field_instance, SP_DB_Data p_data_instance) const
+void DB_ReadMetIndividual::AssignInstance(void* const field_instance, std::shared_ptr<DB_Data> data_instance) const
 {
-	if (std::dynamic_pointer_cast<DB_String>(p_data_instance))
-		lstrcpy(static_cast<TCHAR*>(field_instance), std::dynamic_pointer_cast<DB_String>(p_data_instance).get()->data);
+	if (std::dynamic_pointer_cast<DB_String>(data_instance))
+		lstrcpy(static_cast<TCHAR*>(field_instance), std::dynamic_pointer_cast<DB_String>(data_instance).get()->data);
 
-	else if (dynamic_cast<DB_Point*>(p_data_instance))
-		*static_cast<POINT*>(field_instance) = dynamic_cast<DB_Point*>(p_data_instance)->data;
+	else if (std::dynamic_pointer_cast<DB_Point>(data_instance))
+		*static_cast<POINT*>(field_instance) = std::dynamic_pointer_cast<DB_Point>(data_instance).get()->data;
 
-	else if (dynamic_cast<DB_Int*>(p_data_instance))
-		*static_cast<int*>(field_instance) = dynamic_cast<DB_Int*>(p_data_instance)->data;
+	else if (std::dynamic_pointer_cast<DB_Int>(data_instance))
+		*static_cast<int*>(field_instance) = std::dynamic_pointer_cast<DB_Int>(data_instance).get()->data;
 }
 
 void DB_ReadMetIndividual::AssignByCmdLine(std::string line)
@@ -197,7 +197,7 @@ bool DB_ReadMetIndividual::hasLineSpace(const std::string& line) const
 		return true;
 }
 
-void* DB_ReadMetIndividual::GetFieldInstance(std::string field, const std::map<const std::string, void*>& db_map) const
+void* const DB_ReadMetIndividual::GetFieldInstance(std::string field, const std::map<const std::string, void* const>& db_map) const
 {
 	for (auto iter : db_map) {
 		std::string acc_str = iter.first;
@@ -209,22 +209,22 @@ void* DB_ReadMetIndividual::GetFieldInstance(std::string field, const std::map<c
 	throw INVALID_FIELD;
 }
 
-SP_DB_Data DB_ReadMetIndividual::GetDataInstance(std::string data) const
+std::shared_ptr<DB_Data> DB_ReadMetIndividual::GetDataInstance(std::string data) const
 {
 	std::string args_origin[2];
 	try {
 		args_origin[1] = GetRestString(data);
 		// GetRestString은 매개변수 string에 띄어쓰기가 없으면 오류를 던짐, 따라서 인자의 개수 구분 가능
 		args_origin[0] = GetHeadString(data);
-		return SP_DB_Data{ new DB_Point{ std::stoi(args_origin[0]), std::stoi(args_origin[1]) } };
+		return std::shared_ptr<DB_Data>{ new DB_Point{ std::stoi(args_origin[0]), std::stoi(args_origin[1]) } };
 	}
 	catch (const TCHAR* error_message) {
 		if (IsStringInt(data))
-			return SP_DB_Data{ new DB_Int(std::stoi(data)) };
+			return std::shared_ptr<DB_Data>{ new DB_Int(std::stoi(data)) };
 		else {
 			TCHAR rearranged_data[DEF_STR_LEN];
 			str2Tstr(data, rearranged_data);
-			return SP_DB_Data{new DB_String(rearranged_data)};
+			return std::shared_ptr<DB_Data>{new DB_String(rearranged_data)};
 		}
 	}
 }

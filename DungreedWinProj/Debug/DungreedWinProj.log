@@ -2,16 +2,7 @@
   Character.cpp
   DataBase.cpp
 C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(79,14): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(164,6): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_String *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(165,48): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_String *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(165,95): error C2660: 'lstrcpyW': 함수는 1개의 인수를 사용하지 않습니다.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um\winbase.h(2835,1): message : 'lstrcpyW' 선언을 참조하십시오.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(167,11): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_Point *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(168,42): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_Point *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(170,11): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_Int *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(171,40): error C2682: 'dynamic_cast'을(를) 사용하여 'std::shared_ptr<DB_Data>'에서 'DB_Int *'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(183,22): error C2440: 'delete': 'std::shared_ptr<DB_Data>'에서 'void*'(으)로 변환할 수 없습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(183,9): message : 이 변환을 수행할 수 있는 사용 가능한 사용자 정의 변환 연산자가 없거나 연산자를 호출할 수 없습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(221,22): warning C4101: 'error_message' :참조되지 않은 지역 변수입니다.
   Dungeon.cpp
   MainFrame.cpp
   Monster.cpp
@@ -22,3 +13,4 @@ C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Playe
 C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(24,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   Scene.cpp
   코드를 생성하고 있습니다...
+  DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe
