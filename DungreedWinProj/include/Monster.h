@@ -4,5 +4,11 @@
 #include "Character.h"
 class Monster : public Character
 {
+private:
+public:
+	Monster(const Dungeon* dungeon);
+
+	void Render();
+
 };
 #endif
