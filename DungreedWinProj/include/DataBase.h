@@ -100,8 +100,8 @@ namespace DB {
 		Catching_Return<int> Acc2ID();
 		Catching_Return<int> Acc2ID(const int id);
 		Catching_Return<int> GetNextID();
-		bool IsID(const std::string& str);
-		inline int GetCurID() { return cur_id; }
+		bool IsID(const std::string& str) const;
+		inline int GetCurID() const { return cur_id; }
 	};
 
 	class DataBase : private Uncopyable
@@ -118,10 +118,10 @@ namespace DB {
 		void InterpretLine();
 
 		Catching_Return<void*> GetFieldInst(std::string field_str);
-		Data_Inst GetDataInst(std::string data_str) const;
-		void Match(void* addr, Data_Inst inst);
+		const Data_Inst GetDataInst(std::string data_str) const;
+		void Match(void* addr, const Data_Inst& inst);
 
-		void CompleteCheck();
+		void CompleteCheck() const;
 
 	public:
 		DataBase(const TCHAR* db_name) : in{ db_name } { id_config.AllocateFstream(in); }

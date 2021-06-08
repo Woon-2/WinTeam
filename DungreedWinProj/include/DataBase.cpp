@@ -58,7 +58,7 @@ DB::Catching_Return<int> DB::IDConfig::GetNextID()
 	return next_id;
 }
 
-bool DB::IDConfig::IsID(const std::string& str)
+bool DB::IDConfig::IsID(const std::string& str) const
 {
 	for (const char& c : str)
 		if (!isdigit(c))
@@ -118,7 +118,7 @@ DB::Catching_Return<void*> DB::DataBase::GetFieldInst(std::string field_str)
 	return false;
 }
 
-DB::Data_Inst DB::DataBase::GetDataInst(std::string data_str) const
+const DB::Data_Inst DB::DataBase::GetDataInst(std::string data_str) const
 {
 	auto catch_point_first = GetPointFromStr(data_str);
 	if (catch_point_first.return_success)
@@ -133,7 +133,7 @@ DB::Data_Inst DB::DataBase::GetDataInst(std::string data_str) const
 	return Data_Inst{ new DB_String{catch_tstr_third} };
 }
 
-void DB::DataBase::Match(void* addr, Data_Inst inst)
+void DB::DataBase::Match(void* addr, const Data_Inst& inst)
 {
 	if (std::dynamic_pointer_cast<DB_String>(inst))
 		lstrcpy(static_cast<TCHAR*>(addr), std::dynamic_pointer_cast<DB_String>(inst)->data);
@@ -145,7 +145,7 @@ void DB::DataBase::Match(void* addr, Data_Inst inst)
 		*static_cast<int*>(addr) = std::dynamic_pointer_cast<DB_Int>(inst)->data;
 }
 
-void DB::DataBase::CompleteCheck()
+void DB::DataBase::CompleteCheck() const
 {
 	for (auto iter : data_kit)
 		assert(!std::get<2>(iter), L"로드되지 않은 데이터 존재");
