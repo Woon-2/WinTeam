@@ -46,36 +46,3 @@ void CheckFileNameValidity(const TCHAR* file_name)
 		throw error_message;
 	}
 }
-
-bool IsStringInt(const std::string& str)
-{
-	if (str.empty())
-		return false;
-	for (int i = 0; i < str.length(); ++i)
-		if (str[i] < '0' || str[i] > '9')
-			return false;
-	return true;
-}
-
-const std::string GetHeadString(const std::string& line)
-{
-	for (int i = 0; i < line.length(); ++i)
-		if (line[i] == ' ')
-			return line.substr(0, i);
-	return line;
-}
-
-const std::string GetRestString(const std::string& line)
-{
-	for (int i = 0; i < line.length(); ++i)
-		if (line[i] == ' ')
-			return line.substr(i+1);
-	throw L"GetRestString Failed";
-}
-
-void str2Tstr(const std::string& str, TCHAR t_str[])
-{
-	for (int i = 0; i < str.length(); ++i)
-		t_str[i] = str[i];
-	t_str[str.length()] = NULL;
-}

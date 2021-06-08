@@ -4,6 +4,7 @@
 #include <windows.h>
 #include "DataBase.h"
 #include "Uncopyable.h"
+#include "FileUtility.h"
 
 extern HDC buf_dc;
 extern RECT client;
@@ -14,14 +15,14 @@ class Dungeon : private Uncopyable
 private:
 	int dungeon_id;
 
-	DataBase* BuildDB();
+	DB::DataBase* BuildDB();
 
 public:
 	Image* dungeon_image;
 	Image* dungeon_terrain_image;
 
-	TCHAR map_path[DEF_STR_LEN];
-	TCHAR map_terrain_path[DEF_STR_LEN];
+	TCHAR map_path[FILE_NAME_LEN];
+	TCHAR map_terrain_path[FILE_NAME_LEN];
 
 	POINT left_start_pos;
 	POINT right_start_pos;

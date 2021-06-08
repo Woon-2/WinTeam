@@ -1,8 +1,10 @@
 ﻿  Camera.cpp
   Character.cpp
   DataBase.cpp
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(79,14): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(220,22): warning C4101: 'error_message' :참조되지 않은 지역 변수입니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(5,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(82,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(90,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(151,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
   Dungeon.cpp
   MainFrame.cpp
   Monster.cpp
