@@ -42,6 +42,9 @@ public:
 	Dungeon(const int dungeon_id);
 	~Dungeon();
 
+	bool CanGoPrev() const;
+	bool CanGoNext() const;
+
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };
 #endif

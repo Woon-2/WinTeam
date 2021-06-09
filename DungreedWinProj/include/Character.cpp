@@ -9,6 +9,7 @@ void Character::ForceGravity(const Dungeon* dungeon)	// 캐릭터 상태(LANDING, DOW
 	// 캐릭터 발 위치가 허공일 경우 DOWN상태로 바꾸기
 	if ((state == State::LANDING || state == State::DOWNJUMP) && MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height })) {
 		state = State::DOWN;
+		MovePos(dungeon, Direction::DOWN, 5);
 	}
 	// 낙하 중 땅 밟게 되면 LANDING 상태로 바꾸기
 	else if (state == State::DOWN && (MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 0), POINT{ pos.x + width / 2, pos.y + height }) || MapPixelCollision(dc_set.buf_dc, RGB(0, 255, 0), POINT{ pos.x + width / 2, pos.y + height }))) {
@@ -47,13 +48,15 @@ void Character::MovePos(const Dungeon* dungeon, Direction direction, const int p
 {
 	switch (direction) {
 	case Direction::LEFT:
-		pos.x -= px;
+		if (pos.x - px > 0 || dungeon->CanGoPrev())
+			pos.x -= px;
 		break;
 	case Direction::UP:
 		pos.y -= px;
 		break;
 	case Direction::RIGHT:
-		pos.x += px;
+		if (pos.x + width + px < dungeon->dungeon_width || dungeon->CanGoNext())
+			pos.x += px;
 		break;
 	case Direction::DOWN:
 		pos.y += px;

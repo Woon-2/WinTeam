@@ -55,6 +55,22 @@ Dungeon::~Dungeon()
 	delete dungeon_terrain_image;
 }
 
+bool Dungeon::CanGoNext() const
+{
+	if (!next_dungeon_id)
+		return false;
+	else
+		return true;
+}
+
+bool Dungeon::CanGoPrev() const
+{
+	if (!prev_dungeon_id)
+		return false;
+	else
+		return true;
+}
+
 void Dungeon::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	dungeon_image->Draw(scene_dc, 0, 0, bit_rect.right, bit_rect.bottom, 0, 0, dungeon_width, dungeon_height);

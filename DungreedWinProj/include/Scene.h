@@ -23,6 +23,8 @@ private:
 	Camera* camera;
 	Crosshair* crosshair;
 
+	void GoNextDungeon();
+	void GoPrevDungeon();
 	void ChangeDungeon(const int dungeon_id);
 	HRESULT Init();
 
@@ -32,9 +34,6 @@ public:
 	~Scene();
 
 	void Render() const;
-	void Update() const;
-
-	void GoNextDungeon();
-	void GoPrevDungeon();
+	void Update();
 };
 #endif

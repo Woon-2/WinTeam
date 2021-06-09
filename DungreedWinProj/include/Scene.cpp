@@ -65,9 +65,14 @@ void Scene::Render() const
 	DrawBuffer(dc_set.buf_dc, camera->Rect());
 }
 
-void Scene::Update() const
+void Scene::Update()
 {
 	// player, monster 업데이트 루틴
+	if (player->IsOut_Right(dungeon))
+		GoNextDungeon();
+	else if (player->IsOut_Left(dungeon))
+		GoPrevDungeon();
+
 	player->Update(dungeon, crosshair);
 	player->ForceGravity(dungeon);
 }
@@ -99,7 +104,7 @@ void Scene::GoPrevDungeon()
 void Scene::ChangeDungeon(const int dungeon_id)
 {
 	if (!dungeon_id)
-		throw L"Loaded Dungeon ID was 0";
+		throw L"ChangeDungeon_dungeon_id was 0";
 	delete(dungeon);
 	dungeon = new Dungeon(dungeon_id);
 }

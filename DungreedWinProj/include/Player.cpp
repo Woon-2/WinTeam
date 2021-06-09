@@ -61,3 +61,19 @@ void Player::KeyProc(const Dungeon* dungeon)
 		}
 	}
 }
+
+bool Player::IsOut_Left(const Dungeon* dungeon) const
+{
+	if (pos.x < 0)
+		return true;
+	else
+		return false;
+}
+
+bool Player::IsOut_Right(const Dungeon* dungeon) const
+{
+	if (pos.x + width > dungeon->dungeon_width)
+		return true;
+	else
+		return false;
+}
