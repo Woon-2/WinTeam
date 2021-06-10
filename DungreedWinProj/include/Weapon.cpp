@@ -1,46 +1,63 @@
-#include "Weapon.h"
+ï»¿#include "Weapon.h"
 
-Weapon::Weapon(const Dungeon* dungeon, const POINT* player, const int* player_width, const int* player_height, const POINT* crosshair)
+Weapon::Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair)
 {
 	image = new Image(L"sword\\RustyGreatSword00-resources.assets-1011.png");
-	width = dungeon->camera_x_half_range / 3;
-	height = dungeon->camera_y_half_range / 2;
-	Update(player, player_width, player_height, crosshair);
+	width = camera->x_half_range / 3;
+	height = camera->y_half_range / 2;
+	Update(player, crosshair);
 }
 
-float Degree(const POINT* point1, const POINT* point2)
+void Weapon::Init(const Camera* camera, const Player* player, const Crosshair* crosshair)
 {
-	float degree = atan2(point2->y - point1->y, point2->x - point1->x);
-	//degree = degree * 180 / (std::atan(1) * 4);	// atan(1) * 4 = PI
-
-	return degree;
+	width = camera->x_half_range / 3;
+	height = camera->y_half_range / 2;
+	Update(player, crosshair);
 }
 
-void Weapon::Update(const POINT* player, const int* player_width, const int* player_height, const POINT* crosshair)	// °¢µµ, ÁÂÇ¥ ¾÷µ¥ÀÌÆ®
+float Degree(const POINT& point1, const POINT& point2)
 {
-	pos = *player;
-	pos.x -= *player_width;
-	POINT player_center = { player->x + (*player_width / 2), player->y + (*player_height / 2) };
-	angle = Degree(&player_center, crosshair);
-	
+	float degree;
+	if (point1.x < point2.x) {
+		degree = atan2(point2.y - point1.y, point2.x - point1.x);
+	}
+	else {
+		degree = -atan2(point1.y - point2.y, point1.x - point2.x);
+	}
+
+	return -degree;
 }
 
-void FlipImage(HDC scene_dc, const RECT& bit_rect, Image* image, int x, int y, int width, int height);
+void Weapon::Update(const Player* player, const Crosshair* crosshair)
+{
+	pos = player->pos;
+	pos.x -= player->width;
+	POINT player_center = { player->pos.x + (player->width / 2), player->pos.y + (player->height / 2) };
 
-void Weapon::Render(HDC scene_dc, const RECT& bit_rect, BOOL looking_direction)
+	if (player_center.x <= crosshair->pos.x) {
+		looking_direction = TRUE;
+	}
+	else {
+		looking_direction = FALSE;
+	}
+
+	angle = Degree(player_center, crosshair->pos);
+}
+
+void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 {
 	int image_width = image->GetWidth();
 	int image_height = image->GetHeight();
-	
-	//TCHAR lpOut[200];
-	//wsprintf(lpOut, TEXT("%d"), static_cast <int> (angle));
-	//TextOut(scene_dc, 300, 100, lpOut, 10);
+
+	HBITMAP hbm_rotate = RotateImage(scene_dc, image, angle);
+	Image* rotate_image = new Image();
+	rotate_image->Attach(hbm_rotate);
+	rotate_image->SetTransparentColor(RGB(0, 0, 0));
 
 	if (looking_direction) {
-		FlipImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height);
+		FlipImage(scene_dc, bit_rect, rotate_image, pos.x, pos.y, width, height);
 	}
 	else {
-		image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
+		rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 	}
-	//RotateImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height, angle, looking_direction);
 }

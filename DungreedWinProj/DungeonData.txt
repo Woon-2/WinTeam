@@ -41,7 +41,7 @@ dungeon_width 716
 dungeon_height 258
 next_dungeon_id 9872417
 prev_dungeon_id 2378173
-camera_x_half_range 176
+camera_x_half_range 180
 camera_y_half_range 99
 
 9872417

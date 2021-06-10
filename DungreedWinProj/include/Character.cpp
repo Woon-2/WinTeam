@@ -1,5 +1,4 @@
 #include "Character.h"
-#include <iostream>
 
 void Character::ForceGravity(const Dungeon* dungeon)	// 캐릭터 상태(LANDING, DOWN, DOWNJUMP, UP)에 따른 움직임
 {
@@ -10,33 +9,37 @@ void Character::ForceGravity(const Dungeon* dungeon)	// 캐릭터 상태(LANDING, DOW
 	// 캐릭터 발 위치가 허공일 경우 DOWN상태로 바꾸기
 	if ((state == State::LANDING || state == State::DOWNJUMP) && MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height })) {
 		state = State::DOWN;
-		if (MapPixelCollision(dc_set.buf_dc, !RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height + 5 })) {	// 내리막길일 경우
-			state = State::LANDING;
-			MovePos(dungeon, Direction::DOWN, 5);
-		}
+		MovePos(dungeon, Direction::DOWN, 5);
 	}
 	// 낙하 중 땅 밟게 되면 LANDING 상태로 바꾸기
 	else if (state == State::DOWN && (MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 0), POINT{ pos.x + width / 2, pos.y + height }) || MapPixelCollision(dc_set.buf_dc, RGB(0, 255, 0), POINT{ pos.x + width / 2, pos.y + height }))) {
 		state = State::LANDING;
+		jump_power = 0;
 	}
 
-	if (state == State::LANDING) {	// 오르막 or DOWN에서 LANDING으로 바뀌었을 시 캐릭터가 땅 바로 위에 서게 하려 만듦 but 부자연스러움 
-		while (!MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height - 1 })) {
+	if (state == State::LANDING) {	// 오르막 or DOWN에서 LANDING으로 바뀌었을 시 캐릭터가 땅 바로 위에 서게 하려 만듦
+		while (MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 0), POINT{ pos.x + width / 2, pos.y + height - 1 })
+			|| MapPixelCollision(dc_set.buf_dc, RGB(0, 255, 0), POINT{ pos.x + width / 2, pos.y + height - 1 })) {
 			MovePos(dungeon, Direction::UP, 1);
 		}
 	}
 
 	if (state == State::UP) {	// JUMP에서 올라가고 있는 상태 jump_power가 0이 되면 상태가 DOWN으로 바뀐다
 		MovePos(dungeon, Direction::UP, jump_power);
-		jump_power -= 2;
+		// jump_power를 나누는 분모를 키우면 중력을 덜 받고 튀어오르는 느낌이 강해진다.
+		// 자연스러운 움직임을 만드려면 두 분모의 곱은 최대한 유지한다. ex) 50.0f : 2000.0f, 250.0f : 4000.0f
+		jump_power -= jump_power / 50.0f + dungeon->camera_y_half_range / 2000.0f;
 		if (jump_power <= 0) {
 			state = State::DOWN;
 		}
 	}
 	else if (state == State::DOWN || state == State::DOWNJUMP) {
 		MovePos(dungeon, Direction::DOWN, jump_power);
-		if (jump_power < 10) {
-			jump_power += 2;
+		if (jump_power < dungeon->camera_y_half_range / 20.0f) {
+			// jump_power를 나누는 분모를 키우면 중력이 약한 느낌이 강해진다.
+			// 자연스러운 움직임을 위해선 후자의 분모를 500~1500 사이로 설정한다. 후자는 떨어지게는 하기 위한 최소한의 수치다.
+			// 이 값들을 중력 관련 변수로 설정하면 맵 마다 다른 중력 구현이 가능해 수중맵도 구현이 가능할 것이다.
+			jump_power += jump_power / 500.0f + dungeon->camera_y_half_range / 1500.0f;
 		}
 	}
 }
@@ -45,48 +48,36 @@ void Character::MovePos(const Dungeon* dungeon, Direction direction, const int p
 {
 	switch (direction) {
 	case Direction::LEFT:
-		if (pos.x - px > 0)
+		if (pos.x - px > 0 || dungeon->CanGoPrev())
 			pos.x -= px;
 		break;
 	case Direction::UP:
-		if (pos.y - px > 0)
-			pos.y -= px;
+		pos.y -= px;
 		break;
 	case Direction::RIGHT:
-		if (pos.x + px < dungeon->dungeon_width)
+		if (pos.x + width + px < dungeon->dungeon_width || dungeon->CanGoNext())
 			pos.x += px;
 		break;
 	case Direction::DOWN:
-		if (pos.y + px < dungeon->dungeon_height)
-			pos.y += px;
+		pos.y += px;
 		break;
 	}
 }
 
-void FlipImage(HDC scene_dc, const RECT& bit_rect, Image* image, int x, int y, int width, int height)
+bool Character::MapPixelCollision(HDC terrain_dc, const COLORREF& val, const POINT& pt)	// 지형 표시 이미지를 사용해 충돌 확인, 오류 있음
 {
-	int image_width = image->GetWidth();
-	int image_height = image->GetHeight();
+	if (pt.x < client.left || pt.y > client.right)
+		return false;
+	if (pt.y < client.top || pt.y > client.bottom)
+		return false;
 
-	HDC dest_dc = CreateCompatibleDC(scene_dc);
-	HBITMAP hbitmap = CreateCompatibleBitmap(scene_dc, image_width, image_height);
-	HBITMAP hbm_old_dest = (HBITMAP)SelectObject(dest_dc, hbitmap);
-
-	HDC source_dc = CreateCompatibleDC(scene_dc);
-	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
-	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
-
-	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
-	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
-	TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
-
-	SelectObject(source_dc, hbm_old_source);
-	DeleteObject(source_dc);
-	SelectObject(dest_dc, hbm_old_dest);
-	DeleteObject(dest_dc);
+	if (GetPixel(terrain_dc, pt.x, pt.y) == val)
+		return true;
+	else
+		return false;
 }
 
-void Character::Render(HDC scene_dc, const RECT& bit_rect, BOOL looking_direction)
+void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	Image image(L"player - dungreed\\CharIdle0-resources.assets-2445.png");
 	int image_width = image.GetWidth();
@@ -99,22 +90,10 @@ void Character::Render(HDC scene_dc, const RECT& bit_rect, BOOL looking_directio
 	}
 }
 
-void Character::Update()
+void Character::Look(const POINT& target)
 {
-
-}
-
-bool Character::MapPixelCollision(HDC terrain_dc, COLORREF val, POINT pt)	// 지형 표시 이미지를 사용해 충돌 확인, 오류 있음
-{
-	if (pt.x < client.left || pt.y > client.right)
-		return true;
-	if (pt.y < client.top || pt.y > client.bottom)
-		return true;
-
-	COLORREF pixel_color = GetPixel(terrain_dc, pt.x, pt.y);
-	if (pixel_color == val)
-		return true;
+	if (pos.x < target.x)
+		looking_direction = TRUE;
 	else
-		return false;
+		looking_direction = FALSE;
 }
-

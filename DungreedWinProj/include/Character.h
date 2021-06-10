@@ -24,20 +24,23 @@ protected:
 	int height;
 	POINT pos;
 
-	int jump_power;
+	double jump_power;
 
 	State state;
 
 	int motion_num;
 	Image* image;
 
-	bool MapPixelCollision(HDC terrain_dc, COLORREF val, POINT pt);
+	BOOL looking_direction;	// TRUE면 오른쪽 보는 상태, FALSE면 왼쪽 보고 있는 상태
+
+	bool MapPixelCollision(HDC terrain_dc, const COLORREF& val, const POINT& pt);
 	void MovePos(const Dungeon* dungeon, Direction direction, const int px);
 public:
-	void Update();
+	virtual void Update(const Dungeon* dungeon) {}
 
 	void ForceGravity(const Dungeon* dungeon);
 
-	void Render(HDC scene_dc, const RECT& bit_rect, BOOL looking_direction );
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
+	void Look(const POINT& target);
 };
 #endif

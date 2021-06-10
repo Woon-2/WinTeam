@@ -5,6 +5,8 @@
 #include <math.h>
 #include "Crosshair.h"
 #include "FileUtility.h"
+#include "Player.h"
+#include "Crosshair.h"
 
 class Weapon
 {
@@ -14,9 +16,13 @@ private:
 	int width;
 	int height;
 	float angle;
-public:
-	Weapon(const Dungeon* dungeon, const POINT* player, const int* player_width, const int* player_height, const POINT* crosshair);
-	void Update(const POINT* player, const int* player_width, const int* player_height, const POINT* crosshair);
-	void Render(HDC scene_dc, const RECT& bit_rect, BOOL looking_direction);
+	BOOL looking_direction;
+public:  
+	Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair);
+	void Init(const Camera* camera, const Player* player, const Crosshair* crosshair);
+	void Update(const Player* player, const Crosshair* crosshair);
+	void Render(HDC scene_dc, const RECT& bit_rect);
 };
+
+float Degree(const POINT& point1, const POINT& point2);
 #endif

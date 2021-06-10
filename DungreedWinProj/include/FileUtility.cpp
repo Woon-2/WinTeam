@@ -1,5 +1,10 @@
 #include "FileUtility.h"
 
+Image::Image()
+{
+	this->CImage::CImage();
+}
+
 void Image::Load(const TCHAR* file_name)
 {
 	CheckFileNameValidity(file_name);
@@ -31,6 +36,12 @@ Image::~Image()
 	this->CImage::~CImage();
 }
 
+
+
+
+
+
+
 void CheckFileNameValidity(const TCHAR* file_name)
 {
 	std::ifstream in{ file_name };
@@ -41,62 +52,66 @@ void CheckFileNameValidity(const TCHAR* file_name)
 	}
 }
 
-bool IsID(const std::string& id_string)
+void FlipImage(HDC scene_dc, const RECT& bit_rect, Image* image, int x, int y, int width, int height)
 {
-	int id_num;
-	int id_num_divided_by_digit;
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
-	if (!IsStringInt(id_string))
-		return false;
+	HDC dest_dc = CreateCompatibleDC(scene_dc);
+	HBITMAP hbitmap = CreateCompatibleBitmap(scene_dc, image_width, image_height);
+	HBITMAP hbm_old_dest = (HBITMAP)SelectObject(dest_dc, hbitmap);
 
-	id_num = std::stoi(id_string);
-	id_num_divided_by_digit = id_num / pow(10, ID_DIGIT - 1);
+	HDC source_dc = CreateCompatibleDC(scene_dc);
+	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
+	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
 
-	if (id_num_divided_by_digit >= 1 && id_num_divided_by_digit <= 9)
-		return true;
-	else
-		return false;
+	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
+	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
+	TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
+
+	SelectObject(source_dc, hbm_old_source);
+	DeleteObject(source_dc);
+	SelectObject(dest_dc, hbm_old_dest);
+	DeleteObject(dest_dc);
 }
 
-bool IsStringInt(const std::string& str)
+HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
 {
-	if (str.empty())
-		return false;
-	for (int i = 0; i < str.length(); ++i)
-		if (str[i] < '0' || str[i] > '9')
-			return false;
-	return true;
-}
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
-bool IsLineFieldWithData(const std::string& line)
-{
-	if (GetHeadString(line) == line)
-		return false;
-	else
-		return true;
-}
+	HDC source_dc = CreateCompatibleDC(scene_dc);
+	HBITMAP hbm_source = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 
-const std::string GetHeadString(const std::string& line)
-{
-	for (int i = 0; i < line.length(); ++i)
-		if (line[i] == ' ')
-			return line.substr(0, i);
-	return line;
-}
+	HDC dest_dc = CreateCompatibleDC(scene_dc);
+	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 
-const std::string GetRestString(const std::string& line)
-{
-	for (int i = 0; i < line.length(); ++i)
-		if (line[i] == ' ')
-			return line.substr(i+1);
-	throw L"GetRestString Failed";
-}
+	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_source);
+	HBITMAP hbm_old_dest = (HBITMAP)SelectObject(dest_dc, hbm_result);
 
-TCHAR* str2Tstr(std::string str)
-{
-	TCHAR t_str[DEF_STR_LEN];
-	for (int i = 0; i < str.length(); ++i)
-		t_str[i] = str[i];
-	t_str[str.length()] = NULL;
-	return t_str;
+	image->Draw(source_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
+
+	float cosine = (float)cos(angle);
+	float sine = (float)sin(angle);
+
+	SetGraphicsMode(dest_dc, GM_ADVANCED);
+
+	XFORM xform; // 방정식을 표현하는 3행3열의 행렬 선언
+	xform.eM11 = cosine; // 1행 1열 성분 설정 (회전성분)
+	xform.eM12 = sine; // 1행 2열 성분 설정 (회전성분)
+	xform.eM21 = -sine; // 2행 1열 성분 설정 (회전성분)
+	xform.eM22 = cosine; // 2행 2열 성분 설정 (회전성분)
+	xform.eDx = (FLOAT)image_width / 2.0f; // 3행 1열 성분 설정 (X축 이동 성분)
+	xform.eDy = (FLOAT)image_height / 2.0f; // 3행 2열 성분 설정 (Y축 이동 성분)
+
+	SetWorldTransform(dest_dc, &xform);
+
+	BitBlt(dest_dc, -(image_width / 2), -(image_height / 2), image_width, image_height, source_dc, 0, 0, SRCCOPY);
+
+	SelectObject(source_dc, hbm_old_source);
+	SelectObject(dest_dc, hbm_old_dest);
+	DeleteObject(source_dc);
+	DeleteObject(dest_dc);
+	
+	return hbm_result;
 }

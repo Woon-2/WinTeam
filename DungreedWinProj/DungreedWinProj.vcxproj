@@ -144,6 +144,7 @@
     <ClCompile Include="include\Camera.cpp" />
     <ClCompile Include="include\Character.cpp" />
     <ClCompile Include="include\Crosshair.cpp" />
+    <ClCompile Include="include\DataBase.cpp" />
     <ClCompile Include="include\Dungeon.cpp" />
     <ClCompile Include="include\FileUtility.cpp" />
     <ClCompile Include="include\MainFrame.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Character.h" />
     <ClInclude Include="include\Crosshair.h" />
+    <ClInclude Include="include\DataBase.h" />
     <ClInclude Include="include\Dungeon.h" />
     <ClInclude Include="include\FileUtility.h" />
     <ClInclude Include="include\Monster.h" />

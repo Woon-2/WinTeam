@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Dungeon.h"
 
+class Player;
+
 class Camera
 {
 private:
@@ -17,8 +19,9 @@ public:
 
 	void Init(const Dungeon* dungeon, const Player* player);
 	void Update(const Dungeon* dungeon, const Player* player);
-	inline RECT Rect() { return RECT{ pos.x - x_half_range, pos.y - y_half_range, pos.x + x_half_range, pos.y + y_half_range }; }
+	inline RECT Rect() const { return RECT{ static_cast<int>(pos.x - x_half_range), static_cast<int>(pos.y - y_half_range), static_cast<int>(pos.x + x_half_range), static_cast<int>(pos.y + y_half_range) }; }
 
-	friend class Scene;
+	friend class Crosshair;
+	friend class Weapon;
 };
 #endif
