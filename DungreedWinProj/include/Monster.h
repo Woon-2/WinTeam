@@ -8,6 +8,7 @@ private:
 public:
 	Monster(const Dungeon* dungeon);
 
+	void Update(const Dungeon* dungeon);
 	void Render();
 
 };

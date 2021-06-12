@@ -2,22 +2,27 @@
 #ifndef _dungeon
 #define _dungeon
 #include <windows.h>
+#include "DataBase.h"
+#include "Uncopyable.h"
 #include "FileUtility.h"
 
-class Dungeon
+extern HDC buf_dc;
+extern RECT client;
+extern HWND h_wnd;
+
+class Dungeon : private Uncopyable
 {
 private:
 	int dungeon_id;
-	bool is_loaded;
 
-	void LoadData(std::ifstream& in);
-	void InterpretLine(const std::string& line);
-	void InputDataAtField(const std::string& data, const std::string& field);
-	void FetchFitArg(const std::string& data, int int_arg[], TCHAR str_arg[]);
+	std::shared_ptr<DB::DataBase> BuildDB();
 
 public:
-	Image dungeon_image;
-	Image dungeon_terrain_image;
+	Image* dungeon_image;
+	Image* dungeon_terrain_image;
+
+	TCHAR map_path[FILE_NAME_LEN];
+	TCHAR map_terrain_path[FILE_NAME_LEN];
 
 	POINT left_start_pos;
 	POINT right_start_pos;
@@ -33,8 +38,13 @@ public:
 	int camera_x_half_range;
 	int camera_y_half_range;
 
-	Dungeon() = default;
+	Dungeon();
 	Dungeon(const int dungeon_id);
 	~Dungeon();
+
+	bool CanGoPrev() const;
+	bool CanGoNext() const;
+
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };
 #endif

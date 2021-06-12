@@ -92,6 +92,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,7 +115,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -139,23 +141,34 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\Animation.cpp" />
     <ClCompile Include="include\Camera.cpp" />
     <ClCompile Include="include\Character.cpp" />
+    <ClCompile Include="include\Crosshair.cpp" />
+    <ClCompile Include="include\DataBase.cpp" />
     <ClCompile Include="include\Dungeon.cpp" />
     <ClCompile Include="include\FileUtility.cpp" />
     <ClCompile Include="include\MainFrame.cpp" />
     <ClCompile Include="include\Monster.cpp" />
     <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="include\Scene.cpp" />
+    <ClCompile Include="include\InstantDCSet.cpp" />
+    <ClCompile Include="include\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Character.h" />
+    <ClInclude Include="include\Crosshair.h" />
+    <ClInclude Include="include\DataBase.h" />
     <ClInclude Include="include\Dungeon.h" />
     <ClInclude Include="include\FileUtility.h" />
     <ClInclude Include="include\Monster.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\Uncopyable.h" />
+    <ClInclude Include="include\InstantDCSet.h" />
+    <ClInclude Include="include\Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

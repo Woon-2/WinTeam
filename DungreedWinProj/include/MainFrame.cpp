@@ -1,14 +1,17 @@
 #include <windows.h>
 #include <tchar.h>
 #include "FileUtility.h"
+#include "Scene.h"
+#include "Character.h"
 
 RECT client;
 HWND h_wnd;
 PAINTSTRUCT ps;
 HDC h_dc;
-HDC h_dc_buf;
-HBITMAP h_bit_buf;
-HBITMAP old_bit_buf;
+HDC buf_dc;
+HBITMAP buf_bit;
+HBITMAP old_bit;
+Scene* scene;
 
 HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";
@@ -19,7 +22,7 @@ void PrepareToDoubleBuffering();
 void DoubleBuffering();
 void CleanUpAfterDoubleBuffering();
 void TransmitHDCBufferToRealHDC();
-void TestRender();
+void DrawBuffer(HDC instant_dc, const RECT& rect);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -60,16 +63,20 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 	{
 	case WM_CREATE:
 		GetClientRect(h_wnd, &client);
-
+		scene = new Scene;
+		SetTimer(h_wnd, 1, 15, 0);
 		return 0;
-
 	case WM_PAINT:
 		PrepareToDoubleBuffering();
 		DoubleBuffering();
 		CleanUpAfterDoubleBuffering();
 		return 0;
-
+	case WM_TIMER:
+		scene->Update();
+		InvalidateRect(h_wnd, NULL, FALSE);
+		return 0;
 	case WM_DESTROY:
+		delete scene;
 		PostQuitMessage(0);
 		return 0;
 	}
@@ -79,42 +86,32 @@ LRESULT CALLBACK WndProc(HWND h_wnd, UINT u_msg, WPARAM w_param, LPARAM l_param)
 void PrepareToDoubleBuffering()
 {
 	h_dc = BeginPaint(h_wnd, &ps);
-	h_dc_buf = CreateCompatibleDC(h_dc);
-	h_bit_buf = CreateCompatibleBitmap(h_dc, client.right, client.bottom);
-	old_bit_buf = (HBITMAP)SelectObject(h_dc_buf, h_bit_buf);
+	buf_dc = CreateCompatibleDC(h_dc);
+	buf_bit = CreateCompatibleBitmap(h_dc, client.right, client.bottom);
+	old_bit = (HBITMAP)SelectObject(buf_dc, buf_bit);
 }
 
 void DoubleBuffering()
 {
-	//Scene.render();
-	TestRender();
+	scene->Render();
+
 	TransmitHDCBufferToRealHDC();
 }
 
 void CleanUpAfterDoubleBuffering()
 {
-	SelectObject(h_dc_buf, old_bit_buf);
-	DeleteObject(h_bit_buf);
-	DeleteDC(h_dc_buf);
+	SelectObject(buf_dc, old_bit);
+	DeleteObject(buf_bit);
+	DeleteDC(buf_dc);
 	EndPaint(h_wnd, &ps);
 }
 
 void TransmitHDCBufferToRealHDC()
 {
-	BitBlt(h_dc, 0, 0, client.right, client.bottom, h_dc_buf, 0, 0, SRCCOPY);
+	BitBlt(h_dc, 0, 0, client.right, client.bottom, buf_dc, 0, 0, SRCCOPY);
 }
 
-void TestRender()
+void DrawBuffer(HDC instant_dc, const RECT& rect)
 {
-	try {
-		Image test;
-		test.Load(L"TestImage.png");
-		int test_image_width = test.GetWidth();
-		int test_image_height = test.GetHeight();
-		test.Draw(h_dc_buf, 0, 0, client.right, client.bottom, 0, 0, test_image_width, test_image_height);
-		test.Destroy();
-	}
-	catch (const TCHAR* error_message) {
-		MessageBox(h_wnd, error_message, L"Error", MB_OK);
-	}
+	StretchBlt(buf_dc, 0, 0, client.right, client.bottom, instant_dc, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SRCCOPY);
 }
