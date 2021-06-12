@@ -10,7 +10,7 @@ next_dungeon_portal_pos 990 70
 dungeon_width 1022
 dungeon_height 320
 next_dungeon_id 2378173
-prev_dungeon_id 9872417
+prev_dungeon_id 0
 camera_x_half_range 240
 camera_y_half_range 135
 
@@ -54,7 +54,7 @@ prev_dungeon_portal_pos 20 245
 next_dungeon_portal_pos 515 245
 dungeon_width 564
 dungeon_height 296
-next_dungeon_id 2147017
+next_dungeon_id 0
 prev_dungeon_id 5438013
 camera_x_half_range 232
 camera_y_half_range 148

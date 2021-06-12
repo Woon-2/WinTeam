@@ -17,10 +17,15 @@ void Weapon::Init(const Camera* camera, const Player* player, const Crosshair* c
 
 float Degree(const POINT& point1, const POINT& point2)
 {
-	float degree = atan2(point2.y - point1.y, point2.x - point1.x);
-	//degree = degree * 180 / (std::atan(1) * 4);	// atan(1) * 4 = PI
+	float degree;
+	if (point1.x < point2.x) {
+		degree = atan2(point2.y - point1.y, point2.x - point1.x);
+	}
+	else {
+		degree = -atan2(point1.y - point2.y, point1.x - point2.x);
+	}
 
-	return degree;
+	return -degree;
 }
 
 void Weapon::Update(const Player* player, const Crosshair* crosshair)
@@ -28,6 +33,14 @@ void Weapon::Update(const Player* player, const Crosshair* crosshair)
 	pos = player->pos;
 	pos.x -= player->width;
 	POINT player_center = { player->pos.x + (player->width / 2), player->pos.y + (player->height / 2) };
+
+	if (player_center.x <= crosshair->pos.x) {
+		looking_direction = TRUE;
+	}
+	else {
+		looking_direction = FALSE;
+	}
+
 	angle = Degree(player_center, crosshair->pos);
 }
 
@@ -36,15 +49,15 @@ void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 	int image_width = image->GetWidth();
 	int image_height = image->GetHeight();
 
-	//TCHAR lpOut[200];
-	//wsprintf(lpOut, TEXT("%d"), static_cast <int> (angle));
-	//TextOut(scene_dc, 300, 100, lpOut, 10);
+	HBITMAP hbm_rotate = RotateImage(scene_dc, image, angle);
+	Image* rotate_image = new Image();
+	rotate_image->Attach(hbm_rotate);
+	rotate_image->SetTransparentColor(RGB(0, 0, 0));
 
 	if (looking_direction) {
-		FlipImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height);
+		FlipImage(scene_dc, bit_rect, rotate_image, pos.x, pos.y, width, height);
 	}
 	else {
-		image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
+		rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 	}
-	//RotateImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height, angle, looking_direction);
 }

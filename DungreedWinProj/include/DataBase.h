@@ -9,9 +9,8 @@
 #include <tchar.h>
 #include <windows.h>
 #include "Uncopyable.h"
+#include "FileUtility.h"
 #include <cassert>
-
-void Str2Tstr(const std::string& str, TCHAR t_str[]);
 
 namespace DB {
 	constexpr int DEF_STR_LEN = 200;
@@ -86,17 +85,17 @@ namespace DB {
 	{
 	private:
 		const int ID_DIGIT = 7;
-		std::ifstream* in = nullptr;
+		std::ifstream* in;
 		std::string line;
-		int cur_id;
+		int cur_id = 0;
 
-		IDConfig(const IDConfig&) {}
-		IDConfig& operator=(const IDConfig&) {}
+		IDConfig(const IDConfig& other) {}
+		IDConfig& operator=(const IDConfig& other) {}
 
 	public:
 		IDConfig() = default;
-		void AllocateFstream(std::ifstream& in) { this->in = &in; }
 
+		inline void AllocateFstream(std::ifstream* in) { this->in = in; }
 		Catching_Return<int> Acc2ID();
 		Catching_Return<int> Acc2ID(const int id);
 		Catching_Return<int> GetNextID();
@@ -124,7 +123,7 @@ namespace DB {
 		void CompleteCheck() const;
 
 	public:
-		DataBase(const TCHAR* db_name) : in{ db_name } { id_config.AllocateFstream(in); }
+		DataBase(const TCHAR* db_name) : in{ db_name } { id_config.AllocateFstream(&in); }
 
 		void RegisterField(const std::string& field_name, void* const field_addr);
 

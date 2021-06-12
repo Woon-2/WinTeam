@@ -17,7 +17,7 @@ private:
 	int height;
 	float angle;
 	BOOL looking_direction;
-public:
+public:  
 	Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair);
 	void Init(const Camera* camera, const Player* player, const Crosshair* crosshair);
 	void Update(const Player* player, const Crosshair* crosshair);

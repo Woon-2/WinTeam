@@ -1,10 +1,8 @@
-﻿  Character.cpp
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(28,35): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(37,37): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Player.cpp
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(5,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(6,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(23,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(24,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
+﻿  Player.cpp
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.h(28,33): warning C4244: '인수': 'float'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.h(26,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.h(25,42): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(16,43): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(19,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(20,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\윈팀플\WinTeam\DungreedWinProj\Debug\DungreedWinProj.exe

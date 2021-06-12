@@ -1,12 +1,5 @@
 #include "DataBase.h"
 
-void Str2Tstr(const std::string& str, TCHAR t_str[])
-{
-	for (int i = 0; i < str.length(); ++i)
-		t_str[i] = str[i];
-	t_str[str.length()] = NULL;
-}
-
 DB::Catching_Return<POINT> DB::GetPointFromStr(const std::string& str)
 {
 	int idx = str.find(" ");
@@ -95,6 +88,7 @@ void DB::DataBase::LoadIndividual()
 	while (std::getline(in, line) && !id_config.IsID(line))
 		InterpretLine();
 	CompleteCheck();
+	in.seekg(-static_cast<int>(line.length() + 2), std::ios::cur);
 }
 
 void DB::DataBase::InterpretLine()

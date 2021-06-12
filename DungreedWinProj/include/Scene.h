@@ -8,6 +8,10 @@
 #include "Uncopyable.h"
 #include "Weapon.h"
 #include "Crosshair.h"
+#include <map>
+#include <vector>
+#include "FileUtility.h"
+#include "Animation.h"
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -22,6 +26,7 @@ private:
 	// Monster mosnters[];
 	Camera* camera;
 	Crosshair* crosshair;
+	AnimationManager* animation_manager;
 
 	void GoNextDungeon();
 	void GoPrevDungeon();
