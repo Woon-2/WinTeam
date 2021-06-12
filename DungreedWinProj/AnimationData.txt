@@ -1,0 +1,55 @@
+8000001
+
+animation_name player_stand
+animation_frame_per_cnt 4
+animation_end_cnt 5
+animation_will_loop 1
+
+8000002
+
+animation_name player_move
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000003
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
+
+8000004
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
+
+8000005
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
+
+8000006
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
+
+8000007
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
+
+8000008
+
+animation_name
+animation_frame_per_cnt
+animation_end_cnt
+animation_will_loop
