@@ -23,6 +23,4 @@ public:
 	void Update(const Player* player, const Crosshair* crosshair);
 	void Render(HDC scene_dc, const RECT& bit_rect);
 };
-
-float Degree(const POINT& point1, const POINT& point2);
 #endif

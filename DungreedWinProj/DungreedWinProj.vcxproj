@@ -115,7 +115,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
@@ -141,11 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\Animation.cpp" />
     <ClCompile Include="include\Camera.cpp" />
     <ClCompile Include="include\Character.cpp" />
     <ClCompile Include="include\Crosshair.cpp" />
     <ClCompile Include="include\DataBase.cpp" />
     <ClCompile Include="include\Dungeon.cpp" />
+    <ClCompile Include="include\Effect.cpp" />
     <ClCompile Include="include\FileUtility.cpp" />
     <ClCompile Include="include\MainFrame.cpp" />
     <ClCompile Include="include\Monster.cpp" />
@@ -155,11 +157,13 @@
     <ClCompile Include="include\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Character.h" />
     <ClInclude Include="include\Crosshair.h" />
     <ClInclude Include="include\DataBase.h" />
     <ClInclude Include="include\Dungeon.h" />
+    <ClInclude Include="include\Effect.h" />
     <ClInclude Include="include\FileUtility.h" />
     <ClInclude Include="include\Monster.h" />
     <ClInclude Include="include\Player.h" />

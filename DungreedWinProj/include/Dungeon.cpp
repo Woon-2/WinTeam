@@ -3,35 +3,31 @@
 
 Dungeon::Dungeon()
 {
-	DB::DataBase* db = BuildDB();
+	auto db = BuildDB();
 
 	db->Load();
 
 	dungeon_image = new Image(map_path);
 	dungeon_terrain_image = new Image(map_terrain_path);
-
-	delete db;
 }
 
 Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 {
-	DB::DataBase* db = BuildDB();
+	auto db = BuildDB();
 
 	db->Load(dungeon_id);
 
 	dungeon_image = new Image(map_path);
 	dungeon_terrain_image = new Image(map_terrain_path);
-
-	delete db;
 }
 
 
 // -------------------------------------------------------------------
 // DB와 던전의 멤버 변수를 수정하게 된다면 반드시 이 함수도 수정해야 함!!
 // -------------------------------------------------------------------
-DB::DataBase* Dungeon::BuildDB()
+std::shared_ptr<DB::DataBase> Dungeon::BuildDB()
 {
-	DB::DataBase* db = new DB::DataBase(L"DungeonData.txt");
+	auto db = std::shared_ptr<DB::DataBase>(new DB::DataBase(L"DungeonData.txt"));
 
 	db->RegisterField("map_path", &map_path);
 	db->RegisterField("map_terrain_path", &map_terrain_path);

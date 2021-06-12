@@ -3,13 +3,19 @@
 Scene::Scene()
 {
 	try {
+		animation_manager = new AnimationManager;
+		animation_manager->Insert("player_stand");
+		animation_manager->Insert("player_move");
+
 		dungeon = new Dungeon;
-		player = new Player(dungeon);
-		player->PlaceWithDungeonLeft(dungeon);
+		player = new Player(dungeon, animation_manager);
 		// monsters = new Monster[];
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
+
+
+		player->PlaceWithDungeonLeft(dungeon);
 	}
 	catch (const TCHAR* error_message) {
 		MessageBox(h_wnd, error_message, L"Error", MB_OK);
@@ -19,8 +25,12 @@ Scene::Scene()
 Scene::Scene(const int dungeon_id)
 {
 	try {
+		animation_manager = new AnimationManager;
+		animation_manager->Insert("player_stand");
+		animation_manager->Insert("player_move");
+
 		dungeon = new Dungeon(dungeon_id);
-		player = new Player(dungeon);
+		player = new Player(dungeon, animation_manager);
 		player->PlaceWithDungeonLeft(dungeon);
 		// monsters = new Monster[];
 		camera = new Camera(dungeon, player);
@@ -36,12 +46,17 @@ Scene::~Scene()
 {
 	delete player;
 	delete dungeon;
+	delete camera;
+	delete crosshair;
+	delete weapon;
+	delete animation_manager;
+
 	// delete monsters[];
 }
 
 HRESULT Scene::Init()
 {
-	player->Init(dungeon);
+	player->Init(dungeon, animation_manager);
 	//monstersInit
 	camera->Init(dungeon, player);
 	crosshair->Init(camera);
@@ -53,9 +68,6 @@ HRESULT Scene::Init()
 void Scene::Render() const
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
-	camera->Update(dungeon, player);
-	crosshair->Update(camera);
-	weapon->Update(player, crosshair);
 
 	dungeon->Render(dc_set.buf_dc, dc_set.bit_rect);
 	player->Render(dc_set.buf_dc, dc_set.bit_rect);
@@ -73,8 +85,11 @@ void Scene::Update()
 	else if (player->IsOut_Left(dungeon))
 		GoPrevDungeon();
 
-	player->Update(dungeon, crosshair);
-	player->ForceGravity(dungeon);
+	animation_manager->Update();
+	player->Update(dungeon, crosshair, animation_manager);
+	camera->Update(dungeon, player);
+	crosshair->Update(camera);
+	weapon->Update(player, crosshair);
 }
 
 void Scene::GoNextDungeon()

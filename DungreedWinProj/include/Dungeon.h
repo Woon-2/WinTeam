@@ -15,7 +15,7 @@ class Dungeon : private Uncopyable
 private:
 	int dungeon_id;
 
-	DB::DataBase* BuildDB();
+	std::shared_ptr<DB::DataBase> BuildDB();
 
 public:
 	Image* dungeon_image;
