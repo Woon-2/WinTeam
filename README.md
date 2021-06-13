@@ -11,7 +11,7 @@ Scene의 Update 수가 일정 숫자로 나누어 떨어질 때 몬스터 출현
 // --- 이 부분 아직 안 넣었지만 곧 추가할 것
 //bool Character::IsDied()는 hp가 0이면 true를 반환하는데 이를 통해 죽음 체크 가능
 //MonsterManager 안에는 living_monster_cnt가 있는데 MonsterManager은 죽은 몬스터가 발생할 때마다 living_monster_cnt를 줄여줌
-// ----------------------------------------
+// ----------------------------------------\n
 bool MonsterManager::AreMonstersAllDied() 는 living_monster_cnt가 0이어야 true를 반환
 생성된 모든 몬스터가 죽어야 다음 던전이나 이전 던전으로 넘어갈 수 있음
 
