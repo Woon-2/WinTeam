@@ -25,11 +25,8 @@ void Crosshair::Update(const Camera* camera)
 
 void Crosshair::Render(HDC scene_dc, const RECT& bit_rect)
 {
-	Image* image = new Image;
-	image->Load(L"ShootingCursor1-resources.assets-2645.png");
-	int image_width = image->GetWidth();
-	int image_height = image->GetHeight();
-	image->Draw(scene_dc, pos.x - half_size, pos.y - half_size, half_size * 2, half_size * 2, 0, 0, image_width, image_height);
-	image->~Image();
-	delete image;
+	Image image(L"ShootingCursor1-resources.assets-2645.png");
+	int image_width = image.GetWidth();
+	int image_height = image.GetHeight();
+	image.Draw(scene_dc, pos.x - half_size, pos.y - half_size, half_size * 2, half_size * 2, 0, 0, image_width, image_height);
 }

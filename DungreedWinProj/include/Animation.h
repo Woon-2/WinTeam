@@ -42,6 +42,7 @@ public:
 	void Play(const std::string& animation_name);
 	void Stop(const std::string& animation_name);
 	void Update();
+	BOOL IsEnd(const std::string& animation_name);
 	const Image& GetImage(const std::string& animation_name) const;
 };
 

@@ -68,8 +68,18 @@ void AnimationManager::Stop(const std::string& animation_name)
 	animation.cnt = 1;
 }
 
+BOOL AnimationManager::IsEnd(const std::string& animation_name)
+{
+	Animation animation = animations.find(animation_name)->second;
+	if (animation.cnt == animation.end_cnt) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 const Image& AnimationManager::GetImage(const std::string& animation_name) const
 {
 	return images.Find(animation_name, animations.find(animation_name)->second.cnt - 1);
 }
+

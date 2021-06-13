@@ -12,6 +12,7 @@
 #include <vector>
 #include "FileUtility.h"
 #include "Animation.h"
+#include "Effect.h"
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -27,6 +28,7 @@ private:
 	Camera* camera;
 	Crosshair* crosshair;
 	AnimationManager* animation_manager;
+	EffectManager* effect_manager;
 
 	void GoNextDungeon();
 	void GoPrevDungeon();

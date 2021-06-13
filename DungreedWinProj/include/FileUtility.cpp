@@ -2,6 +2,7 @@
 
 Image::Image()
 {
+	this->CImage::CImage();
 }
 
 void Image::Load(const TCHAR* file_name)
@@ -105,10 +106,10 @@ void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image* const image, int
 
 	SelectObject(source_dc, hbm_old_source);
 	DeleteDC(source_dc);
-	DeleteObject(hbm_result);
+	DeleteObject(hbitmap);
 	SelectObject(dest_dc, hbm_old_dest);
 	DeleteDC(dest_dc);
-	DeleteObject(hbitmap);
+	DeleteObject(hbm_result);
 }
 
 HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
@@ -145,9 +146,9 @@ HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
 	BitBlt(dest_dc, -(image_width / 2), -(image_height / 2), image_width, image_height, source_dc, 0, 0, SRCCOPY);
 
 	SelectObject(source_dc, hbm_old_source);
+	SelectObject(dest_dc, hbm_old_dest);
 	DeleteDC(source_dc);
 	DeleteObject(hbm_source);
-	SelectObject(dest_dc, hbm_old_dest);
 	DeleteDC(dest_dc);
 	//DeleteObject(hbm_result);
 	

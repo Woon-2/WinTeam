@@ -36,10 +36,9 @@ void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 	int image_width = image->GetWidth();
 	int image_height = image->GetHeight();
 
-	HBITMAP rotate_hbm = RotateImage(scene_dc, image, angle);
-
-	Image* rotate_image = new Image;
-	rotate_image->Attach(rotate_hbm);
+	HBITMAP hbm_rotate = RotateImage(scene_dc, image, angle);
+	Image* rotate_image = new Image();
+	rotate_image->Attach(hbm_rotate);
 	rotate_image->SetTransparentColor(RGB(0, 0, 0));
 
 	if (looking_direction) {
@@ -48,7 +47,4 @@ void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 	else {
 		rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 	}
-
-	rotate_image->~Image();
-	delete rotate_image;
 }

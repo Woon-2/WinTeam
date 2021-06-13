@@ -7,13 +7,14 @@ Scene::Scene()
 		animation_manager->Insert("player_stand");
 		animation_manager->Insert("player_move");
 
+		effect_manager = new EffectManager;
+
 		dungeon = new Dungeon;
 		player = new Player(dungeon, animation_manager);
 		// monsters = new Monster[];
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
-
 
 		player->PlaceWithDungeonLeft(dungeon);
 	}
@@ -28,6 +29,7 @@ Scene::Scene(const int dungeon_id)
 		animation_manager = new AnimationManager;
 		animation_manager->Insert("player_stand");
 		animation_manager->Insert("player_move");
+		effect_manager = new EffectManager;
 
 		dungeon = new Dungeon(dungeon_id);
 		player = new Player(dungeon, animation_manager);
@@ -50,6 +52,7 @@ Scene::~Scene()
 	delete crosshair;
 	delete weapon;
 	delete animation_manager;
+	delete effect_manager;
 
 	// delete monsters[];
 }
@@ -73,6 +76,7 @@ void Scene::Render() const
 	player->Render(dc_set.buf_dc, dc_set.bit_rect);
 	crosshair->Render(dc_set.buf_dc, dc_set.bit_rect);
 	weapon->Render(dc_set.buf_dc, dc_set.bit_rect);
+	effect_manager->Render(dc_set.buf_dc, dc_set.bit_rect);
 
 	DrawBuffer(dc_set.buf_dc, camera->Rect());
 }
@@ -90,6 +94,7 @@ void Scene::Update()
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);
+	effect_manager->Update(animation_manager);
 }
 
 void Scene::GoNextDungeon()
@@ -98,6 +103,9 @@ void Scene::GoNextDungeon()
 		ChangeDungeon(dungeon->next_dungeon_id);
 		Init();
 		player->PlaceWithDungeonLeft(dungeon);
+		// Å×½ºÆ®
+		//effect_manager->Insert(animation_manager, dungeon->left_start_pos, 100, 100, "player_move", L"animation/player_move1.png");
+		//effect_manager->Insert(animation_manager, dungeon->left_start_pos, 100, 100, "portal_create", L"animation/portal_create1.png");
 	}
 	catch (const TCHAR* error_message) {
 		MessageBox(h_wnd, error_message, L"Error", MB_OK);

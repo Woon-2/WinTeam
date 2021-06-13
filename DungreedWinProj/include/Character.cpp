@@ -172,9 +172,9 @@ void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 
 void Character::Look(const POINT& target)
 {
-	if (pos.x < target.x) 
+	if (pos.x < target.x)
 		looking_direction = TRUE;
-	else 
+	else
 		looking_direction = FALSE;
 }
 
