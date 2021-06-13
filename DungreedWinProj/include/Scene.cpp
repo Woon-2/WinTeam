@@ -89,7 +89,7 @@ void Scene::Update()
 	else if (player->IsOut_Left(dungeon))
 		GoPrevDungeon();
 
-	animation_manager->Update();
+	//animation_manager->Update();
 	player->Update(dungeon, crosshair, animation_manager);
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);

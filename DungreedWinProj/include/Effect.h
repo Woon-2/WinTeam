@@ -10,13 +10,15 @@ class Effect
 {
 protected:
 	Image image;
-	std::string old_animation_name;
-	std::string cur_animation_name;
+	//std::string old_animation_name;
+	std::string animation_name;
 
 	int width;
 	int height;
 	POINT pos;
 public:
+	Animation effect_animaiton;
+
 	Effect(AnimationManager* animation_manager, POINT given_pos, int given_width, int given_height, const std::string& start_animation_name, const TCHAR* start_image_path);
 
 	void Render(HDC scene_dc, const RECT& bit_rect) const;

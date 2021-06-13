@@ -23,6 +23,8 @@ protected:
 	};
 
 	Image image;
+	Animation animation;
+
 	std::string old_animation_name;
 	std::string cur_animation_name;
 
@@ -54,10 +56,11 @@ protected:
 public:
 	Character() = default;
 	Character(const int width, const int height, const POINT pos, const State state, const BOOL looking_direction,
-		const int x_move_px, const double jump_start_power, const std::string& start_animation_name, const TCHAR* start_image_path)
+		const int x_move_px, const double jump_start_power, const std::string& start_animation_name, const TCHAR* start_image_path, AnimationManager* animation_manager)
 		: width{ width }, height{ height }, pos{ pos }, state{ state }, looking_direction{ looking_direction },
 		x_move_px{ x_move_px }, jump_start_power{ jump_start_power }
 	{
+		animation.LoadAnimation(animation_manager, start_animation_name);
 		old_animation_name = cur_animation_name = start_animation_name;
 		image = Image(start_image_path);
 	}

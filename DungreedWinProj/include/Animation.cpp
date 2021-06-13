@@ -1,5 +1,12 @@
 #include "Animation.h"
 
+Animation::Animation()
+{
+}
+Animation::~Animation()
+{
+}
+
 void Animation::Update()
 {
 	// 프레임 오버플로우가 일어나도 괜찮은가?
@@ -15,6 +22,43 @@ void Animation::Update()
 			}
 	}
 }
+
+void Animation::Play()
+{
+	is_playing = TRUE;
+}
+
+void Animation::Stop()
+{
+	is_playing = FALSE;
+	cnt = 1;
+}
+
+const Image& Animation::GetImage(AnimationManager* animation_manager) const
+{
+	return animation_manager->images.Find(name, cnt - 1);
+}
+
+void Animation::LoadAnimation(AnimationManager* animation_manager, const std::string& animation_name)
+{
+	Animation animation = animation_manager->animations.find(animation_name)->second;
+	name = animation_name;
+	frame_per_cnt = animation.frame_per_cnt;
+	frame = 0;
+	cnt = 1;
+	end_cnt = animation.end_cnt;
+	will_loop = animation.will_loop;
+	is_playing = FALSE;
+}
+
+BOOL Animation::IsEnd()
+{
+	if (cnt == end_cnt) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 void AnimationManager::Insert(const std::string& animation_name)
 {
@@ -50,6 +94,7 @@ void AnimationManager::Delete(const std::string& animation_name)
 	images.Delete(animation_name);
 }
 
+/*
 void AnimationManager::Update()
 {
 	for (auto& animation : animations)
@@ -68,18 +113,10 @@ void AnimationManager::Stop(const std::string& animation_name)
 	animation.cnt = 1;
 }
 
-BOOL AnimationManager::IsEnd(const std::string& animation_name)
-{
-	Animation animation = animations.find(animation_name)->second;
-	if (animation.cnt == animation.end_cnt) {
-		return TRUE;
-	}
-	return FALSE;
-}
-
-
 const Image& AnimationManager::GetImage(const std::string& animation_name) const
 {
 	return images.Find(animation_name, animations.find(animation_name)->second.cnt - 1);
 }
+*/
+
 

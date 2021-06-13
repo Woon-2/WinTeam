@@ -6,10 +6,11 @@ Effect::Effect(AnimationManager* animation_manager, POINT given_pos, int given_w
 	width = given_width;
 	height = given_height;
 
-	old_animation_name = cur_animation_name = start_animation_name;
+	//old_animation_name = cur_animation_name = start_animation_name;
+	animation_name = start_animation_name;
 	image = Image(start_image_path);
-
 	//animation_manager->Insert(start_animation_name);
+	effect_animaiton.LoadAnimation(animation_manager, start_animation_name);
 }
 
 void Effect::Render(HDC scene_dc, const RECT& bit_rect) const
@@ -19,15 +20,9 @@ void Effect::Render(HDC scene_dc, const RECT& bit_rect) const
 
 void Effect::UpdateAnimation(AnimationManager* animation_manager)
 {
-	if (old_animation_name != cur_animation_name) {
-		animation_manager->Stop(old_animation_name);
-		animation_manager->Play(cur_animation_name);
-		animation_manager->Update();
-
-		old_animation_name = cur_animation_name;
-	}
-
-	image = animation_manager->GetImage(cur_animation_name);
+	effect_animaiton.Play();
+	effect_animaiton.Update();
+	image = effect_animaiton.GetImage(animation_manager);
 }
 
 
@@ -49,7 +44,8 @@ void EffectManager::Delete(AnimationManager* animation_manager, const std::strin
 {
 	for (int i = 0; i < effects.size(); i++)
 	{
-		if (effects[i]->cur_animation_name == animation_name) {
+		if (effects[i]->animation_name == animation_name) {
+			delete effects[i];
 			effects.erase(effects.begin() + i);
 			break;
 		}
@@ -70,8 +66,8 @@ void EffectManager::Update(AnimationManager* animation_manager)
 	{
 		effects[i]->UpdateAnimation(animation_manager);
 		
-		if (animation_manager->IsEnd(effects[i]->cur_animation_name)) {
-			Delete(animation_manager, effects[i]->cur_animation_name);
+		if (effects[i]->effect_animaiton.IsEnd()) {
+			Delete(animation_manager, effects[i]->animation_name);
 		}
 	}
 }

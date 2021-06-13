@@ -31,9 +31,11 @@ public:
 			dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE,
 			dungeon->left_start_pos, State::DOWN, TRUE,
 			dungeon->camera_x_half_range / 60.0f, dungeon->camera_y_half_range / 32.0f, "player_stand",
-			L"animation/player_stand1.png")
+			L"animation/player_stand1.png", animation_manager)
 	{
-		animation_manager->Play("player_stand");
+		animation.LoadAnimation(animation_manager, "player_stand");
+		animation.Play();
+		//animation_manager->Play("player_stand");
 	}
 
 	void PlaceWithDungeonLeft(const Dungeon* dungeon);

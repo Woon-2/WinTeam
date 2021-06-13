@@ -21,6 +21,8 @@ void Player::Init(const Dungeon* dungeon, AnimationManager* animation_manager)
 	width = dungeon->camera_x_half_range / PLAYER_WIDTH_PER_CAMERA_X_HALF_RANGE;
 	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
 	cur_animation_name = "player_stand";
+	animation.LoadAnimation(animation_manager, "player_stand");
+	animation.Play();
 }
 
 void Player::Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager)
@@ -44,7 +46,7 @@ void Player::KeyProc(const Dungeon* dungeon)
 
 	if (state == State::MOVING && !GetAsyncKeyState('A') && !GetAsyncKeyState('D') && !GetAsyncKeyState('S') && !GetAsyncKeyState(VK_SPACE)) {
 		Stand();
-		cur_animation_name = "player_stand";
+		animation.Stop();
 		return;
 	}
 
@@ -120,8 +122,12 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 
 void Player::MatchStateAndAnimation(AnimationManager* animation_manager)
 {
-	if (state == State::MOVING)
+	if (state == State::MOVING && cur_animation_name == "player_stand") {
+		animation.LoadAnimation(animation_manager, "player_move");
 		cur_animation_name = "player_move";
-	else if (state == State::STANDING || state == State::DOWN)
+	}
+	else if ((state == State::STANDING || state == State::DOWN) && cur_animation_name == "player_move") {
+		animation.LoadAnimation(animation_manager, "player_stand");
 		cur_animation_name = "player_stand";
+	}
 }
