@@ -9,7 +9,7 @@ MonsterManager에 던전을 주면 그 던전에 필요한 몬스터들을 모�
 Scene의 Update 수가 일정 숫자로 나누어 떨어질 때 몬스터 출현 -> "생성"된 몬스터들 중 일부를 "출현"시킴  
 
 // --- 이 부분 아직 안 넣었지만 곧 추가할 것  
-//bool Character::IsDied()는 hp가 0이면 true를 반환하는데 이를 통해 죽음 체크 가능 
+//bool Character::IsDied()는 hp가 0이면 true를 반환하는데 이를 통해 죽음 체크 가능   
 //MonsterManager 안에는 living_monster_cnt가 있는데 MonsterManager은 죽은 몬스터가 발생할 때마다 living_monster_cnt를 줄여줌  
 // ----------------------------------------
 
