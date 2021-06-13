@@ -61,6 +61,8 @@ HRESULT Scene::Init()
 	crosshair->Init(camera);
 	weapon->Init(camera, player, crosshair);
 
+	update_cnt = 0;
+
 	return S_OK;
 }
 
@@ -70,6 +72,7 @@ void Scene::Render() const
 
 	dungeon->Render(dc_set.buf_dc, dc_set.bit_rect);
 	player->Render(dc_set.buf_dc, dc_set.bit_rect);
+	monster_manager->Render(dc_set.buf_dc, dc_set.bit_rect);
 	crosshair->Render(dc_set.buf_dc, dc_set.bit_rect);
 	weapon->Render(dc_set.buf_dc, dc_set.bit_rect);
 
@@ -79,18 +82,31 @@ void Scene::Render() const
 void Scene::Update()
 {
 	// player, monster 업데이트 루틴
-	if (player->IsOut_Right(dungeon))
-		GoNextDungeon();
-	else if (player->IsOut_Left(dungeon))
-		GoPrevDungeon();
-
 	animation_manager->Update();
 	player->Update(dungeon, crosshair, animation_manager);
+	monster_manager->Update(dungeon);
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);
-
 	/*HitUpdate();*/
+	DungeonChangeProc();
+}
+
+void Scene::DungeonChangeProc()
+{
+	if (player->IsOut_Right(dungeon))
+		if (monster_manager->AreMonsterAllDied())
+			GoNextDungeon();
+		else
+			player->NoOut(dungeon);
+	else if (player->IsOut_Left(dungeon))
+		if (monster_manager->AreMonsterAllDied())
+			GoPrevDungeon();
+		else
+			player->NoOut(dungeon);
+
+	if (update_cnt++ % 1000 == 0)
+		monster_manager->Appear(5);
 }
 
 //void Scene::HitUpdate()

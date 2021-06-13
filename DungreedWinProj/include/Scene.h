@@ -20,7 +20,6 @@ extern void DrawBuffer(HDC instant_dc, const RECT& rect);
 class Scene : private Uncopyable
 {
 private:
-
 	Dungeon* dungeon;
 	Player* player;
 	Weapon* weapon;
@@ -29,6 +28,8 @@ private:
 	AnimationManager* animation_manager;
 	MonsterManager* monster_manager;
 
+	int update_cnt = 0;
+
 	void GoNextDungeon();
 	void GoPrevDungeon();
 	void ChangeDungeon(const int dungeon_id);
@@ -36,6 +37,7 @@ private:
 
 	HitScanner HitScan;
 	//void HitUpdate();
+	void DungeonChangeProc();
 
 public:
 	Scene();

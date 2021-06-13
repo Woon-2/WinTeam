@@ -129,6 +129,16 @@ bool Character::IsOut_Right(const Dungeon* dungeon) const
 		return false;
 }
 
+void Character::NoOut(const Dungeon* dungeon)
+{
+	if (IsOut_Right(dungeon))
+		while (pos.x + width > dungeon->dungeon_width)
+			pos.x -= 2;
+	else if (IsOut_Left(dungeon))
+		while (pos.x < 0)
+			pos.x += 2;
+}
+
 void Character::MovePos(Direction direction, const int px)
 {
 	switch (direction) {

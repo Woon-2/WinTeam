@@ -23,8 +23,8 @@ animation_id3 0
 4000002
 
 monster_name AbyssGuardian
-width 300
-height 200
+width 400
+height 500
 x_move_px 15
 jump_start_power 6
 hp 150

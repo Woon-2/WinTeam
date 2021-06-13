@@ -52,6 +52,8 @@ protected:
 	void DownJump();
 	void Jump();
 
+	void MovePos(Direction direction, const int px);
+
 	bool CanGoToPos(const HDC terrain_dc, const POINT pos);
 	bool CanGoLeft(const HDC terrain_dc);
 	bool CanGoRight(const HDC terrain_dc);
@@ -59,7 +61,6 @@ protected:
 	bool CanJump(const State state);
 
 	bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt);
-	void MovePos(Direction direction, const int px);
 public:
 	Character() = default;
 	Character(const int id, const int width, const int height, const POINT pos, const State state, const BOOL looking_direction,
@@ -84,6 +85,8 @@ public:
 
 	bool IsOut_Left(const Dungeon* dungeon) const;
 	bool IsOut_Right(const Dungeon* dungeon) const;
+
+	void NoOut(const Dungeon* dungeon);
 
 	inline bool IsAttacking() const { return is_attacking; }
 	inline bool IsDied() const { return (hp <= 0) ? true : false; }

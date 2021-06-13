@@ -2,8 +2,23 @@
 
 void Monster::Update(const Dungeon* dungeon)
 {
-	//AutoAction 루틴
-	ForceGravity(dungeon);
+	if (is_appeared) {
+		//AutoAction 루틴
+		//Die 루틴
+		ForceGravity(dungeon);
+	}
+}
+
+void Monster::ForceGravity(const Dungeon* dungeon)
+{
+	if (!is_floating)
+		this->Character::ForceGravity(dungeon);
+}
+
+void Monster::Render(HDC scene_dc, const RECT& bit_rect) const
+{
+	if (is_appeared)
+		this->Character::Render(scene_dc, bit_rect);
 }
 
 MonsterManager::MonsterManager(const Dungeon* dungeon)
@@ -25,6 +40,18 @@ void MonsterManager::Init(const Dungeon* dungeon)
 			break;
 }
 
+void MonsterManager::Update(const Dungeon* dungeon)
+{
+	for (Monster* monster : monsters)
+		monster->Update(dungeon);
+}
+
+void MonsterManager::Render(HDC scene_dc, const RECT& bit_rect) const
+{
+	for (Monster* monster : monsters)
+		monster->Render(scene_dc, bit_rect);
+}
+
 MonsterManager::~MonsterManager()
 {
 	for (auto* monster : monsters)
@@ -39,14 +66,17 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 
 	monster_db->Load(monster_id);
 
+	// 이 수치들은 카메라에 대한 천분율
+	width *= dungeon->camera_x_half_range / 1000.0f;
+	height *= dungeon->camera_y_half_range / 1000.0f;
+	x_move_px *= dungeon->camera_x_half_range / 1000.0f;
+	jump_start_power *= dungeon->camera_y_half_range / 1000.0f;
+	//
+
+	// 시작 위치는 지형 상 핑크색 위치중 랜덤
 	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 	std::uniform_int_distribution<> uid_x{ 0, dungeon->dungeon_width };
 	std::uniform_int_distribution<> uid_y{ 0, dungeon->dungeon_height };
-
-	do {
-		pos.x = uid_x(dre);
-		pos.y = uid_y(dre);
-	} while (!MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), pos));
 
 	LoadNeededAnimations();
 	
@@ -59,12 +89,18 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	Tstr2Str(move_animation_name_tstr, move_animation_name);
 
 	while (num--) {
+		do {
+			pos.x = uid_x(dre);
+			pos.y = uid_y(dre);
+		} while (!MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), pos));
+
 		Monster* monster = new Monster(monster_id, width, height, pos, x_move_px, jump_start_power,
 			hp, atk, def, is_floating, melee_attack, missile_attack,
 			stand_animation_name, attack_animation_name, move_animation_name, start_image_path); // = new Monster(...)
 		monsters.push_back(monster);
 	}
 
+	living_monster_cnt += num;
 	BufferEmpty();
 }
 
@@ -142,4 +178,16 @@ bool MonsterManager::MapPixelCollision(const HDC terrain_dc, const COLORREF& val
 		return true;
 	else
 		return false;
+}
+
+void MonsterManager::Appear(int num)
+{
+	// 일정 시간 이후 문제가 생긴다면 어쩌면 여기 문제
+	std::random_shuffle(monsters.begin(), monsters.end());
+	for (Monster* monster : monsters)
+		if (!monster->is_appeared) {
+			monster->is_appeared = true;
+			if (--num == 0)
+				break;
+		}
 }

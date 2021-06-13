@@ -10,6 +10,7 @@
 #include "InstantDCSet.h"
 #include "Dungeon.h"
 #include <random>
+#include <algorithm>
 
 extern std::default_random_engine dre;
 constexpr int MONSTER_MAX_ANIMATION_NUM = 4;
@@ -25,6 +26,9 @@ private:
 	const std::string attack_animation_name;
 	const std::string move_animation_name;
 
+	bool is_appeared = false;
+
+	void ForceGravity(const Dungeon* dungeon);
 public:
 	Monster(const int monster_id, const int width, const int height, const POINT pos,
 		const int x_move_px, const int jump_start_power,
@@ -37,6 +41,7 @@ public:
 		stand_animation_name{ stand_animation_name }, attack_animation_name{ attack_animation_name }, move_animation_name{ move_animation_name } {}
 
 	void Update(const Dungeon* dungeon);
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
 
 	friend class MonsterManager;
 };
@@ -56,6 +61,7 @@ private:
 	BOOL is_floating;
 	BOOL melee_attack;
 	BOOL missile_attack;
+	int living_monster_cnt = 0;
 
 	int animation_ids[MONSTER_MAX_ANIMATION_NUM];
 	std::string stand_animation_name = "";
@@ -78,5 +84,9 @@ public:
 	~MonsterManager();
 
 	void Init(const Dungeon* dungeon);
+	void Render(HDC scene_dc, const RECT& bit_rect) const;
+	void Update(const Dungeon* dungeon);
+	void Appear(int num);
+	inline bool AreMonsterAllDied() const { return (living_monster_cnt == 0) ? true : false; }
 };
 #endif
