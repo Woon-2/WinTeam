@@ -14,31 +14,31 @@ animation_will_loop 1
 
 8000003
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssBansheeAttack
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 0
 
 8000004
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssBansheeStand
+animation_frame_per_cnt 4
+animation_end_cnt 6
+animation_will_loop 1
 
 8000005
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssGuardianAttack
+animation_frame_per_cnt 8
+animation_end_cnt 8
+animation_will_loop 0
 
 8000006
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssGuardianStand
+animation_frame_per_cnt 8
+animation_end_cnt 4
+animation_will_loop 1
 
 8000007
 

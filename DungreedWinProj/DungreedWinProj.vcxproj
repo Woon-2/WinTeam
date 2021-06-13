@@ -148,6 +148,7 @@
     <ClCompile Include="include\DataBase.cpp" />
     <ClCompile Include="include\Dungeon.cpp" />
     <ClCompile Include="include\FileUtility.cpp" />
+    <ClCompile Include="include\HitScan.cpp" />
     <ClCompile Include="include\MainFrame.cpp" />
     <ClCompile Include="include\Monster.cpp" />
     <ClCompile Include="include\Player.cpp" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\DataBase.h" />
     <ClInclude Include="include\Dungeon.h" />
     <ClInclude Include="include\FileUtility.h" />
+    <ClInclude Include="include\HitScan.h" />
     <ClInclude Include="include\Monster.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Scene.h" />

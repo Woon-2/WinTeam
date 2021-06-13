@@ -9,11 +9,10 @@ Scene::Scene()
 
 		dungeon = new Dungeon;
 		player = new Player(dungeon, animation_manager);
-		// monsters = new Monster[];
+		monster_manager = new MonsterManager(dungeon);
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
-
 
 		player->PlaceWithDungeonLeft(dungeon);
 	}
@@ -31,11 +30,12 @@ Scene::Scene(const int dungeon_id)
 
 		dungeon = new Dungeon(dungeon_id);
 		player = new Player(dungeon, animation_manager);
-		player->PlaceWithDungeonLeft(dungeon);
-		// monsters = new Monster[];
+		monster_manager = new MonsterManager(dungeon);
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
+
+		player->PlaceWithDungeonLeft(dungeon);
 	}
 	catch (const TCHAR* error_message) {
 		MessageBox(h_wnd, error_message, L"Error", MB_OK);
@@ -50,14 +50,13 @@ Scene::~Scene()
 	delete crosshair;
 	delete weapon;
 	delete animation_manager;
-
-	// delete monsters[];
+	delete monster_manager;
 }
 
 HRESULT Scene::Init()
 {
 	player->Init(dungeon, animation_manager);
-	//monstersInit
+	monster_manager->Init(dungeon);
 	camera->Init(dungeon, player);
 	crosshair->Init(camera);
 	weapon->Init(camera, player, crosshair);
@@ -90,7 +89,17 @@ void Scene::Update()
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);
+
+	/*HitUpdate();*/
 }
+
+//void Scene::HitUpdate()
+//{
+//	for (Monster* monster : monsters) {
+//		HitScan(dynamic_cast<Character*>(player), dynamic_cast<Character*>(monster), weapon->AtkRect());
+//		HitScan(dynamic_cast<Character*>(monster), dynamic_cast<Character*>(player), monster->AtkRect());
+//	}
+//}
 
 void Scene::GoNextDungeon()
 {

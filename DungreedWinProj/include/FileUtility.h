@@ -11,6 +11,7 @@
 #include "Uncopyable.h"
 #include "InstantDCSet.h"
 #include <vector>
+#include <sstream>
 
 constexpr int FILE_NAME_LEN = 200;
 constexpr int IMAGE_DIGIT_IDX_MAX = 3;

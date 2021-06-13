@@ -3,6 +3,7 @@
 #include "FileUtility.h"
 #include "Scene.h"
 #include "Character.h"
+#include <random>
 
 RECT client;
 HWND h_wnd;
@@ -12,6 +13,7 @@ HDC buf_dc;
 HBITMAP buf_bit;
 HBITMAP old_bit;
 Scene* scene;
+std::default_random_engine dre;
 
 HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";

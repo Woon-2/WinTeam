@@ -183,7 +183,6 @@ void Character::UpdateAnimation(AnimationManager* animation_manager)
 	if (old_animation_name != cur_animation_name) {
 		animation_manager->Stop(old_animation_name);
 		animation_manager->Play(cur_animation_name);
-		animation_manager->Update();
 
 		old_animation_name = cur_animation_name;
 	}

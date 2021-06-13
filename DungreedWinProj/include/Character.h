@@ -22,6 +22,8 @@ protected:
 		LEFT, UP, RIGHT, DOWN
 	};
 
+	int id;
+
 	Image image;
 	std::string old_animation_name;
 	std::string cur_animation_name;
@@ -33,9 +35,16 @@ protected:
 	double jump_power = 0;
 	BOOL looking_direction;	// TRUE면 오른쪽 보는 상태, FALSE면 왼쪽 보고 있는 상태
 
+	bool is_attacking = false;
+
 	int x_move_px;
 	double jump_start_power;
+	
+	int hp;
+	int atk;
+	int def;
 
+	const Character* character_who_hit_this = nullptr;
 
 	void Stand();
 	void RunLeft();
@@ -53,10 +62,12 @@ protected:
 	void MovePos(Direction direction, const int px);
 public:
 	Character() = default;
-	Character(const int width, const int height, const POINT pos, const State state, const BOOL looking_direction,
-		const int x_move_px, const double jump_start_power, const std::string& start_animation_name, const TCHAR* start_image_path)
+	Character(const int id, const int width, const int height, const POINT pos, const State state, const BOOL looking_direction,
+		const int x_move_px, const double jump_start_power, const std::string& start_animation_name, const TCHAR* start_image_path,
+		const int hp, const int atk, const int def)
 		: width{ width }, height{ height }, pos{ pos }, state{ state }, looking_direction{ looking_direction },
-		x_move_px{ x_move_px }, jump_start_power{ jump_start_power }
+		x_move_px{ x_move_px }, jump_start_power{ jump_start_power },
+		hp {hp}, atk {atk}, def{def}
 	{
 		old_animation_name = cur_animation_name = start_animation_name;
 		image = Image(start_image_path);
@@ -73,5 +84,10 @@ public:
 
 	bool IsOut_Left(const Dungeon* dungeon) const;
 	bool IsOut_Right(const Dungeon* dungeon) const;
+
+	inline bool IsAttacking() const { return is_attacking; }
+	inline bool IsDied() const { return (hp <= 0) ? true : false; }
+
+	friend class HitScanner;
 };
 #endif

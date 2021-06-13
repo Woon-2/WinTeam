@@ -1,0 +1,165 @@
+# 몬스터 width, height, x_move_px, jump_start_power는 카메라 반경에 대한 천분율
+# width가 400이면 카메라 x축 반경의 40% 크기라는 뜻
+# 부유하는(is_floating) 몬스터들은 jump_start_power를 y_move_px로 이용함
+
+4000001
+
+monster_name AbyssBanshee
+width 80
+height 160
+x_move_px 10
+jump_start_power 8
+hp 100
+atk 20
+def 20
+is_floating 1
+melee_attack 0
+missile_attack 1
+animation_id0 8000004
+animation_id1 8000003
+animation_id2 0
+animation_id3 0
+
+4000002
+
+monster_name AbyssGuardian
+width 300
+height 200
+x_move_px 15
+jump_start_power 6
+hp 150
+atk 60
+def 60
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000006
+animation_id1 8000005
+animation_id2 0
+animation_id3 0
+
+4000003
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000004
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000005
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000006
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000007
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000008
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+
+4000009
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3

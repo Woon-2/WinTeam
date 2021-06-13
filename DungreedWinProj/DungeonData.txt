@@ -13,6 +13,18 @@ next_dungeon_id 2378173
 prev_dungeon_id 0
 camera_x_half_range 240
 camera_y_half_range 135
+monster_id0 4000001
+monster_id1 4000002
+monster_id2 0
+monster_id3 0
+monster_id4 0
+monster_id5 0
+monster_num0 10
+monster_num1 10
+monster_num2 0
+monster_num3 0
+monster_num4 0
+monster_num5 0
 
 2378173
 
@@ -28,6 +40,18 @@ next_dungeon_id 5438013
 prev_dungeon_id 2147017
 camera_x_half_range 280
 camera_y_half_range 165
+monster_id0 0
+monster_id1 0
+monster_id2 0
+monster_id3 0
+monster_id4 0
+monster_id5 0
+monster_num0 0
+monster_num1 0
+monster_num2 0
+monster_num3 0
+monster_num4 0
+monster_num5 0
 
 5438013
 
@@ -43,6 +67,18 @@ next_dungeon_id 9872417
 prev_dungeon_id 2378173
 camera_x_half_range 180
 camera_y_half_range 99
+monster_id0 0
+monster_id1 0
+monster_id2 0
+monster_id3 0
+monster_id4 0
+monster_id5 0
+monster_num0 0
+monster_num1 0
+monster_num2 0
+monster_num3 0
+monster_num4 0
+monster_num5 0
 
 9872417
 
@@ -58,3 +94,15 @@ next_dungeon_id 0
 prev_dungeon_id 5438013
 camera_x_half_range 232
 camera_y_half_range 148
+monster_id0 0
+monster_id1 0
+monster_id2 0
+monster_id3 0
+monster_id4 0
+monster_id5 0
+monster_num0 0
+monster_num1 0
+monster_num2 0
+monster_num3 0
+monster_num4 0
+monster_num5 0

@@ -12,6 +12,7 @@
 #include <vector>
 #include "FileUtility.h"
 #include "Animation.h"
+#include "HitScan.h"
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -23,15 +24,18 @@ private:
 	Dungeon* dungeon;
 	Player* player;
 	Weapon* weapon;
-	// Monster mosnters[];
 	Camera* camera;
 	Crosshair* crosshair;
 	AnimationManager* animation_manager;
+	MonsterManager* monster_manager;
 
 	void GoNextDungeon();
 	void GoPrevDungeon();
 	void ChangeDungeon(const int dungeon_id);
 	HRESULT Init();
+
+	HitScanner HitScan;
+	//void HitUpdate();
 
 public:
 	Scene();

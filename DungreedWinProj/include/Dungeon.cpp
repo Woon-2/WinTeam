@@ -42,6 +42,17 @@ std::shared_ptr<DB::DataBase> Dungeon::BuildDB()
 	db->RegisterField("camera_x_half_range", &camera_x_half_range);
 	db->RegisterField("camera_y_half_range", &camera_y_half_range);
 
+	for (int i = 0; i < MAX_MONSTER_KIND_IN_DUNGEON; ++i) {
+		std::string id_field_str = "monster_id";
+		std::string num_field_str = "monster_num";
+		std::stringstream idx;
+		idx << i;
+		id_field_str += idx.str();
+		num_field_str += idx.str();
+		db->RegisterField(id_field_str, &monster_ids[i]);
+		db->RegisterField(num_field_str, &monster_nums[i]);
+	}
+
 	return db;
 }
 
