@@ -13,12 +13,18 @@ void Animation::Update()
 	if (is_playing) {
 		if (++frame % frame_per_cnt == 0)
 			if (will_loop) {
-				if (++cnt > end_cnt)
+				if (++cnt > end_cnt) {
 					cnt = 1;
+					frame = 0;
+				}
 			}
 			else {
-				if (cnt < end_cnt)
+				if (cnt < end_cnt) {
 					++cnt;
+				}
+				else {
+					frame = 0;
+				}
 			}
 	}
 }

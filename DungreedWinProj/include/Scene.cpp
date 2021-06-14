@@ -8,6 +8,11 @@ Scene::Scene()
 		animation_manager->Insert("player_move");
 
 		effect_manager = new EffectManager;
+		sound_manager = new SoundManager;
+		sound_manager->Init();
+		sound_manager->PlayBgm("sound\\bgm1.mp3");
+		sound_manager->InsertEffectSound("sound\\dash.mp3");
+		sound_manager->InsertEffectSound("sound\\jump.mp3");
 
 		dungeon = new Dungeon;
 		player = new Player(dungeon, animation_manager);
@@ -53,6 +58,7 @@ Scene::~Scene()
 	delete weapon;
 	delete animation_manager;
 	delete effect_manager;
+	delete sound_manager;
 
 	// delete monsters[];
 }
@@ -90,7 +96,7 @@ void Scene::Update()
 		GoPrevDungeon();
 
 	//animation_manager->Update();
-	player->Update(dungeon, crosshair, animation_manager);
+	player->Update(dungeon, crosshair, animation_manager, sound_manager);
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);

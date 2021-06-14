@@ -41,10 +41,14 @@ void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 	rotate_image->Attach(hbm_rotate);
 	rotate_image->SetTransparentColor(RGB(0, 0, 0));
 
+	
 	if (looking_direction) {
-		FlipImage(scene_dc, bit_rect, rotate_image, pos.x, pos.y, width, height);
+		DrawFlip(scene_dc, bit_rect, rotate_image, pos, width, height);
 	}
 	else {
 		rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 	}
+	DeleteObject(hbm_rotate);
+	//rotate_image->~Image();
+	//delete rotate_image;
 }

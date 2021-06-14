@@ -5,6 +5,7 @@
 #include "Uncopyable.h"
 #include "InstantDCSet.h"
 #include "Crosshair.h"
+#include "Sound.h"
 
 extern HDC buf_dc;
 extern RECT client;
@@ -20,10 +21,10 @@ private:
 	double dash_power = 0;	// dash_power > 0 이면 dash중인 상태, dash_power < 0 이면 다음 dash 가능 시간까지 대기중, dash_power == 0이면 dash 가능 상태
 	double dash_radian = 0;
 
-	void KeyProc(const Dungeon* dungeon);
-	void DashProc(float radian, const Dungeon* dungeon, const int px);
+	void KeyProc(const Dungeon* dungeon, SoundManager* sound_manager);
+	void DashProc(float radian, const Dungeon* dungeon, const int px, SoundManager* sound_manger);
 
-	void MatchStateAndAnimation(AnimationManager* animation_manager);
+	void MatchStateAndAnimation(AnimationManager* animation_manager, SoundManager* sound_manager);
 
 public:
 	Player(const Dungeon* dungeon, AnimationManager* animation_manager) :
@@ -43,7 +44,7 @@ public:
 
 	void Init(const Dungeon* dungeon, AnimationManager* animation_manager);
 
-	void Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager);
+	void Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager, SoundManager* sound_manager);
 
 	friend class Camera;
 	friend class Weapon;

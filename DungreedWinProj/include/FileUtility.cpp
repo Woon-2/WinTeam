@@ -85,9 +85,7 @@ const Image& ImageContainer::Find(const std::string& image_representative_name, 
 	return images.find(image_representative_name)->second.at(idx);
 }
 
-
-
-void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image* const image, int x, int y, int width, int height)
+HBITMAP FlipImage(HDC scene_dc, const Image* const image)
 {
 	int image_width = image->GetWidth();
 	int image_height = image->GetHeight();
@@ -99,17 +97,35 @@ void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image* const image, int
 	HDC source_dc = CreateCompatibleDC(scene_dc);
 	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
-
+	/*
+	HBRUSH hbr_back = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH hbr_old = (HBRUSH)SelectObject(dest_dc, hbr_back);
+	PatBlt(dest_dc, 0, 0, image_width, image_height, PATCOPY);
+	DeleteObject(SelectObject(dest_dc, hbr_old));
+	*/
 	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
 	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
-	TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
+	//TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
 
 	SelectObject(source_dc, hbm_old_source);
 	DeleteDC(source_dc);
 	DeleteObject(hbitmap);
 	SelectObject(dest_dc, hbm_old_dest);
 	DeleteDC(dest_dc);
-	DeleteObject(hbm_result);
+	//DeleteObject(hbm_result);
+	return hbm_result;
+}
+
+void DrawFlip(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos, int width, int height)
+{
+	HBITMAP hbm_flip = FlipImage(scene_dc, image);
+	Image* rotate_image = new Image();
+	rotate_image->Attach(hbm_flip);
+	rotate_image->SetTransparentColor(RGB(0, 0, 0));
+
+	rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, rotate_image->GetWidth(), rotate_image->GetHeight());
+
+	DeleteObject(hbm_flip);
 }
 
 HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
@@ -155,7 +171,44 @@ HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
 	return hbm_result;
 }
 
+void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos, int width, int height, BOOL flip)
+{
+	int R, G, B;
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
+	BYTE* byteptr = (BYTE*)image->GetBits();
+	int pitch = image->GetPitch();
+
+	for (int i = 0; i < image_width; i++) {
+		for (int j = 0; j < image_height; j++) {
+			R = *(byteptr + pitch * j + 4 * i);
+			G = *(byteptr + pitch * j + 4 * i + 1);
+			B = *(byteptr + pitch * j + 4 * i + 2);
+
+			if (R != 0 || G != 0 || B != 0) {
+				R = 255;
+				G = 0;
+				B = 0;
+			}
+			*(byteptr + pitch * j + 4 * i) = B;
+			*(byteptr + pitch * j + 4 * i + 1) = G;
+			*(byteptr + pitch * j + 4 * i + 2) = R;
+		}
+	}
+
+	if (!flip) {
+		image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);	// 0xcc 값 조정해 투명도 조절 가능 0xff면 불투명
+	}
+	else {
+		HBITMAP hbm_flip_red = FlipImage(scene_dc, image);
+		Image* red_flip_image = new Image();
+		red_flip_image->Attach(hbm_flip_red);
+		red_flip_image->SetTransparentColor(RGB(0, 0, 0));
+		red_flip_image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);
+		DeleteObject(hbm_flip_red);
+	}
+}
 
 
 void CheckFileNameValidity(const TCHAR* file_name)
@@ -200,3 +253,4 @@ float Degree(const POINT& point1, const POINT& point2)
 	}
 	return -degree;
 }
+

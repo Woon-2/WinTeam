@@ -166,10 +166,18 @@ void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	if (looking_direction) {
 		image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image.GetWidth(), image.GetHeight());
+		if ((GetAsyncKeyState('C'))) {
+			RedImage(scene_dc, bit_rect, &image, pos, width, height, FALSE);
+		}
 	}
 	else {
-		FlipImage(scene_dc, bit_rect, &image, pos.x, pos.y, width, height);
+		DrawFlip(scene_dc, bit_rect, &image, pos, width, height);
+		if ((GetAsyncKeyState('C'))) {
+			RedImage(scene_dc, bit_rect, &image, pos, width, height, TRUE);
+		}
 	}
+
+	// Å×½ºÆ®
 }
 
 void Character::Look(const POINT& target)
