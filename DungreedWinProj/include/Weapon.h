@@ -11,7 +11,7 @@
 class Weapon
 {
 private:
-	Image* image;
+	Image image;
 	POINT pos;
 	int width;
 	int height;

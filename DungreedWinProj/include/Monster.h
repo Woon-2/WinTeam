@@ -11,9 +11,13 @@
 #include "Dungeon.h"
 #include <random>
 #include <algorithm>
+#include "Player.h"
+#include "MonsterAI.h"
 
 extern std::default_random_engine dre;
 constexpr int MONSTER_MAX_ANIMATION_NUM = 4;
+
+class MonsterAI;
 
 class Monster : public Character
 {
@@ -28,23 +32,21 @@ private:
 	const std::string attack_animation_name;
 	const std::string move_animation_name;
 
+	bool is_appeared = false;
+
+
 	POINT policy_stand;					// x는 행동을 선택할 확률, y는 행동을 몇 업데이트 카운트 동안 지속할 건지
 	POINT policy_move_to_player;
 	POINT policy_move_from_player;
 	POINT policy_attack;
 	Policy cur_policy = Policy::STAND;
 
-	bool is_appeared = false;
+	int remain_update_cnt_to_change_policy = 0;
 
-	int remain_update_cnt_to_change_action = 0;
 
 	void ForceGravity(const Dungeon* dungeon);
-	void AutoAction();
-	void FollowPolicy();
-	void Stand();
-	void MoveToPlayer();
-	void MoveFromPlayer();
-	void Attack();
+	void AutoAction(const Player* player);
+	void FollowPolicy(const Player* player);
 	void ChooseNewPolicy();
 
 public:
@@ -61,10 +63,11 @@ public:
 		policy_stand{ policy_stand }, policy_move_to_player{ policy_move_to_player }, policy_move_from_player{ policy_move_from_player },
 		policy_attack{ policy_attack } {}
 
-	void Update(const Dungeon* dungeon);
+	void Update(const Dungeon* dungeon, const Player* player);
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 
 	friend class MonsterManager;
+	friend class MonsterAI;
 };
 
 class MonsterManager : private Uncopyable {
@@ -90,12 +93,12 @@ private:
 	int remain_monster_cnt = 0;
 
 	int animation_ids[MONSTER_MAX_ANIMATION_NUM];
-	std::string stand_animation_name = "";
-	std::string attack_animation_name = "";
-	std::string move_animation_name = "";
-	TCHAR stand_animation_name_tstr[FILE_NAME_LEN];
-	TCHAR attack_animation_name_tstr[FILE_NAME_LEN];
-	TCHAR move_animation_name_tstr[FILE_NAME_LEN];
+	std::string stand_animation_name;
+	std::string attack_animation_name;
+	std::string move_animation_name;
+	TCHAR stand_animation_name_tstr[FILE_NAME_LEN] = L"\0";
+	TCHAR attack_animation_name_tstr[FILE_NAME_LEN] = L"\0";
+	TCHAR move_animation_name_tstr[FILE_NAME_LEN] = L"\0";
 
 	std::shared_ptr<DB::DataBase> BuildDB();
 
@@ -111,7 +114,7 @@ public:
 
 	void Init(const Dungeon* dungeon);
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
-	void Update(const Dungeon* dungeon);
+	void Update(const Dungeon* dungeon, const Player* player);
 	void Appear(int num);
 	inline bool AreMonsterAllDied() const { return (remain_monster_cnt == 0) ? true : false; }
 };

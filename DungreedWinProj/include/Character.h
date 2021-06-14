@@ -12,6 +12,9 @@ extern HDC buf_dc;
 extern HWND h_wnd;
 extern RECT client;
 
+extern bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt);
+extern bool CanGoToPos(const HDC terrain_dc, const POINT pos);
+
 class Character
 {
 protected:
@@ -54,13 +57,11 @@ protected:
 
 	void MovePos(Direction direction, const int px);
 
-	bool CanGoToPos(const HDC terrain_dc, const POINT pos);
 	bool CanGoLeft(const HDC terrain_dc);
 	bool CanGoRight(const HDC terrain_dc);
 	bool CanDownJump(const HDC terrain_dc);
 	bool CanJump(const State state);
 
-	bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt);
 public:
 	Character() = default;
 	Character(const int id, const int width, const int height, const POINT pos, const State state, const BOOL looking_direction,

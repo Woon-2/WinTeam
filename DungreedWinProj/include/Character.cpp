@@ -4,7 +4,7 @@ void Character::ForceGravity(const Dungeon* dungeon)	// 캐릭터 상태(LANDING, DOW
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
 
 	// 캐릭터 발 위치가 허공일 경우 DOWN상태로 바꾸기
 	if ((state == State::STANDING || state == State::MOVING || state == State::DOWNJUMP) && MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height })) {
@@ -76,13 +76,6 @@ void Character::Jump()
 	state = State::UP;
 	// 분모가 커지면 점프력이 약해진다.
 	jump_power = jump_start_power;
-}
-
-bool Character::CanGoToPos(const HDC terrain_dc, const POINT pos)
-{
-	if (!MapPixelCollision(terrain_dc, RGB(255, 0, 0), pos))
-		return true;
-	return false;
 }
 
 bool Character::CanGoLeft(const HDC terrain_dc)
@@ -157,26 +150,13 @@ void Character::MovePos(Direction direction, const int px)
 	}
 }
 
-bool Character::MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt)	// 지형 표시 이미지를 사용해 충돌 확인, 오류 있음
-{
-	if (pt.x < client.left || pt.y > client.right)
-		return false;
-	if (pt.y < client.top || pt.y > client.bottom)
-		return false;
-
-	if (GetPixel(terrain_dc, pt.x, pt.y) == val)
-		return true;
-	else
-		return false;
-}
-
 void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	if (looking_direction) {
 		image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image.GetWidth(), image.GetHeight());
 	}
 	else {
-		FlipImage(scene_dc, bit_rect, &image, pos.x, pos.y, width, height);
+		FlipImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height);
 	}
 }
 

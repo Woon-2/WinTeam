@@ -26,6 +26,8 @@ void DoubleBuffering();
 void CleanUpAfterDoubleBuffering();
 void TransmitHDCBufferToRealHDC();
 void DrawBuffer(HDC instant_dc, const RECT& rect);
+bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt);
+bool CanGoToPos(const HDC terrain_dc, const POINT pos);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdParam, int nCmdShow)
 {
@@ -117,4 +119,24 @@ void TransmitHDCBufferToRealHDC()
 void DrawBuffer(HDC instant_dc, const RECT& rect)
 {
 	StretchBlt(buf_dc, 0, 0, client.right, client.bottom, instant_dc, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SRCCOPY);
+}
+
+bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt)	// 지형 표시 이미지를 사용해 충돌 확인
+{
+	if (pt.x < client.left || pt.y > client.right)
+		return false;
+	if (pt.y < client.top || pt.y > client.bottom)
+		return false;
+
+	if (GetPixel(terrain_dc, pt.x, pt.y) == val)
+		return true;
+	else
+		return false;
+}
+
+bool CanGoToPos(const HDC terrain_dc, const POINT pos)
+{
+	if (!MapPixelCollision(terrain_dc, RGB(255, 0, 0), pos))
+		return true;
+	return false;
 }

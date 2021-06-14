@@ -1,9 +1,9 @@
 #include "Monster.h"
 
-void Monster::Update(const Dungeon* dungeon)
+void Monster::Update(const Dungeon* dungeon, const Player* player)
 {
 	if (is_appeared) {
-		AutoAction();
+		AutoAction(player);
 		// Die 루틴
 		ForceGravity(dungeon);
 		ForceGravity(dungeon);
@@ -11,52 +11,34 @@ void Monster::Update(const Dungeon* dungeon)
 	}
 }
 
-void Monster::AutoAction()
+void Monster::AutoAction(const Player* player)
 {
-	if (!remain_update_cnt_to_change_action)
+	if (!remain_update_cnt_to_change_policy)
 		ChooseNewPolicy();
 	else {
-		FollowPolicy();
-		--remain_update_cnt_to_change_action;
+		FollowPolicy(player);
+		--remain_update_cnt_to_change_policy;
 	}
 }
 
-void Monster::FollowPolicy()
+void Monster::FollowPolicy(const Player* player)
 {
+	static MonsterAI monster_ai(this); // static으로 선언하면 몬스터가 2000마리가 생성되어도 몬스터 ai는 단 하나 존재한다.
+
 	switch (cur_policy) {
 	case Policy::STAND:
-		Stand();
+		monster_ai.Stand();
 		break;
 	case Policy::MOVE_TO_PLAYER:
-		MoveToPlayer();
+		monster_ai.MoveToPlayer(player);
 		break;
 	case Policy::MOVE_FROM_PLAYER:
-		MoveFromPlayer();
+		monster_ai.MoveFromPlayer(player);
 		break;
 	case Policy::ATTACK:
-		Attack();
+		monster_ai.Attack();
 		break;
 	}
-}
-
-void Monster::Stand()
-{
-
-}
-
-void Monster::MoveToPlayer()
-{
-
-}
-
-void Monster::MoveFromPlayer()
-{
-
-}
-
-void Monster::Attack()
-{
-
 }
 
 void Monster::ChooseNewPolicy()
@@ -66,25 +48,25 @@ void Monster::ChooseNewPolicy()
 
 	if (chance <= policy_stand.x) {
 		cur_policy = Policy::STAND;
-		remain_update_cnt_to_change_action = policy_stand.y;
+		remain_update_cnt_to_change_policy = policy_stand.y;
 		return;
 	}
 	chance -= policy_stand.x;
 	if (chance <= policy_move_to_player.x) {
 		cur_policy = Policy::MOVE_TO_PLAYER;
-		remain_update_cnt_to_change_action = policy_move_to_player.y;
+		remain_update_cnt_to_change_policy = policy_move_to_player.y;
 		return;
 	}
 	chance -= policy_move_to_player.x;
 	if (chance <= policy_move_from_player.x) {
 		cur_policy = Policy::MOVE_FROM_PLAYER;
-		remain_update_cnt_to_change_action = policy_move_from_player.y;
+		remain_update_cnt_to_change_policy = policy_move_from_player.y;
 		return;
 	}
 	chance -= policy_move_from_player.x;
 	if (chance <= policy_attack.x) {
 		cur_policy = Policy::ATTACK;
-		remain_update_cnt_to_change_action = policy_attack.y;
+		remain_update_cnt_to_change_policy = policy_attack.y;
 		return;
 	}
 }
@@ -120,10 +102,10 @@ void MonsterManager::Init(const Dungeon* dungeon)
 			break;
 }
 
-void MonsterManager::Update(const Dungeon* dungeon)
+void MonsterManager::Update(const Dungeon* dungeon, const Player* player)
 {
 	for (Monster* monster : monsters) {
-		monster->Update(dungeon);
+		monster->Update(dungeon, player);
 		// Die 루틴 : 현재는 죽으면 그냥 출현 취소
 		if (monster->is_appeared && monster->IsDied()) {
 			monster->is_attacking = false;
@@ -161,7 +143,7 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	//
 
 	// 시작 위치는 지형 상 핑크색 위치중 랜덤
-	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
 	std::uniform_int_distribution<> uid_x{ 0, dungeon->dungeon_width };
 	std::uniform_int_distribution<> uid_y{ 0, dungeon->dungeon_height / 3 * 2 };
 
@@ -212,12 +194,12 @@ void MonsterManager::LoadNeededAnimations()
 
 void MonsterManager::BufferEmpty()
 {
-	stand_animation_name = "";
-	attack_animation_name = "";
-	move_animation_name = "";
-	lstrcpy(stand_animation_name_tstr, L"");
-	lstrcpy(attack_animation_name_tstr, L"");
-	lstrcpy(move_animation_name_tstr, L"");
+	stand_animation_name.clear();
+	attack_animation_name.clear();
+	move_animation_name.clear();
+	stand_animation_name_tstr[0] = NULL;
+	attack_animation_name_tstr[0] = NULL;
+	move_animation_name_tstr[0] = NULL;
 }
 
 void MonsterManager::Clear()

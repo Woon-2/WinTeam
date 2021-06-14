@@ -45,6 +45,7 @@ public:
 
 	friend class Camera;
 	friend class Weapon;
+	friend class MonsterAI;
 };
 #endif
 

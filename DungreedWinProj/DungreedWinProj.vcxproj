@@ -151,7 +151,9 @@
     <ClCompile Include="include\FileUtility.cpp" />
     <ClCompile Include="include\HitScan.cpp" />
     <ClCompile Include="include\MainFrame.cpp" />
+    <ClCompile Include="include\Missile.cpp" />
     <ClCompile Include="include\Monster.cpp" />
+    <ClCompile Include="include\MonsterAI.cpp" />
     <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="include\Scene.cpp" />
     <ClCompile Include="include\InstantDCSet.cpp" />
@@ -166,7 +168,9 @@
     <ClInclude Include="include\Dungeon.h" />
     <ClInclude Include="include\FileUtility.h" />
     <ClInclude Include="include\HitScan.h" />
+    <ClInclude Include="include\Missile.h" />
     <ClInclude Include="include\Monster.h" />
+    <ClInclude Include="include\MonsterAI.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Scene.h" />
     <ClInclude Include="include\Uncopyable.h" />

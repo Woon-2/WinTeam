@@ -84,7 +84,7 @@ void Scene::Update()
 	// player, monster 업데이트 루틴
 	animation_manager->Update();
 	player->Update(dungeon, crosshair, animation_manager);
-	monster_manager->Update(dungeon);
+	monster_manager->Update(dungeon, player);
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);
