@@ -120,7 +120,7 @@ void Scene::DungeonChangeProc()
 		else
 			player->NoOut(dungeon);
 
-	if (update_cnt++ % 1000 == 0)
+	if (update_cnt++ % 100 == 0)
 		monster_manager->Appear(5);
 }
 

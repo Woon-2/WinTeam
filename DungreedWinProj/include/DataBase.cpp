@@ -67,6 +67,12 @@ void DB::DataBase::RegisterField(const std::string& field_name, void* const fiel
 	data_kit.push_back({ field_name, field_addr, false });
 }
 
+void DB::DataBase::Init()
+{
+	data_kit.clear();
+	in.seekg(0, std::ios::beg);
+}
+
 void DB::DataBase::Load()
 {
 	if (auto has_found_individual_to_load = id_config.Acc2ID())

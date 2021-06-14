@@ -13,18 +13,18 @@ next_dungeon_id 2378173
 prev_dungeon_id 0
 camera_x_half_range 240
 camera_y_half_range 135
-monster_id0 4000001
-monster_id1 4000002
-monster_id2 0
-monster_id3 0
-monster_id4 0
+monster_id0 4000011
+monster_id1 4000012
+monster_id2 4000008
+monster_id3 4000009
+monster_id4 4000010
 monster_id5 0
 monster_num0 10
 monster_num1 10
-monster_num2 0
-monster_num3 0
-monster_num4 0
-monster_num5 0
+monster_num2 10
+monster_num3 10
+monster_num4 10
+monster_num5 10
 
 2378173
 

@@ -4,7 +4,7 @@ void Missile::Update(float radian, const Dungeon* dungeon)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 
 	POINT old_pos = pos;
 
@@ -29,7 +29,7 @@ void Missile::Update(float radian, const Dungeon* dungeon)
 
 void Missile::Render(HDC scene_dc) const
 {
-	image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image.GetWidth(), image.GetHeight());
+	image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image->GetWidth(), image->GetHeight());
 }
 
 bool Missile::IsOut_Left(const Dungeon* dungeon) const

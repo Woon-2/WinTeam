@@ -2,10 +2,15 @@
 
 Weapon::Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair)
 {
-	image = Image(L"sword\\RustyGreatSword00-resources.assets-1011.png");
+	image = new Image(L"sword\\RustyGreatSword00-resources.assets-1011.png");
 	width = camera->x_half_range / 3;
 	height = camera->y_half_range / 2;
 	Update(player, crosshair);
+}
+
+Weapon::~Weapon()
+{
+	delete image;
 }
 
 void Weapon::Init(const Camera* camera, const Player* player, const Crosshair* crosshair)
@@ -33,18 +38,18 @@ void Weapon::Update(const Player* player, const Crosshair* crosshair)
 
 void Weapon::Render(HDC scene_dc, const RECT& bit_rect)
 {
-	int image_width = image.GetWidth();
-	int image_height = image.GetHeight();
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
 	HBITMAP hbm_rotate = RotateImage(scene_dc, image, angle);
-	Image rotate_image;
-	rotate_image.Attach(hbm_rotate);
-	rotate_image.SetTransparentColor(RGB(0, 0, 0));
+	Image* rotate_image = new Image;
+	rotate_image->Attach(hbm_rotate);
+	rotate_image->SetTransparentColor(RGB(0, 0, 0));
 
 	if (looking_direction) {
 		FlipImage(scene_dc, bit_rect, rotate_image, pos.x, pos.y, width, height);
 	}
 	else {
-		rotate_image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
+		rotate_image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height);
 	}
 }

@@ -12,7 +12,7 @@ extern bool CanGoToPos(const HDC terrain_dc, const POINT pos);
 class Missile {
 private:
 	Character* host;
-	Image image;
+	const Image* image;
 	POINT pos;
 	int width;
 	int height;
@@ -21,7 +21,7 @@ private:
 	BOOL looking_direction;
 
 public:
-	Missile(Character* host, const Image& image, const POINT pos, const int width, const int height, const float radian,
+	Missile(Character* host, const Image* image, const POINT pos, const int width, const int height, const float radian,
 		const int speed, const BOOL looking_direction)
 		: host{ host }, image{ image }, pos{ pos }, width{ width }, height{ height }, radian{ radian },
 		speed{ speed }, looking_direction{ looking_direction } {}

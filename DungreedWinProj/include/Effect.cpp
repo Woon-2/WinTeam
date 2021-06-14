@@ -8,14 +8,19 @@ Effect::Effect(AnimationManager* animation_manager, POINT given_pos, int given_w
 
 	//old_animation_name = cur_animation_name = start_animation_name;
 	animation_name = start_animation_name;
-	image = Image(start_image_path);
+	image = new Image(start_image_path);
 	//animation_manager->Insert(start_animation_name);
 	effect_animaiton.LoadAnimation(animation_manager, start_animation_name);
 }
 
+Effect::~Effect()
+{
+	delete image;
+}
+
 void Effect::Render(HDC scene_dc, const RECT& bit_rect) const
 {
-	image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image.GetWidth(), image.GetHeight());
+	image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image->GetWidth(), image->GetHeight());
 }
 
 void Effect::UpdateAnimation(AnimationManager* animation_manager)

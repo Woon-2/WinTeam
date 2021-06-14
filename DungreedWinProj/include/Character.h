@@ -27,7 +27,7 @@ protected:
 
 	int id;
 
-	Image image;
+	const Image* image;
 	Animation animation;
 
 	std::string old_animation_name;
@@ -76,8 +76,9 @@ public:
 	{
 		animation.LoadAnimation(animation_manager, start_animation_name);
 		old_animation_name = cur_animation_name = start_animation_name;
-		image = Image(start_image_path);
+		image = new Image(start_image_path);
 	}
+	~Character() { delete image; }
 
 	virtual void Update(const Dungeon* dungeon) {}
 
@@ -98,5 +99,6 @@ public:
 	inline bool IsDied() const { return (hp <= 0) ? true : false; }
 
 	friend class HitScanner;
+	friend class MonsterAI;
 };
 #endif

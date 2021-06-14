@@ -46,8 +46,8 @@ private:
 
 
 	void ForceGravity(const Dungeon* dungeon);
-	void AutoAction(const Player* player);
-	void FollowPolicy(const Player* player);
+	void AutoAction(const Dungeon* dungeon, const Player* player);
+	void FollowPolicy(const Dungeon* dungeon, const Player* player);
 	void ChooseNewPolicy();
 
 public:

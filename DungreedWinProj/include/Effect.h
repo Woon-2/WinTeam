@@ -9,7 +9,7 @@
 class Effect
 {
 protected:
-	Image image;
+	const Image* image;
 	//std::string old_animation_name;
 	std::string animation_name;
 
@@ -20,6 +20,7 @@ public:
 	Animation effect_animaiton;
 
 	Effect(AnimationManager* animation_manager, POINT given_pos, int given_width, int given_height, const std::string& start_animation_name, const TCHAR* start_image_path);
+	~Effect();
 
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 	void UpdateAnimation(AnimationManager* animation_manager);

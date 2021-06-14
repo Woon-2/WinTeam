@@ -22,8 +22,8 @@ private:
 	std::shared_ptr<DB::DataBase> BuildDB();
 
 public:
-	Image dungeon_image;
-	Image dungeon_terrain_image;
+	Image* dungeon_image;
+	Image* dungeon_terrain_image;
 
 	TCHAR map_path[FILE_NAME_LEN];
 	TCHAR map_terrain_path[FILE_NAME_LEN];
@@ -47,6 +47,7 @@ public:
 
 	Dungeon();
 	Dungeon(const int dungeon_id);
+	~Dungeon();
 
 	bool CanGoPrev() const;
 	bool CanGoNext() const;

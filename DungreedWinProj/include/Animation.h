@@ -27,7 +27,7 @@ public:
 	void Play();
 	void Stop();
 	void LoadAnimation(AnimationManager* animation_manager, const std::string& animation_name);
-	const Image& GetImage(AnimationManager* animation_manager) const;
+	const Image* GetImage(AnimationManager* animation_manager) const;
 	BOOL IsEnd();
 
 	friend class AnimationManager;

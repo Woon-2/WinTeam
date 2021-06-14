@@ -7,8 +7,8 @@ Dungeon::Dungeon()
 
 	db->Load();
 
-	dungeon_image = Image(map_path);
-	dungeon_terrain_image = Image(map_terrain_path);
+	dungeon_image = new Image(map_path);
+	dungeon_terrain_image = new Image(map_terrain_path);
 }
 
 Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
@@ -17,8 +17,14 @@ Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 
 	db->Load(dungeon_id);
 
-	dungeon_image = Image(map_path);
-	dungeon_terrain_image = Image(map_terrain_path);
+	dungeon_image = new Image(map_path);
+	dungeon_terrain_image = new Image(map_terrain_path);
+}
+
+Dungeon::~Dungeon()
+{
+	delete dungeon_image;
+	delete dungeon_terrain_image;
 }
 
 
@@ -74,5 +80,5 @@ bool Dungeon::CanGoPrev() const
 
 void Dungeon::Render(HDC scene_dc, const RECT& bit_rect) const
 {
-	dungeon_image.Draw(scene_dc, 0, 0, bit_rect.right, bit_rect.bottom, 0, 0, dungeon_width, dungeon_height);
+	dungeon_image->Draw(scene_dc, 0, 0, bit_rect.right, bit_rect.bottom, 0, 0, dungeon_width, dungeon_height);
 }

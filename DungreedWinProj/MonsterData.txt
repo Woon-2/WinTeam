@@ -8,8 +8,8 @@
 monster_name AbyssBanshee
 width 80
 height 160
-x_move_px 10
-jump_start_power 8
+x_move_px 4
+jump_start_power 25
 hp 100
 atk 20
 def 20
@@ -30,8 +30,8 @@ policy_attack 40 40
 monster_name AbyssGuardian
 width 400
 height 500
-x_move_px 15
-jump_start_power 6
+x_move_px 8
+jump_start_power 32
 hp 150
 atk 60
 def 60
@@ -49,116 +49,226 @@ policy_attack 55 80
 
 4000003
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name Bat_Red
+width 120
+height 200
+x_move_px 6
+jump_start_power 40
+hp 60
+atk 20
+def 20
+is_floating 1
+melee_attack 1
+missile_attack 0
+animation_id0 8000008
+animation_id1 8000007
+animation_id2 0
+animation_id3 0
+policy_stand 20 80
+policy_move_to_player 0 0
+policy_move_from_player 25 80
+policy_attack 55 80
 
 4000004
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name BigWhiteSkel
+width 130
+height 220
+x_move_px 6
+jump_start_power 25
+hp 100
+atk 40
+def 30
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000011
+animation_id1 8000010
+animation_id2 8000009
+animation_id3 0
+policy_stand 25 60
+policy_move_to_player 5 40
+policy_move_from_player 15 40
+policy_attack 55 80
 
 4000005
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name DevilChurchArcher
+width 130
+height 220
+x_move_px 8
+jump_start_power 35
+hp 100
+atk 40
+def 30
+is_floating 0
+melee_attack 0
+missile_attack 1
+animation_id0 8000014
+animation_id1 8000013
+animation_id2 8000012
+animation_id3 0
+policy_stand 30 50
+policy_move_to_player 10 30
+policy_move_from_player 30 50
+policy_attack 30 50
 
 4000006
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name DevilChurchKnight
+width 180
+height 265
+x_move_px 10
+jump_start_power 32
+hp 150
+atk 60
+def 40
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000017
+animation_id1 8000016
+animation_id2 8000015
+animation_id3 0
+policy_stand 10 50
+policy_move_to_player 0 0
+policy_move_from_player 15 40
+policy_attack 75 50
 
 4000007
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name GiantBat
+width 240
+height 360
+x_move_px 6
+jump_start_power 40
+hp 120
+atk 35
+def 25
+is_floating 1
+melee_attack 1
+missile_attack 0
+animation_id0 8000019
+animation_id1 8000018
+animation_id2 0
+animation_id3 0
+policy_stand 20 50
+policy_move_to_player 0 0
+policy_move_from_player 35 30
+policy_attack 45 40
 
 4000008
 
+monster_name HellHound
+width 240
+height 160
+x_move_px 10
+jump_start_power 36
+hp 100
+atk 50
+def 20
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000022
+animation_id1 8000021
+animation_id2 8000020
+animation_id3 0
+policy_stand 25 60
+policy_move_to_player 5 40
+policy_move_from_player 25 30
+policy_attack 45 50
+
+4000009
+
+monster_name LizadManCenturion
+width 300
+height 350
+x_move_px 7
+jump_start_power 30
+hp 200
+atk 50
+def 50
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000025
+animation_id1 8000024
+animation_id2 8000023
+animation_id3 0
+policy_stand 35 40
+policy_move_to_player 0 0
+policy_move_from_player 20 30 
+policy_attack 45 60
+
+4000010
+
+monster_name LizadManScout
+width 220
+height 280
+x_move_px 9
+jump_start_power 34
+hp 140
+atk 50
+def 30
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000028
+animation_id1 8000027
+animation_id2 8000026
+animation_id3 0
+policy_stand 15 25
+policy_move_to_player 5 30
+policy_move_from_player 40 40
+policy_attack 40 40
+
+4000011
+
+monster_name Minotaurs
+width 270
+height 340
+x_move_px 8
+jump_start_power 27
+hp 250
+atk 40
+def 70
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000030
+animation_id1 8000029
+animation_id2 0
+animation_id3 0
+policy_stand 35 60
+policy_move_to_player 0 0
+policy_move_from_player 15 45
+policy_attack 50 60
+
+4000012
+
+monster_name Wyvern
+width 320
+height 600
+x_move_px 6
+jump_start_power 36
+hp 250
+atk 70
+def 50
+is_floating 1
+melee_attack 0
+missile_attack 1
+animation_id0 8000032
+animation_id1 8000031
+animation_id2 0
+animation_id3 0
+policy_stand 30 60
+policy_move_to_player 5 40
+policy_move_from_player 35 50
+policy_attack 30 60
+
+4000013
+
 monster_name
 width
 height
@@ -179,7 +289,29 @@ policy_move_to_player
 policy_move_from_player
 policy_attack
 
-4000009
+4000014
+
+monster_name
+width
+height
+x_move_px
+jump_start_power
+hp
+atk
+def
+is_floating
+melee_attack
+missile_attack
+animation_id0
+animation_id1
+animation_id2
+animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
+
+4000015
 
 monster_name
 width

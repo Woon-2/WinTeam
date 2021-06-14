@@ -27,9 +27,9 @@ void Animation::Stop()
 	cnt = 1;
 }
 
-const Image& Animation::GetImage(AnimationManager* animation_manager) const
+const Image* Animation::GetImage(AnimationManager* animation_manager) const
 {
-	return animation_manager->images.Find(name, cnt - 1);
+	return &animation_manager->images.Find(name, cnt - 1);
 }
 
 void Animation::LoadAnimation(AnimationManager* animation_manager, const std::string& animation_name)

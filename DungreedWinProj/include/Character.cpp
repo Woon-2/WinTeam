@@ -4,7 +4,7 @@ void Character::ForceGravity(const Dungeon* dungeon)	// 캐릭터 상태(LANDING, DOW
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 
 	// 캐릭터 발 위치가 허공일 경우 DOWN상태로 바꾸기
 	if ((state == State::STANDING || state == State::MOVING || state == State::DOWNJUMP) && MapPixelCollision(dc_set.buf_dc, RGB(255, 0, 255), POINT{ pos.x + width / 2, pos.y + height })) {
@@ -155,7 +155,7 @@ void Character::MovePos(Direction direction, const int px)
 void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 {
 	if (looking_direction) {
-		image.Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image.GetWidth(), image.GetHeight());
+		image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image->GetWidth(), image->GetHeight());
 	}
 	else {
 		FlipImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height);

@@ -11,7 +11,7 @@
 class Weapon
 {
 private:
-	Image image;
+	Image* image;
 	POINT pos;
 	int width;
 	int height;
@@ -20,6 +20,7 @@ private:
 
 public:  
 	Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair);
+	~Weapon();
 	void Init(const Camera* camera, const Player* player, const Crosshair* crosshair);
 	void Update(const Player* player, const Crosshair* crosshair);
 	void Render(HDC scene_dc, const RECT& bit_rect);

@@ -42,7 +42,7 @@ void Player::KeyProc(const Dungeon* dungeon)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 
 	if (state == State::MOVING && !GetAsyncKeyState('A') && !GetAsyncKeyState('D') && !GetAsyncKeyState('S') && !GetAsyncKeyState(VK_SPACE)) {
 		Stand();
@@ -77,7 +77,7 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px, SoundM
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
-	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 
 	if (dash_power == 0 && GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
 		dash_power = dungeon->camera_y_half_range / 24.0f;

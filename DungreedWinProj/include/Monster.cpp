@@ -3,7 +3,7 @@
 void Monster::Update(const Dungeon* dungeon, const Player* player, AnimationManager* animation_manager)
 {
 	if (is_appeared) {
-		AutoAction(player);
+		AutoAction(dungeon, player);
 		// Die 루틴
 		ForceGravity(dungeon);
 		ForceGravity(dungeon);
@@ -11,32 +11,34 @@ void Monster::Update(const Dungeon* dungeon, const Player* player, AnimationMana
 	}
 }
 
-void Monster::AutoAction(const Player* player)
+void Monster::AutoAction(const Dungeon* dungeon, const Player* player)
 {
-	if (!remain_update_cnt_to_change_policy)
+	if (!remain_update_cnt_to_change_policy) {
+		animation.Stop();
 		ChooseNewPolicy();
+	}
 	else {
-		FollowPolicy(player);
+		FollowPolicy(dungeon, player);
 		--remain_update_cnt_to_change_policy;
 	}
 }
 
-void Monster::FollowPolicy(const Player* player)
+void Monster::FollowPolicy(const Dungeon* dungeon, const Player* player)
 {
-	static MonsterAI monster_ai(this); // static으로 선언하면 몬스터가 2000마리가 생성되어도 몬스터 ai는 단 하나 존재한다.
+	MonsterAI monster_ai(this);
 
 	switch (cur_policy) {
 	case Policy::STAND:
 		monster_ai.Stand();
 		break;
 	case Policy::MOVE_TO_PLAYER:
-		monster_ai.MoveToPlayer(player);
+		monster_ai.MoveToPlayer(dungeon, player);
 		break;
 	case Policy::MOVE_FROM_PLAYER:
-		monster_ai.MoveFromPlayer(player);
+		monster_ai.MoveFromPlayer(dungeon, player);
 		break;
 	case Policy::ATTACK:
-		monster_ai.Attack();
+		monster_ai.Attack(dungeon, player);
 		break;
 	}
 }
@@ -143,7 +145,7 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	//
 
 	// 시작 위치는 지형 상 핑크색 위치중 랜덤
-	dungeon->dungeon_terrain_image.Draw(dc_set.buf_dc, dc_set.bit_rect);
+	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 	std::uniform_int_distribution<> uid_x{ 0, dungeon->dungeon_width };
 	std::uniform_int_distribution<> uid_y{ 0, dungeon->dungeon_height / 3 * 2 };
 
@@ -160,9 +162,9 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	if (!stand_animation_name.empty())
 		animation_manager->Insert(stand_animation_name);
 	if (!attack_animation_name.empty())
-		animation_manager->Insert(stand_animation_name);
+		animation_manager->Insert(attack_animation_name);
 	if (!move_animation_name.empty())
-		animation_manager->Insert(stand_animation_name);
+		animation_manager->Insert(move_animation_name);
 
 	while (num--) {
 		do {
@@ -188,14 +190,19 @@ void MonsterManager::LoadNeededAnimations()
 	if (animation_ids[0]) {
 		animation_db->RegisterField("animation_name", &stand_animation_name_tstr);
 		animation_db->Load(animation_ids[0]);
+		lstrcpy(stand_animation_name_tstr, stand_animation_name_tstr);
 	}
+	animation_db->Init();
 	if (animation_ids[1]) {
 		animation_db->RegisterField("animation_name", &attack_animation_name_tstr);
 		animation_db->Load(animation_ids[1]);
+		lstrcpy(attack_animation_name_tstr, attack_animation_name_tstr);
 	}
+	animation_db->Init();
 	if (animation_ids[2]) {
 		animation_db->RegisterField("animation_name", &move_animation_name_tstr);
 		animation_db->Load(animation_ids[2]);
+		lstrcpy(move_animation_name_tstr, move_animation_name_tstr);
 	}
 }
 

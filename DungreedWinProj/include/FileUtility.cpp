@@ -87,10 +87,10 @@ const Image& ImageContainer::Find(const std::string& image_representative_name, 
 
 
 
-void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image& image, int x, int y, int width, int height)
+void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image* const image, int x, int y, int width, int height)
 {
-	int image_width = image.GetWidth();
-	int image_height = image.GetHeight();
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
 	HDC dest_dc = CreateCompatibleDC(scene_dc);
 	HBITMAP hbitmap = CreateCompatibleBitmap(scene_dc, image_width, image_height);
@@ -100,20 +100,22 @@ void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image& image, int x, in
 	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
 
-	image.Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
+	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
 	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
 	TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
 
 	SelectObject(source_dc, hbm_old_source);
-	DeleteObject(source_dc);
+	DeleteDC(source_dc);
+	DeleteObject(hbitmap);
 	SelectObject(dest_dc, hbm_old_dest);
-	DeleteObject(dest_dc);
+	DeleteDC(dest_dc);
+	DeleteObject(hbm_result);
 }
 
-HBITMAP RotateImage(HDC scene_dc, Image& image, float angle)
+HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
 {
-	int image_width = image.GetWidth();
-	int image_height = image.GetHeight();
+	int image_width = image->GetWidth();
+	int image_height = image->GetHeight();
 
 	HDC source_dc = CreateCompatibleDC(scene_dc);
 	HBITMAP hbm_source = CreateCompatibleBitmap(scene_dc, image_width, image_height);
@@ -124,7 +126,7 @@ HBITMAP RotateImage(HDC scene_dc, Image& image, float angle)
 	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_source);
 	HBITMAP hbm_old_dest = (HBITMAP)SelectObject(dest_dc, hbm_result);
 
-	image.Draw(source_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
+	image->Draw(source_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
 
 	float cosine = (float)cos(angle);
 	float sine = (float)sin(angle);
@@ -145,9 +147,11 @@ HBITMAP RotateImage(HDC scene_dc, Image& image, float angle)
 
 	SelectObject(source_dc, hbm_old_source);
 	SelectObject(dest_dc, hbm_old_dest);
-	DeleteObject(source_dc);
-	DeleteObject(dest_dc);
-	
+	DeleteDC(source_dc);
+	DeleteObject(hbm_source);
+	DeleteDC(dest_dc);
+	//DeleteObject(hbm_result);
+
 	return hbm_result;
 }
 
