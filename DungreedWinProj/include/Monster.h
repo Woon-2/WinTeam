@@ -18,6 +18,8 @@ constexpr int MONSTER_MAX_ANIMATION_NUM = 4;
 class Monster : public Character
 {
 private:
+	enum class Policy {STAND, MOVE_TO_PLAYER, MOVE_FROM_PLAYER, ATTACK};
+
 	BOOL is_floating;
 	BOOL melee_attack;
 	BOOL missile_attack;
@@ -26,19 +28,38 @@ private:
 	const std::string attack_animation_name;
 	const std::string move_animation_name;
 
+	POINT policy_stand;					// x는 행동을 선택할 확률, y는 행동을 몇 업데이트 카운트 동안 지속할 건지
+	POINT policy_move_to_player;
+	POINT policy_move_from_player;
+	POINT policy_attack;
+	Policy cur_policy = Policy::STAND;
+
 	bool is_appeared = false;
 
+	int remain_update_cnt_to_change_action = 0;
+
 	void ForceGravity(const Dungeon* dungeon);
+	void AutoAction();
+	void FollowPolicy();
+	void Stand();
+	void MoveToPlayer();
+	void MoveFromPlayer();
+	void Attack();
+	void ChooseNewPolicy();
+
 public:
 	Monster(const int monster_id, const int width, const int height, const POINT pos,
 		const int x_move_px, const int jump_start_power,
 		const int hp, const int atk, const int def, const BOOL is_floating, const BOOL melee_attack, const BOOL missile_attack,
 		const std::string& stand_animation_name, const std::string& attack_animation_name, const std::string& move_animation_name,
-		const TCHAR* start_image_path)
+		const TCHAR* start_image_path,
+		const POINT policy_stand, const POINT policy_move_to_player, const POINT policy_move_from_player, const POINT policy_attack)
 		: Character(monster_id, width, height, pos, State::DOWN, TRUE, x_move_px, jump_start_power,
 			stand_animation_name, start_image_path, hp, atk, def),
 		is_floating {is_floating}, melee_attack {melee_attack}, missile_attack {missile_attack},
-		stand_animation_name{ stand_animation_name }, attack_animation_name{ attack_animation_name }, move_animation_name{ move_animation_name } {}
+		stand_animation_name{ stand_animation_name }, attack_animation_name{ attack_animation_name }, move_animation_name{ move_animation_name },
+		policy_stand{ policy_stand }, policy_move_to_player{ policy_move_to_player }, policy_move_from_player{ policy_move_from_player },
+		policy_attack{ policy_attack } {}
 
 	void Update(const Dungeon* dungeon);
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
@@ -61,7 +82,12 @@ private:
 	BOOL is_floating;
 	BOOL melee_attack;
 	BOOL missile_attack;
-	int living_monster_cnt = 0;
+	POINT policy_stand;				// x는 행동을 선택할 확률, y는 행동을 몇 업데이트 카운트 동안 지속할 건지
+	POINT policy_move_to_player;
+	POINT policy_move_from_player;
+	POINT policy_attack;
+
+	int remain_monster_cnt = 0;
 
 	int animation_ids[MONSTER_MAX_ANIMATION_NUM];
 	std::string stand_animation_name = "";
@@ -87,6 +113,6 @@ public:
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 	void Update(const Dungeon* dungeon);
 	void Appear(int num);
-	inline bool AreMonsterAllDied() const { return (living_monster_cnt == 0) ? true : false; }
+	inline bool AreMonsterAllDied() const { return (remain_monster_cnt == 0) ? true : false; }
 };
 #endif

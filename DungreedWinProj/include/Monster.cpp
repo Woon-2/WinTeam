@@ -3,9 +3,89 @@
 void Monster::Update(const Dungeon* dungeon)
 {
 	if (is_appeared) {
-		//AutoAction 루틴
-		//Die 루틴
+		AutoAction();
+		// Die 루틴
 		ForceGravity(dungeon);
+		ForceGravity(dungeon);
+		// UpdateAnimation(animation_manager);
+	}
+}
+
+void Monster::AutoAction()
+{
+	if (!remain_update_cnt_to_change_action)
+		ChooseNewPolicy();
+	else {
+		FollowPolicy();
+		--remain_update_cnt_to_change_action;
+	}
+}
+
+void Monster::FollowPolicy()
+{
+	switch (cur_policy) {
+	case Policy::STAND:
+		Stand();
+		break;
+	case Policy::MOVE_TO_PLAYER:
+		MoveToPlayer();
+		break;
+	case Policy::MOVE_FROM_PLAYER:
+		MoveFromPlayer();
+		break;
+	case Policy::ATTACK:
+		Attack();
+		break;
+	}
+}
+
+void Monster::Stand()
+{
+
+}
+
+void Monster::MoveToPlayer()
+{
+
+}
+
+void Monster::MoveFromPlayer()
+{
+
+}
+
+void Monster::Attack()
+{
+
+}
+
+void Monster::ChooseNewPolicy()
+{
+	std::uniform_int_distribution<> uid_chance{ 1, 100 };
+	int chance = uid_chance(dre);
+
+	if (chance <= policy_stand.x) {
+		cur_policy = Policy::STAND;
+		remain_update_cnt_to_change_action = policy_stand.y;
+		return;
+	}
+	chance -= policy_stand.x;
+	if (chance <= policy_move_to_player.x) {
+		cur_policy = Policy::MOVE_TO_PLAYER;
+		remain_update_cnt_to_change_action = policy_move_to_player.y;
+		return;
+	}
+	chance -= policy_move_to_player.x;
+	if (chance <= policy_move_from_player.x) {
+		cur_policy = Policy::MOVE_FROM_PLAYER;
+		remain_update_cnt_to_change_action = policy_move_from_player.y;
+		return;
+	}
+	chance -= policy_move_from_player.x;
+	if (chance <= policy_attack.x) {
+		cur_policy = Policy::ATTACK;
+		remain_update_cnt_to_change_action = policy_attack.y;
+		return;
 	}
 }
 
@@ -42,8 +122,15 @@ void MonsterManager::Init(const Dungeon* dungeon)
 
 void MonsterManager::Update(const Dungeon* dungeon)
 {
-	for (Monster* monster : monsters)
+	for (Monster* monster : monsters) {
 		monster->Update(dungeon);
+		// Die 루틴 : 현재는 죽으면 그냥 출현 취소
+		if (monster->is_appeared && monster->IsDied()) {
+			monster->is_attacking = false;
+			monster->is_appeared = false;
+			--remain_monster_cnt;
+		}
+	}
 }
 
 void MonsterManager::Render(HDC scene_dc, const RECT& bit_rect) const
@@ -76,7 +163,7 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	// 시작 위치는 지형 상 핑크색 위치중 랜덤
 	dungeon->dungeon_terrain_image->Draw(dc_set.buf_dc, dc_set.bit_rect);
 	std::uniform_int_distribution<> uid_x{ 0, dungeon->dungeon_width };
-	std::uniform_int_distribution<> uid_y{ 0, dungeon->dungeon_height };
+	std::uniform_int_distribution<> uid_y{ 0, dungeon->dungeon_height / 3 * 2 };
 
 	LoadNeededAnimations();
 	
@@ -96,11 +183,12 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 
 		Monster* monster = new Monster(monster_id, width, height, pos, x_move_px, jump_start_power,
 			hp, atk, def, is_floating, melee_attack, missile_attack,
-			stand_animation_name, attack_animation_name, move_animation_name, start_image_path); // = new Monster(...)
+			stand_animation_name, attack_animation_name, move_animation_name, start_image_path,
+			policy_stand, policy_move_to_player, policy_move_from_player, policy_attack); // = new Monster(...)
 		monsters.push_back(monster);
 	}
 
-	living_monster_cnt += num;
+	remain_monster_cnt += num;
 	BufferEmpty();
 }
 
@@ -155,6 +243,10 @@ std::shared_ptr<DB::DataBase> MonsterManager::BuildDB()
 	db->RegisterField("melee_attack", &melee_attack);
 	db->RegisterField("missile_attack", &missile_attack);
 	db->RegisterField("monster_name", &monster_name);
+	db->RegisterField("policy_stand", &policy_stand);
+	db->RegisterField("policy_move_to_player", &policy_move_to_player);
+	db->RegisterField("policy_move_from_player", &policy_move_from_player);
+	db->RegisterField("policy_attack", &policy_attack);
 
 	for (int i = 0; i < MONSTER_MAX_ANIMATION_NUM; ++i) {
 		std::string field_str = "animation_id";
@@ -183,7 +275,7 @@ bool MonsterManager::MapPixelCollision(const HDC terrain_dc, const COLORREF& val
 void MonsterManager::Appear(int num)
 {
 	// 일정 시간 이후 문제가 생긴다면 어쩌면 여기 문제
-	std::random_shuffle(monsters.begin(), monsters.end());
+	std::shuffle(monsters.begin(), monsters.end(), dre);
 	for (Monster* monster : monsters)
 		if (!monster->is_appeared) {
 			monster->is_appeared = true;

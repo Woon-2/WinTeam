@@ -1,6 +1,7 @@
 # 몬스터 width, height, x_move_px, jump_start_power는 카메라 반경에 대한 천분율
 # width가 400이면 카메라 x축 반경의 40% 크기라는 뜻
 # 부유하는(is_floating) 몬스터들은 jump_start_power를 y_move_px로 이용함
+# policy들은 첫 번째 인자가 해당 행동을 선택할 확률, 두 번째 인자가 행동을 몇 업데이트 카운트동안 지속할 것인지임
 
 4000001
 
@@ -19,6 +20,10 @@ animation_id0 8000004
 animation_id1 8000003
 animation_id2 0
 animation_id3 0
+policy_stand 40 40
+policy_move_to_player 10 80
+policy_move_from_player 10 80
+policy_attack 40 40
 
 4000002
 
@@ -37,6 +42,10 @@ animation_id0 8000006
 animation_id1 8000005
 animation_id2 0
 animation_id3 0
+policy_stand 30 80
+policy_move_to_player 0 0  
+policy_move_from_player 15 40
+policy_attack 55 80
 
 4000003
 
@@ -55,6 +64,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000004
 
@@ -73,6 +86,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000005
 
@@ -91,6 +108,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000006
 
@@ -109,6 +130,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000007
 
@@ -127,6 +152,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000008
 
@@ -145,6 +174,10 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack
 
 4000009
 
@@ -163,3 +196,7 @@ animation_id0
 animation_id1
 animation_id2
 animation_id3
+policy_stand
+policy_move_to_player
+policy_move_from_player
+policy_attack

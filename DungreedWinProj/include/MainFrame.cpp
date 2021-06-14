@@ -13,7 +13,8 @@ HDC buf_dc;
 HBITMAP buf_bit;
 HBITMAP old_bit;
 Scene* scene;
-std::default_random_engine dre;
+std::random_device rd;
+std::default_random_engine dre(rd());
 
 HINSTANCE g_h_inst;
 LPCTSTR lpszClass = L"Window Class Name";

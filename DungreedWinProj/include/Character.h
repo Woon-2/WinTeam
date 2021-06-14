@@ -80,6 +80,7 @@ public:
 
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 	void Look(const POINT& target);
+	void Look(const Character& target);
 
 	void UpdateAnimation(AnimationManager* animation_manager);
 

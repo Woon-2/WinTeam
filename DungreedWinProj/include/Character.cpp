@@ -188,6 +188,14 @@ void Character::Look(const POINT& target)
 		looking_direction = FALSE;
 }
 
+void Character::Look(const Character& target)
+{
+	if (pos.x < target.pos.x)
+		looking_direction = TRUE;
+	else
+		looking_direction = FALSE;
+}
+
 void Character::UpdateAnimation(AnimationManager* animation_manager)
 {
 	if (old_animation_name != cur_animation_name) {
