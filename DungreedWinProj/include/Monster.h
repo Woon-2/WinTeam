@@ -13,6 +13,7 @@
 #include <algorithm>
 #include "Player.h"
 #include "MonsterAI.h"
+#include "Animation.h"
 
 extern std::default_random_engine dre;
 constexpr int MONSTER_MAX_ANIMATION_NUM = 4;
@@ -55,15 +56,20 @@ public:
 		const int hp, const int atk, const int def, const BOOL is_floating, const BOOL melee_attack, const BOOL missile_attack,
 		const std::string& stand_animation_name, const std::string& attack_animation_name, const std::string& move_animation_name,
 		const TCHAR* start_image_path,
-		const POINT policy_stand, const POINT policy_move_to_player, const POINT policy_move_from_player, const POINT policy_attack)
+		const POINT policy_stand, const POINT policy_move_to_player, const POINT policy_move_from_player, const POINT policy_attack,
+		AnimationManager* animation_manager)
 		: Character(monster_id, width, height, pos, State::DOWN, TRUE, x_move_px, jump_start_power,
-			stand_animation_name, start_image_path, hp, atk, def),
+			stand_animation_name, start_image_path, hp, atk, def, animation_manager),
 		is_floating {is_floating}, melee_attack {melee_attack}, missile_attack {missile_attack},
 		stand_animation_name{ stand_animation_name }, attack_animation_name{ attack_animation_name }, move_animation_name{ move_animation_name },
 		policy_stand{ policy_stand }, policy_move_to_player{ policy_move_to_player }, policy_move_from_player{ policy_move_from_player },
-		policy_attack{ policy_attack } {}
+		policy_attack{ policy_attack } 
+	{
+		animation.LoadAnimation(animation_manager, stand_animation_name);
+		animation.Play();
+	}
 
-	void Update(const Dungeon* dungeon, const Player* player);
+	void Update(const Dungeon* dungeon, const Player* player, AnimationManager* animation_manager);
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 
 	friend class MonsterManager;
@@ -102,19 +108,19 @@ private:
 
 	std::shared_ptr<DB::DataBase> BuildDB();
 
-	void Insert(const Dungeon* dungeon, const int monster_id, int num);
+	void Insert(const Dungeon* dungeon, const int monster_id, int num, AnimationManager* animation_manager);
 	void LoadNeededAnimations();
 	void BufferEmpty();
 	void Clear();
 
 	bool MapPixelCollision(const HDC terrain_dc, const COLORREF& val, const POINT& pt);
 public:
-	MonsterManager(const Dungeon* dungeon);
+	MonsterManager(const Dungeon* dungeon, AnimationManager* animation_manager);
 	~MonsterManager();
 
-	void Init(const Dungeon* dungeon);
+	void Init(const Dungeon* dungeon, AnimationManager* animation_manager);
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
-	void Update(const Dungeon* dungeon, const Player* player);
+	void Update(const Dungeon* dungeon, const Player* player, AnimationManager* animation_manager);
 	void Appear(int num);
 	inline bool AreMonsterAllDied() const { return (remain_monster_cnt == 0) ? true : false; }
 };

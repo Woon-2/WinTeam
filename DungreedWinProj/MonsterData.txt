@@ -43,7 +43,7 @@ animation_id1 8000005
 animation_id2 0
 animation_id3 0
 policy_stand 30 80
-policy_move_to_player 0 0  
+policy_move_to_player 0 0
 policy_move_from_player 15 40
 policy_attack 55 80
 

@@ -56,6 +56,7 @@ void Character::RunLeft()
 {
 	if (state == State::STANDING)
 		state = State::MOVING;
+
 	MovePos(Direction::LEFT, x_move_px);
 }
 
@@ -63,6 +64,7 @@ void Character::RunRight()
 {
 	if (state == State::STANDING)
 		state = State::MOVING;
+
 	MovePos(Direction::RIGHT, x_move_px);
 }
 
@@ -179,11 +181,11 @@ void Character::Look(const Character& target)
 void Character::UpdateAnimation(AnimationManager* animation_manager)
 {
 	if (old_animation_name != cur_animation_name) {
-		animation_manager->Stop(old_animation_name);
-		animation_manager->Play(cur_animation_name);
-
+		animation.LoadAnimation(animation_manager, cur_animation_name);
 		old_animation_name = cur_animation_name;
 	}
 
-	image = animation_manager->GetImage(cur_animation_name);
+	animation.Play();
+	animation.Update();
+	image = animation.GetImage(animation_manager);
 }

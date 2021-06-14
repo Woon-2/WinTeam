@@ -1,13 +1,13 @@
 #include "Monster.h"
 
-void Monster::Update(const Dungeon* dungeon, const Player* player)
+void Monster::Update(const Dungeon* dungeon, const Player* player, AnimationManager* animation_manager)
 {
 	if (is_appeared) {
 		AutoAction(player);
 		// Die 루틴
 		ForceGravity(dungeon);
 		ForceGravity(dungeon);
-		// UpdateAnimation(animation_manager);
+		UpdateAnimation(animation_manager);
 	}
 }
 
@@ -83,29 +83,29 @@ void Monster::Render(HDC scene_dc, const RECT& bit_rect) const
 		this->Character::Render(scene_dc, bit_rect);
 }
 
-MonsterManager::MonsterManager(const Dungeon* dungeon)
+MonsterManager::MonsterManager(const Dungeon* dungeon, AnimationManager* animation_manager)
 {
 	for (int i = 0; i < MAX_MONSTER_KIND_IN_DUNGEON; ++i)
 		if (dungeon->monster_ids[i])
-			Insert(dungeon, dungeon->monster_ids[i], dungeon->monster_nums[i]);
+			Insert(dungeon, dungeon->monster_ids[i], dungeon->monster_nums[i], animation_manager);
 		else
 			break;
 }
 
-void MonsterManager::Init(const Dungeon* dungeon)
+void MonsterManager::Init(const Dungeon* dungeon, AnimationManager* animation_manager)
 {
 	Clear();
 	for (int i = 0; i < MAX_MONSTER_KIND_IN_DUNGEON; ++i)
 		if (dungeon->monster_ids[i])
-			Insert(dungeon, dungeon->monster_ids[i], dungeon->monster_nums[i]);
+			Insert(dungeon, dungeon->monster_ids[i], dungeon->monster_nums[i], animation_manager);
 		else
 			break;
 }
 
-void MonsterManager::Update(const Dungeon* dungeon, const Player* player)
+void MonsterManager::Update(const Dungeon* dungeon, const Player* player, AnimationManager* animation_manager)
 {
 	for (Monster* monster : monsters) {
-		monster->Update(dungeon, player);
+		monster->Update(dungeon, player, animation_manager);
 		// Die 루틴 : 현재는 죽으면 그냥 출현 취소
 		if (monster->is_appeared && monster->IsDied()) {
 			monster->is_attacking = false;
@@ -127,7 +127,7 @@ MonsterManager::~MonsterManager()
 		delete monster;
 }
 
-void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int num)
+void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int num, AnimationManager* animation_manager)
 {
 	auto monster_db = BuildDB();
 	POINT pos;
@@ -157,6 +157,13 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 	Tstr2Str(attack_animation_name_tstr, attack_animation_name);
 	Tstr2Str(move_animation_name_tstr, move_animation_name);
 
+	if (!stand_animation_name.empty())
+		animation_manager->Insert(stand_animation_name);
+	if (!attack_animation_name.empty())
+		animation_manager->Insert(stand_animation_name);
+	if (!move_animation_name.empty())
+		animation_manager->Insert(stand_animation_name);
+
 	while (num--) {
 		do {
 			pos.x = uid_x(dre);
@@ -166,7 +173,7 @@ void MonsterManager::Insert(const Dungeon* dungeon, const int monster_id, int nu
 		Monster* monster = new Monster(monster_id, width, height, pos, x_move_px, jump_start_power,
 			hp, atk, def, is_floating, melee_attack, missile_attack,
 			stand_animation_name, attack_animation_name, move_animation_name, start_image_path,
-			policy_stand, policy_move_to_player, policy_move_from_player, policy_attack); // = new Monster(...)
+			policy_stand, policy_move_to_player, policy_move_from_player, policy_attack, animation_manager); // = new Monster(...)
 		monsters.push_back(monster);
 	}
 

@@ -7,9 +7,15 @@ Scene::Scene()
 		animation_manager->Insert("player_stand");
 		animation_manager->Insert("player_move");
 
+		effect_manager = new EffectManager;
+		sound_manager = new SoundManager;
+		sound_manager->Init();
+		sound_manager->PlayBgm("sound\\bgm1.mp3");
+		sound_manager->InsertEffectSound("sound\\dash.mp3");
+
 		dungeon = new Dungeon;
 		player = new Player(dungeon, animation_manager);
-		monster_manager = new MonsterManager(dungeon);
+		monster_manager = new MonsterManager(dungeon, animation_manager);
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
@@ -28,9 +34,15 @@ Scene::Scene(const int dungeon_id)
 		animation_manager->Insert("player_stand");
 		animation_manager->Insert("player_move");
 
+		effect_manager = new EffectManager;
+		sound_manager = new SoundManager;
+		sound_manager->Init();
+		sound_manager->PlayBgm("sound\\bgm1.mp3");
+		sound_manager->InsertEffectSound("sound\\dash.mp3");
+
 		dungeon = new Dungeon(dungeon_id);
 		player = new Player(dungeon, animation_manager);
-		monster_manager = new MonsterManager(dungeon);
+		monster_manager = new MonsterManager(dungeon, animation_manager);
 		camera = new Camera(dungeon, player);
 		crosshair = new Crosshair(camera);
 		weapon = new Weapon(camera, player, crosshair);
@@ -51,12 +63,14 @@ Scene::~Scene()
 	delete weapon;
 	delete animation_manager;
 	delete monster_manager;
+	delete effect_manager;
+	delete sound_manager;
 }
 
 HRESULT Scene::Init()
 {
 	player->Init(dungeon, animation_manager);
-	monster_manager->Init(dungeon);
+	monster_manager->Init(dungeon, animation_manager);
 	camera->Init(dungeon, player);
 	crosshair->Init(camera);
 	weapon->Init(camera, player, crosshair);
@@ -75,6 +89,7 @@ void Scene::Render() const
 	monster_manager->Render(dc_set.buf_dc, dc_set.bit_rect);
 	crosshair->Render(dc_set.buf_dc, dc_set.bit_rect);
 	weapon->Render(dc_set.buf_dc, dc_set.bit_rect);
+	effect_manager->Render(dc_set.buf_dc, dc_set.bit_rect);
 
 	DrawBuffer(dc_set.buf_dc, camera->Rect());
 }
@@ -82,12 +97,12 @@ void Scene::Render() const
 void Scene::Update()
 {
 	// player, monster 업데이트 루틴
-	animation_manager->Update();
-	player->Update(dungeon, crosshair, animation_manager);
-	monster_manager->Update(dungeon, player);
+	player->Update(dungeon, crosshair, animation_manager, sound_manager);
+	monster_manager->Update(dungeon, player, animation_manager);
 	camera->Update(dungeon, player);
 	crosshair->Update(camera);
 	weapon->Update(player, crosshair);
+	effect_manager->Update(animation_manager);
 	/*HitUpdate();*/
 	DungeonChangeProc();
 }

@@ -13,6 +13,8 @@
 #include "FileUtility.h"
 #include "Animation.h"
 #include "HitScan.h"
+#include "Effect.h"
+#include "Sound.h"
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -27,6 +29,8 @@ private:
 	Crosshair* crosshair;
 	AnimationManager* animation_manager;
 	MonsterManager* monster_manager;
+	EffectManager* effect_manager;
+	SoundManager* sound_manager;
 
 	int update_cnt = 0;
 

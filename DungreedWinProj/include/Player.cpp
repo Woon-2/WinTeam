@@ -21,9 +21,11 @@ void Player::Init(const Dungeon* dungeon, AnimationManager* animation_manager)
 	width = dungeon->camera_x_half_range / PLAYER_WIDTH_PER_CAMERA_X_HALF_RANGE;
 	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
 	cur_animation_name = "player_stand";
+	animation.LoadAnimation(animation_manager, "player_stand");
+	animation.Play();
 }
 
-void Player::Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager)
+void Player::Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager, SoundManager* sound_manager)
 {	
 	if (dash_power <= 0) {
 		KeyProc(dungeon);
@@ -31,8 +33,8 @@ void Player::Update(const Dungeon* dungeon, const Crosshair* crosshair, Animatio
 		ForceGravity(dungeon);
 		Look(crosshair->pos);
 	}
-	DashProc(Degree(pos, crosshair->pos), dungeon, dungeon->camera_x_half_range / 16);
-	MatchStateAndAnimation(animation_manager);
+	DashProc(Degree(pos, crosshair->pos), dungeon, dungeon->camera_x_half_range / 16, sound_manager);
+	MatchStateAndAnimation(animation_manager, sound_manager);
 	UpdateAnimation(animation_manager);
 }
 
@@ -44,7 +46,8 @@ void Player::KeyProc(const Dungeon* dungeon)
 
 	if (state == State::MOVING && !GetAsyncKeyState('A') && !GetAsyncKeyState('D') && !GetAsyncKeyState('S') && !GetAsyncKeyState(VK_SPACE)) {
 		Stand();
-		cur_animation_name = "player_stand";
+		animation.Stop();
+		//cur_animation_name = "player_stand";
 		return;
 	}
 
@@ -70,7 +73,7 @@ void Player::KeyProc(const Dungeon* dungeon)
 		MovePos(Direction::LEFT, x_move_px);
 }
 
-void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
+void Player::DashProc(float radian, const Dungeon* dungeon, const int px, SoundManager* sound_manager)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
@@ -100,7 +103,7 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 
 		if (dash_power < 0) {
 			dash_power = -50;
-			state == State::DOWN;
+			state = State::DOWN;
 		}
 
 		if (IsOut_Left(dungeon) && !dungeon->CanGoPrev())
@@ -118,10 +121,13 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 	}
 }
 
-void Player::MatchStateAndAnimation(AnimationManager* animation_manager)
+void Player::MatchStateAndAnimation(AnimationManager* animation_manager, SoundManager* sound_manager)
 {
-	if (state == State::MOVING)
+	if (state == State::MOVING) {
 		cur_animation_name = "player_move";
-	else if (state == State::STANDING || state == State::DOWN)
+		sound_manager->Play("sound\\walk.mp3");
+	}
+	else if (state == State::STANDING || state == State::DOWN) {
 		cur_animation_name = "player_stand";
+	}
 }
