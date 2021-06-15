@@ -97,12 +97,17 @@ HBITMAP FlipImage(HDC scene_dc, const Image* const image)
 	HDC source_dc = CreateCompatibleDC(scene_dc);
 	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
-	/*
+	
 	HBRUSH hbr_back = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH hbr_old = (HBRUSH)SelectObject(dest_dc, hbr_back);
 	PatBlt(dest_dc, 0, 0, image_width, image_height, PATCOPY);
 	DeleteObject(SelectObject(dest_dc, hbr_old));
-	*/
+	
+	hbr_back = CreateSolidBrush(RGB(0, 0, 0));
+	hbr_old = (HBRUSH)SelectObject(source_dc, hbr_back);
+	PatBlt(source_dc, 0, 0, image_width, image_height, PATCOPY);
+	DeleteObject(SelectObject(source_dc, hbr_old));
+
 	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
 	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
 	//TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
@@ -198,14 +203,15 @@ void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos,
 	}
 
 	if (!flip) {
+		//image->SetTransparentColor(RGB(0, 0, 0));
 		image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);	// 0xcc 값 조정해 투명도 조절 가능 0xff면 불투명
 	}
 	else {
 		HBITMAP hbm_flip_red = FlipImage(scene_dc, image);
-		Image* red_flip_image = new Image();
-		red_flip_image->Attach(hbm_flip_red);
-		red_flip_image->SetTransparentColor(RGB(0, 0, 0));
-		red_flip_image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);
+		Image red_flip_image; // = new Image;
+		red_flip_image.Attach(hbm_flip_red);
+		red_flip_image.SetTransparentColor(RGB(0, 0, 0));
+		red_flip_image.AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);
 		DeleteObject(hbm_flip_red);
 	}
 }
