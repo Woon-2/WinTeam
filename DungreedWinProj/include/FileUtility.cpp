@@ -199,6 +199,7 @@ void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos,
 
 	if (!flip) {
 		image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);	// 0xcc 값 조정해 투명도 조절 가능 0xff면 불투명
+		return;
 	}
 	else {
 		BLENDFUNCTION bf;
@@ -213,10 +214,11 @@ void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos,
 		bf.SourceConstantAlpha = 0xcc;  // opaque (disable constant alpha)
 
 		TransparentBlt(hbm_dc, 0, 0, image_width, image_height, hbm_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));
-		AlphaBlend(scene_dc, pos.x, pos.y, width, height, hbm_dc, 0, 0, image_width, image_height,bf);
+		AlphaBlend(scene_dc, pos.x, pos.y, width, height, hbm_dc, 0, 0, image_width, image_height, bf);
 		SelectObject(hbm_dc, old_hbm);
 		DeleteDC(hbm_dc);
 		DeleteObject(hbm_flip_red);
+		return;
 	}
 }
 
