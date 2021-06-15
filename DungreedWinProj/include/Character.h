@@ -38,6 +38,8 @@ protected:
 	int x_move_px;
 	double jump_start_power;
 
+	int hp = 100;
+	int max_hp = 100;
 
 	void Stand();
 	void RunLeft();
@@ -70,6 +72,8 @@ public:
 	void ForceGravity(const Dungeon* dungeon);
 
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
+	void RenderMonsterHP(HDC scene_dc, const RECT& bit_rect) const;
+	void RenderPlayerHP(HDC scene_dc, const RECT& bit_rect, const RECT& camera) const;
 	void Look(const POINT& target);
 
 	void UpdateAnimation(AnimationManager* animation_manager);

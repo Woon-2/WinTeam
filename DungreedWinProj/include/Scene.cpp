@@ -6,6 +6,7 @@ Scene::Scene()
 		animation_manager = new AnimationManager;
 		animation_manager->Insert("player_stand");
 		animation_manager->Insert("player_move");
+		//animation_manager->Insert("attack");
 
 		effect_manager = new EffectManager;
 		sound_manager = new SoundManager;
@@ -80,6 +81,7 @@ void Scene::Render() const
 
 	dungeon->Render(dc_set.buf_dc, dc_set.bit_rect);
 	player->Render(dc_set.buf_dc, dc_set.bit_rect);
+	player->RenderPlayerHP(dc_set.buf_dc, dc_set.bit_rect, camera->Rect());
 	crosshair->Render(dc_set.buf_dc, dc_set.bit_rect);
 	weapon->Render(dc_set.buf_dc, dc_set.bit_rect);
 	effect_manager->Render(dc_set.buf_dc, dc_set.bit_rect);
@@ -110,7 +112,7 @@ void Scene::GoNextDungeon()
 		Init();
 		player->PlaceWithDungeonLeft(dungeon);
 		// Å×½ºÆ®
-		//effect_manager->Insert(animation_manager, dungeon->left_start_pos, 100, 100, "player_move", L"animation/player_move1.png");
+		//effect_manager->Insert(animation_manager, dungeon->left_start_pos, 100, 100, "attack", L"animation/attack1.png");
 		//effect_manager->Insert(animation_manager, dungeon->left_start_pos, 100, 100, "portal_create", L"animation/portal_create1.png");
 	}
 	catch (const TCHAR* error_message) {

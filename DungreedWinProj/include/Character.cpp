@@ -176,8 +176,53 @@ void Character::Render(HDC scene_dc, const RECT& bit_rect) const
 			RedImage(scene_dc, bit_rect, &image, pos, width, height, TRUE);
 		}
 	}
-
 	// Å×½ºÆ®
+}
+
+void Character::RenderMonsterHP(HDC scene_dc, const RECT& bit_rect) const
+{
+	int half_size = width / 2;
+	int height_size = height / 10;
+	POINT center_pos = { pos.x + (width / 2) , pos.y + height + height_size };
+
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	RECT rect = { center_pos.x - half_size - 1, center_pos.y - 1, center_pos.x + half_size + 1, center_pos.y + height_size + 1};
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+
+	hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	int hp_max_hp = (static_cast<double>(hp) / static_cast<double>(max_hp)) * (half_size * 2) - half_size;
+	rect = { center_pos.x - half_size, center_pos.y, center_pos.x + hp_max_hp , center_pos.y + height_size };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+}
+
+void Character::RenderPlayerHP(HDC scene_dc, const RECT& bit_rect, const RECT& camera) const
+{
+	int size = width * 3;
+	int height_size = height / 5;
+	POINT left_top;
+	left_top.x = camera.left;
+	left_top.y = camera.top;
+
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	RECT rect = { left_top.x , left_top.y , left_top.x + size + 1, left_top.y + height_size + 1 };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+
+	hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	int hp_max_hp = (static_cast<double>(hp) / static_cast<double>(max_hp)) * size;
+	rect = { left_top.x + 1, left_top.y + 1, left_top.x + hp_max_hp, left_top.y + height_size };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
 }
 
 void Character::Look(const POINT& target)

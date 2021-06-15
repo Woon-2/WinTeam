@@ -12,5 +12,5 @@ void Monster::Update(const Dungeon* dungeon)
 
 void Monster::Render()
 {
-
+	
 }
