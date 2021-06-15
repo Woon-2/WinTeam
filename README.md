@@ -20,4 +20,4 @@ Effect_sound 사용할 타이밍에 Play("파일경로\\파일이름"); 해주�
 #RedImage 추가
 
 키보드 C 누르면 빨간 반투명 이미지 그려줌 // Character.cpp Render 부분에서 테스트함
-현재 RedImage를 flip시키면 투명처리가 안됨
+flip하면 투명하 처리 안되는거 수정함
