@@ -97,17 +97,12 @@ HBITMAP FlipImage(HDC scene_dc, const Image* const image)
 	HDC source_dc = CreateCompatibleDC(scene_dc);
 	HBITMAP hbm_result = CreateCompatibleBitmap(scene_dc, image_width, image_height);
 	HBITMAP hbm_old_source = (HBITMAP)SelectObject(source_dc, hbm_result);
-	
+	/*
 	HBRUSH hbr_back = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH hbr_old = (HBRUSH)SelectObject(dest_dc, hbr_back);
 	PatBlt(dest_dc, 0, 0, image_width, image_height, PATCOPY);
 	DeleteObject(SelectObject(dest_dc, hbr_old));
-	
-	hbr_back = CreateSolidBrush(RGB(0, 0, 0));
-	hbr_old = (HBRUSH)SelectObject(source_dc, hbr_back);
-	PatBlt(source_dc, 0, 0, image_width, image_height, PATCOPY);
-	DeleteObject(SelectObject(source_dc, hbr_old));
-
+	*/
 	image->Draw(dest_dc, 0, 0, image_width, image_height, 0, 0, image_width, image_height);
 	StretchBlt(source_dc, image_width, 0, -image_width, image_height, dest_dc, 0, 0, image_width, image_height, SRCCOPY);
 	//TransparentBlt(scene_dc, x, y, width, height, source_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));	// RGB(34, 32, 52)
@@ -154,13 +149,13 @@ HBITMAP RotateImage(HDC scene_dc, Image* image, float angle)
 
 	SetGraphicsMode(dest_dc, GM_ADVANCED);
 
-	XFORM xform; // πÊ¡§Ωƒ¿ª «•«ˆ«œ¥¬ 3«‡3ø≠¿« «‡∑ƒ º±æ
-	xform.eM11 = cosine; // 1«‡ 1ø≠ º∫∫– º≥¡§ (»∏¿¸º∫∫–)
-	xform.eM12 = sine; // 1«‡ 2ø≠ º∫∫– º≥¡§ (»∏¿¸º∫∫–)
-	xform.eM21 = -sine; // 2«‡ 1ø≠ º∫∫– º≥¡§ (»∏¿¸º∫∫–)
-	xform.eM22 = cosine; // 2«‡ 2ø≠ º∫∫– º≥¡§ (»∏¿¸º∫∫–)
-	xform.eDx = (FLOAT)image_width / 2.0f; // 3«‡ 1ø≠ º∫∫– º≥¡§ (X√‡ ¿Ãµø º∫∫–)
-	xform.eDy = (FLOAT)image_height / 2.0f; // 3«‡ 2ø≠ º∫∫– º≥¡§ (Y√‡ ¿Ãµø º∫∫–)
+	XFORM xform; // Î∞©Ï†ïÏãùÏùÑ ÌëúÌòÑÌïòÎäî 3Ìñâ3Ïó¥Ïùò ÌñâÎ†¨ ÏÑ†Ïñ∏
+	xform.eM11 = cosine; // 1Ìñâ 1Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (ÌöåÏ†ÑÏÑ±Î∂Ñ)
+	xform.eM12 = sine; // 1Ìñâ 2Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (ÌöåÏ†ÑÏÑ±Î∂Ñ)
+	xform.eM21 = -sine; // 2Ìñâ 1Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (ÌöåÏ†ÑÏÑ±Î∂Ñ)
+	xform.eM22 = cosine; // 2Ìñâ 2Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (ÌöåÏ†ÑÏÑ±Î∂Ñ)
+	xform.eDx = (FLOAT)image_width / 2.0f; // 3Ìñâ 1Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (XÏ∂ï Ïù¥Îèô ÏÑ±Î∂Ñ)
+	xform.eDy = (FLOAT)image_height / 2.0f; // 3Ìñâ 2Ïó¥ ÏÑ±Î∂Ñ ÏÑ§Ï†ï (YÏ∂ï Ïù¥Îèô ÏÑ±Î∂Ñ)
 
 	SetWorldTransform(dest_dc, &xform);
 
@@ -203,15 +198,24 @@ void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos,
 	}
 
 	if (!flip) {
-		//image->SetTransparentColor(RGB(0, 0, 0));
-		image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);	// 0xcc ∞™ ¡∂¡§«ÿ ≈ı∏Ìµµ ¡∂¿˝ ∞°¥… 0xff∏È ∫“≈ı∏Ì
+		image->AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);	// 0xcc Í∞í Ï°∞Ï†ïÌï¥ Ìà¨Î™ÖÎèÑ Ï°∞Ï†à Í∞ÄÎä• 0xffÎ©¥ Î∂àÌà¨Î™Ö
 	}
 	else {
+		BLENDFUNCTION bf;
+
+		HDC hbm_dc = CreateCompatibleDC(scene_dc);
 		HBITMAP hbm_flip_red = FlipImage(scene_dc, image);
-		Image red_flip_image; // = new Image;
-		red_flip_image.Attach(hbm_flip_red);
-		red_flip_image.SetTransparentColor(RGB(0, 0, 0));
-		red_flip_image.AlphaBlend(scene_dc, pos.x, pos.y, width, height, 0, 0, image_width, image_height, 0xcc, AC_SRC_OVER);
+		HBITMAP old_hbm = (HBITMAP)SelectObject(hbm_dc, hbm_flip_red);
+
+		bf.BlendOp = AC_SRC_OVER;
+		bf.BlendFlags = 0;
+		bf.AlphaFormat = AC_SRC_ALPHA;  // use source alpha
+		bf.SourceConstantAlpha = 0xcc;  // opaque (disable constant alpha)
+
+		TransparentBlt(hbm_dc, 0, 0, image_width, image_height, hbm_dc, 0, 0, image_width, image_height, RGB(0, 0, 0));
+		AlphaBlend(scene_dc, pos.x, pos.y, width, height, hbm_dc, 0, 0, image_width, image_height,bf);
+		SelectObject(hbm_dc, old_hbm);
+		DeleteDC(hbm_dc);
 		DeleteObject(hbm_flip_red);
 	}
 }
