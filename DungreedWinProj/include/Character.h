@@ -38,8 +38,8 @@ protected:
 	int x_move_px;
 	double jump_start_power;
 
-	int hp = 100;
-	int max_hp = 100;
+	int hp;
+	int max_hp;
 
 	void Stand();
 	void RunLeft();
@@ -65,6 +65,7 @@ public:
 		animation.LoadAnimation(animation_manager, start_animation_name);
 		old_animation_name = cur_animation_name = start_animation_name;
 		image = Image(start_image_path);
+		max_hp = hp;
 	}
 
 	virtual void Update(const Dungeon* dungeon) {}
