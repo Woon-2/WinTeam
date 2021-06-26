@@ -10,6 +10,7 @@ class Effect
 {
 protected:
 	const Image* image;
+	const Image* start_image;
 	//std::string old_animation_name;
 	std::string animation_name;
 

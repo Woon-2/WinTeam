@@ -82,14 +82,14 @@ void Character::Jump()
 
 bool Character::CanGoLeft(const HDC terrain_dc)
 {
-	if (CanGoToPos(terrain_dc, POINT{ pos.x - x_move_px, pos.y + height / 2 }))
+	if (CanGoToPos(terrain_dc, POINT{ pos.x - static_cast<LONG>(x_move_px), pos.y + height / 2 }))
 		return true;
 	return false;
 }
 
 bool Character::CanGoRight(const HDC terrain_dc)
 {
-	if (CanGoToPos(terrain_dc, POINT{ pos.x + width + x_move_px, pos.y + height / 2 }))
+	if (CanGoToPos(terrain_dc, POINT{ pos.x + width + static_cast<LONG>(x_move_px), pos.y + height / 2 }))
 		return true;
 	return false;
 }
@@ -152,14 +152,68 @@ void Character::MovePos(Direction direction, const int px)
 	}
 }
 
-void Character::Render(HDC scene_dc, const RECT& bit_rect) const
+void Character::Render(HDC scene_dc, const RECT& bit_rect)
 {
 	if (looking_direction) {
 		image->Draw(scene_dc, pos.x, pos.y, width, height, 0, 0, image->GetWidth(), image->GetHeight());
+		if (red_flash_cnt) {
+			--red_flash_cnt;
+			RedImage(scene_dc, bit_rect, image, pos, width, height, FALSE);
+		}
 	}
 	else {
-		FlipImage(scene_dc, bit_rect, image, pos.x, pos.y, width, height);
+		DrawFlip(scene_dc, bit_rect, image, pos, width, height);
+		if (red_flash_cnt) {
+			--red_flash_cnt;
+			RedImage(scene_dc, bit_rect, image, pos, width, height, TRUE);
+		}
 	}
+}
+
+void Character::RenderMonsterHP(HDC scene_dc, const RECT& bit_rect) const
+{
+	int half_size = width / 2;
+	int height_size = height / 10;
+	POINT center_pos = { pos.x + (width / 2) , pos.y + height + height_size };
+
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	RECT rect = { center_pos.x - half_size - 1, center_pos.y - 1, center_pos.x + half_size + 1, center_pos.y + height_size + 1 };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+
+	hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	int hp_max_hp = (static_cast<double>(hp) / static_cast<double>(max_hp)) * (half_size * 2) - half_size;
+	rect = { center_pos.x - half_size, center_pos.y, center_pos.x + hp_max_hp , center_pos.y + height_size };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+}
+
+void Character::RenderPlayerHP(HDC scene_dc, const RECT& bit_rect, const RECT& camera) const
+{
+	int size = width * 3;
+	int height_size = height / 5;
+	POINT left_top;
+	left_top.x = camera.left;
+	left_top.y = camera.top;
+
+	HBRUSH hBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	RECT rect = { left_top.x , left_top.y , left_top.x + size + 1, left_top.y + height_size + 1 };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
+
+	hBrush = CreateSolidBrush(RGB(255, 0, 0));
+	oldBrush = (HBRUSH)SelectObject(scene_dc, hBrush);
+	int hp_max_hp = (static_cast<double>(hp) / static_cast<double>(max_hp)) * size;
+	rect = { left_top.x + 1, left_top.y + 1, left_top.x + hp_max_hp, left_top.y + height_size };
+	FillRect(scene_dc, &rect, hBrush);
+	SelectObject(scene_dc, oldBrush);
+	DeleteObject(hBrush);
 }
 
 void Character::Look(const POINT& target)
@@ -180,12 +234,44 @@ void Character::Look(const Character& target)
 
 void Character::UpdateAnimation(AnimationManager* animation_manager)
 {
-	if (old_animation_name != cur_animation_name) {
-		animation.LoadAnimation(animation_manager, cur_animation_name);
-		old_animation_name = cur_animation_name;
+	if (is_animation_load_requested) {
+		animation.LoadAnimation(animation_manager, animation_name);
+		animation.Play();
+		is_animation_load_requested = false;
+	}
+	else if (animation.IsPlaying()) {
+		if (animation.IsEnd())
+			animation.Stop();
+		else
+			animation.Update();
 	}
 
-	animation.Play();
-	animation.Update();
 	image = animation.GetImage(animation_manager);
+}
+
+void Character::StartAttack(const int given_former_atk_delay, const int given_atk_delay, const RECT& given_atk_rect)
+{
+	is_attacking = true;
+	former_atk_delay = given_former_atk_delay;
+	atk_delay = given_atk_delay;
+	atk_rect = given_atk_rect;
+}
+
+void Character::FinishAttack()
+{
+	attack_victims.clear();
+	is_attacking = false;
+}
+
+void Character::AddAttackVictim(const Character* victim)
+{
+	attack_victims.push_back(victim);
+}
+
+bool Character::HasAlreadyAttacked(const Character* victim) const
+{
+	for (const auto& iter : attack_victims)
+		if (iter == victim)
+			return true;
+	return false;
 }

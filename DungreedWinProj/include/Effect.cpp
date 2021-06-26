@@ -8,14 +8,14 @@ Effect::Effect(AnimationManager* animation_manager, POINT given_pos, int given_w
 
 	//old_animation_name = cur_animation_name = start_animation_name;
 	animation_name = start_animation_name;
-	image = new Image(start_image_path);
+	image = start_image = new Image(start_image_path);
 	//animation_manager->Insert(start_animation_name);
 	effect_animaiton.LoadAnimation(animation_manager, start_animation_name);
 }
 
 Effect::~Effect()
 {
-	delete image;
+	delete start_image;
 }
 
 void Effect::Render(HDC scene_dc, const RECT& bit_rect) const

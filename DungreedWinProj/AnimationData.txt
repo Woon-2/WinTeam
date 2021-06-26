@@ -224,49 +224,80 @@ animation_will_loop 1
 
 8000033
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name RustyGreatSwordAttack
+animation_frame_per_cnt 2
+animation_end_cnt 15
+animation_will_loop 0
 
 8000034
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name SwordMissile
+animation_frame_per_cnt 10
+animation_end_cnt 1
+animation_will_loop 1
 
 8000035
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name Dust
+animation_frame_per_cnt 2
+animation_end_cnt 5
+animation_will_loop 0
 
 8000036
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name BansheeBullet
+animation_frame_per_cnt 4
+animation_end_cnt 4
+animation_will_loop 1
 
 8000037
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name SkellBossAttack
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 0
 
 8000038
 
+animation_name SkellBossStand
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 1
+
+8000039
+
+animation_name SkellBossBullet
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 1
+
+8000040
+
+animation_name CerberosMove
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000041
+
+animation_name CerberosAttack
+animation_frame_per_cnt 4
+animation_end_cnt 11
+animation_will_loop 0
+
+
+8000042
+
+animation_name CerberosStand
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000043
+
 animation_name
 animation_frame_per_cnt
 animation_end_cnt
 animation_will_loop
-
-8000039
-
-animation_name
-animation_frame_per_cnt
 animation_end_cnt
 animation_will_loop

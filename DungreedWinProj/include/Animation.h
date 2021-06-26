@@ -23,12 +23,14 @@ public:
 	~Animation() = default;
 	Animation(const std::string& name, const int frame_per_cnt, const int end_cnt, const BOOL will_loop) : name{ name }, frame_per_cnt{ frame_per_cnt }, end_cnt{ end_cnt }, will_loop{ will_loop } {}
 	
+	void Replay();
 	void Update();
 	void Play();
 	void Stop();
 	void LoadAnimation(AnimationManager* animation_manager, const std::string& animation_name);
 	const Image* GetImage(AnimationManager* animation_manager) const;
-	BOOL IsEnd();
+	BOOL IsEnd() const;
+	BOOL IsPlaying() const;
 
 	friend class AnimationManager;
 };

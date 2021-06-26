@@ -13,18 +13,18 @@ next_dungeon_id 2378173
 prev_dungeon_id 0
 camera_x_half_range 240
 camera_y_half_range 135
-monster_id0 4000011
-monster_id1 4000012
-monster_id2 4000008
-monster_id3 4000009
-monster_id4 4000010
+monster_id0 4000014
+monster_id1 0
+monster_id2 0
+monster_id3 0
+monster_id4 0
 monster_id5 0
-monster_num0 10
-monster_num1 10
-monster_num2 10
-monster_num3 10
-monster_num4 10
-monster_num5 10
+monster_num0 20
+monster_num1 0
+monster_num2 0
+monster_num3 0
+monster_num4 0
+monster_num5 0
 
 2378173
 
@@ -40,17 +40,17 @@ next_dungeon_id 5438013
 prev_dungeon_id 2147017
 camera_x_half_range 280
 camera_y_half_range 165
-monster_id0 0
-monster_id1 0
-monster_id2 0
-monster_id3 0
-monster_id4 0
+monster_id0 4000004
+monster_id1 4000005
+monster_id2 4000006
+monster_id3 4000007
+monster_id4 4000008
 monster_id5 0
-monster_num0 0
-monster_num1 0
-monster_num2 0
-monster_num3 0
-monster_num4 0
+monster_num0 4
+monster_num1 4
+monster_num2 4
+monster_num3 4
+monster_num4 4
 monster_num5 0
 
 5438013
@@ -67,17 +67,17 @@ next_dungeon_id 9872417
 prev_dungeon_id 2378173
 camera_x_half_range 180
 camera_y_half_range 99
-monster_id0 0
-monster_id1 0
-monster_id2 0
-monster_id3 0
-monster_id4 0
+monster_id0 4000008
+monster_id1 4000009
+monster_id2 4000010
+monster_id3 4000011
+monster_id4 4000012
 monster_id5 0
-monster_num0 0
-monster_num1 0
-monster_num2 0
-monster_num3 0
-monster_num4 0
+monster_num0 4
+monster_num1 4
+monster_num2 4
+monster_num3 4
+monster_num4 4
 monster_num5 0
 
 9872417
@@ -94,13 +94,13 @@ next_dungeon_id 0
 prev_dungeon_id 5438013
 camera_x_half_range 232
 camera_y_half_range 148
-monster_id0 0
+monster_id0 4000013
 monster_id1 0
 monster_id2 0
 monster_id3 0
 monster_id4 0
 monster_id5 0
-monster_num0 0
+monster_num0 1
 monster_num1 0
 monster_num2 0
 monster_num3 0

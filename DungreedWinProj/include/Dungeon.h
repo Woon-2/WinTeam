@@ -52,6 +52,8 @@ public:
 	bool CanGoPrev() const;
 	bool CanGoNext() const;
 
+	int x;
+
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };
 #endif

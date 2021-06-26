@@ -15,6 +15,7 @@
 #include "HitScan.h"
 #include "Effect.h"
 #include "Sound.h"
+#include "Missile.h"
 
 extern HWND h_wnd;
 extern void DrawBuffer(HDC instant_dc, const RECT& rect);
@@ -31,6 +32,7 @@ private:
 	MonsterManager* monster_manager;
 	EffectManager* effect_manager;
 	SoundManager* sound_manager;
+	MissileManager* missile_manager;
 
 	int update_cnt = 0;
 
@@ -40,8 +42,11 @@ private:
 	HRESULT Init();
 
 	HitScanner HitScan;
-	//void HitUpdate();
+	void HitUpdate();
 	void DungeonChangeProc();
+	void LoadPlayerAniamtion();
+	void LoadBattleSound();
+	void LoadBattleEffect();
 
 public:
 	Scene();

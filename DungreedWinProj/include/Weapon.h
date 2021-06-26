@@ -7,25 +7,38 @@
 #include "FileUtility.h"
 #include "Player.h"
 #include "Crosshair.h"
+#include "Animation.h"
+#include "Camera.h"
+#include <string>
+
+class Player;
+class Camera;
+class Crosshair;
 
 class Weapon
 {
 private:
-	Image* image;
+	const Image* image;
+	const Image* start_image;
+
+	Animation animation;
+	std::string animation_name;
+
 	POINT pos;
 	int width;
 	int height;
 	float angle;
 	BOOL looking_direction;
 
-public:  
-	Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair);
-	~Weapon();
-	void Init(const Camera* camera, const Player* player, const Crosshair* crosshair);
-	void Update(const Player* player, const Crosshair* crosshair);
-	void Render(HDC scene_dc, const RECT& bit_rect);
+	void UpdateAnimation(AnimationManager* animation_manager);
 
-	friend class HitScanner;
-	inline RECT AtkRect() const { return RECT{ pos.x, pos.y, pos.x + width, pos.y + height }; }
+public:  
+	Weapon(const Camera* camera, const Player* player, const Crosshair* crosshair, AnimationManager* animation_manager);
+	~Weapon();
+	void Init(const Camera* camera, const Player* player, const Crosshair* crosshair, AnimationManager* animation_manager);
+	void Update(const Player* player, const Crosshair* crosshair, AnimationManager* animation_manager);
+	void Render(HDC scene_dc, const RECT& bit_rect);
+	void StartAttack();
+	bool IsAttackFinished();
 };
 #endif

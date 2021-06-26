@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fmod.h>
 #include <vector>
+#include <string>
 
 #define SOUNDBUFFER 10
 #define EXTRABUFFER 5
@@ -41,6 +42,7 @@ public:
 
 	void InsertEffectSound(const char* effect_name);
 	void Play(const char* effect_name);
+	void Play(const char* effect_name, const float volume);
 	//void Stop(std::string name);
 	void Release();
 	void SystemClose();

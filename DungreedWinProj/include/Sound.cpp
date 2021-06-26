@@ -39,10 +39,23 @@ void SoundManager::Play(const char* effect_name)
 {
 	for (int i = 0; i < effect_sounds.size(); i++)
 	{
-		if (effect_sounds[i]->name == effect_name) {
+		if (!strcmp(effect_sounds[i]->name.c_str(), effect_name)) {
 			//FMOD_Channel_Stop(effect_sounds[i]->channel);
-			FMOD_Channel_SetVolume(effect_sounds[i]->channel, 1.0);
 			FMOD_System_PlaySound(system, effect_sounds[i]->sound, NULL, 0, &effect_sounds[i]->channel);
+			FMOD_Channel_SetVolume(effect_sounds[i]->channel, 1.0);
+			break;
+		}
+	}
+}
+
+void SoundManager::Play(const char* effect_name, const float volume)
+{
+	for (int i = 0; i < effect_sounds.size(); i++)
+	{
+		if (!strcmp(effect_sounds[i]->name.c_str(), effect_name)) {
+			//FMOD_Channel_Stop(effect_sounds[i]->channel);
+			FMOD_System_PlaySound(system, effect_sounds[i]->sound, NULL, 0, &effect_sounds[i]->channel);
+			FMOD_Channel_SetVolume(effect_sounds[i]->channel, volume);
 			break;
 		}
 	}
@@ -55,6 +68,7 @@ void SoundManager::Release()
 
 	for (int i = effect_sounds.size() - 1; i >= 0; --i)
 	{
+		delete effect_sounds[i];
 		FMOD_Sound_Release(effect_sounds[i]->sound);
 		effect_sounds.erase(effect_sounds.begin() + i);
 	}

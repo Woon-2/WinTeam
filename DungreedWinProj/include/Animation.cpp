@@ -21,10 +21,15 @@ void Animation::Play()
 	is_playing = TRUE;
 }
 
+void Animation::Replay()
+{
+	cnt = 1;
+	Play();
+}
+
 void Animation::Stop()
 {
 	is_playing = FALSE;
-	cnt = 1;
 }
 
 const Image* Animation::GetImage(AnimationManager* animation_manager) const
@@ -44,12 +49,17 @@ void Animation::LoadAnimation(AnimationManager* animation_manager, const std::st
 	is_playing = FALSE;
 }
 
-BOOL Animation::IsEnd()
+BOOL Animation::IsEnd() const
 {
-	if (cnt == end_cnt) {
+	if (cnt == end_cnt && !will_loop) {
 		return TRUE;
 	}
 	return FALSE;
+}
+
+BOOL Animation::IsPlaying() const
+{
+	return is_playing;
 }
 
 void AnimationManager::Insert(const std::string& animation_name)

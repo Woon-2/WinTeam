@@ -163,6 +163,7 @@
     <ClCompile Include="include\Missile.cpp" />
     <ClCompile Include="include\Monster.cpp" />
     <ClCompile Include="include\MonsterAI.cpp" />
+    <ClCompile Include="include\MonsterAttackSpecific.cpp" />
     <ClCompile Include="include\Player.cpp" />
     <ClCompile Include="include\Scene.cpp" />
     <ClCompile Include="include\InstantDCSet.cpp" />

@@ -8,9 +8,9 @@
 monster_name AbyssBanshee
 width 80
 height 160
-x_move_px 4
+x_move_px 8
 jump_start_power 25
-hp 100
+hp 50
 atk 20
 def 20
 is_floating 1
@@ -21,8 +21,8 @@ animation_id1 8000003
 animation_id2 0
 animation_id3 0
 policy_stand 40 40
-policy_move_to_player 10 80
-policy_move_from_player 10 80
+policy_move_to_player 20 80
+policy_move_from_player 0 80
 policy_attack 40 40
 
 4000002
@@ -54,7 +54,7 @@ width 120
 height 200
 x_move_px 6
 jump_start_power 40
-hp 60
+hp 20
 atk 20
 def 20
 is_floating 1
@@ -64,10 +64,10 @@ animation_id0 8000008
 animation_id1 8000007
 animation_id2 0
 animation_id3 0
-policy_stand 20 80
-policy_move_to_player 0 0
-policy_move_from_player 25 80
-policy_attack 55 80
+policy_stand 50 40
+policy_move_to_player 30 40
+policy_move_from_player 20 40
+policy_attack 0 0
 
 4000004
 
@@ -76,7 +76,7 @@ width 130
 height 220
 x_move_px 6
 jump_start_power 25
-hp 100
+hp 60
 atk 40
 def 30
 is_floating 0
@@ -98,7 +98,7 @@ width 130
 height 220
 x_move_px 8
 jump_start_power 35
-hp 100
+hp 50
 atk 40
 def 30
 is_floating 0
@@ -120,7 +120,7 @@ width 180
 height 265
 x_move_px 10
 jump_start_power 32
-hp 150
+hp 80
 atk 60
 def 40
 is_floating 0
@@ -142,7 +142,7 @@ width 240
 height 360
 x_move_px 6
 jump_start_power 40
-hp 120
+hp 50
 atk 35
 def 25
 is_floating 1
@@ -152,10 +152,10 @@ animation_id0 8000019
 animation_id1 8000018
 animation_id2 0
 animation_id3 0
-policy_stand 20 50
-policy_move_to_player 0 0
-policy_move_from_player 35 30
-policy_attack 45 40
+policy_stand 50 50
+policy_move_to_player 35 30
+policy_move_from_player 15 30
+policy_attack 0 0
 
 4000008
 
@@ -164,7 +164,7 @@ width 240
 height 160
 x_move_px 10
 jump_start_power 36
-hp 100
+hp 50
 atk 50
 def 20
 is_floating 0
@@ -186,7 +186,7 @@ width 300
 height 350
 x_move_px 7
 jump_start_power 30
-hp 200
+hp 100
 atk 50
 def 50
 is_floating 0
@@ -197,9 +197,9 @@ animation_id1 8000024
 animation_id2 8000023
 animation_id3 0
 policy_stand 35 40
-policy_move_to_player 0 0
+policy_move_to_player 35 40
 policy_move_from_player 20 30 
-policy_attack 45 60
+policy_attack 15 60
 
 4000010
 
@@ -208,7 +208,7 @@ width 220
 height 280
 x_move_px 9
 jump_start_power 34
-hp 140
+hp 65
 atk 50
 def 30
 is_floating 0
@@ -219,9 +219,9 @@ animation_id1 8000027
 animation_id2 8000026
 animation_id3 0
 policy_stand 15 25
-policy_move_to_player 5 30
+policy_move_to_player 35 40
 policy_move_from_player 40 40
-policy_attack 40 40
+policy_attack 10 40
 
 4000011
 
@@ -230,7 +230,7 @@ width 270
 height 340
 x_move_px 8
 jump_start_power 27
-hp 250
+hp 50
 atk 40
 def 70
 is_floating 0
@@ -241,9 +241,9 @@ animation_id1 8000029
 animation_id2 0
 animation_id3 0
 policy_stand 35 60
-policy_move_to_player 0 0
+policy_move_to_player 20 50
 policy_move_from_player 15 45
-policy_attack 50 60
+policy_attack 30 30
 
 4000012
 
@@ -252,7 +252,7 @@ width 320
 height 600
 x_move_px 6
 jump_start_power 36
-hp 250
+hp 150
 atk 70
 def 50
 is_floating 1
@@ -263,53 +263,53 @@ animation_id1 8000031
 animation_id2 0
 animation_id3 0
 policy_stand 30 60
-policy_move_to_player 5 40
-policy_move_from_player 35 50
-policy_attack 30 60
+policy_move_to_player 25 30
+policy_move_from_player 10 20
+policy_attack 35 60
 
 4000013
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name SkellBoss
+width 800
+height 800
+x_move_px 10
+jump_start_power 10
+hp 500
+atk 60
+def 60
+is_floating 1
+melee_attack 0
+missile_attack 1
+animation_id0 8000038
+animation_id1 8000037
+animation_id2 0
+animation_id3 0
+policy_stand 50 50
+policy_move_to_player 0 0
+policy_move_from_player 0 0
+policy_attack 50 50
 
 4000014
 
-monster_name
-width
-height
-x_move_px
-jump_start_power
-hp
-atk
-def
-is_floating
-melee_attack
-missile_attack
-animation_id0
-animation_id1
-animation_id2
-animation_id3
-policy_stand
-policy_move_to_player
-policy_move_from_player
-policy_attack
+monster_name Cerberos
+width 240
+height 200
+x_move_px 6
+jump_start_power 30
+hp 200
+atk 60
+def 40
+is_floating 0
+melee_attack 1
+missile_attack 0
+animation_id0 8000042
+animation_id1 8000041
+animation_id2 8000040
+animation_id3 0
+policy_stand 25 50
+policy_move_to_player 35 40
+policy_move_from_player 15 30
+policy_attack 25 40
 
 4000015
 
