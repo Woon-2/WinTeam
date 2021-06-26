@@ -11,6 +11,7 @@
 #include "Uncopyable.h"
 #include "InstantDCSet.h"
 #include <vector>
+#include <sstream>
 
 constexpr int FILE_NAME_LEN = 200;
 constexpr int IMAGE_DIGIT_IDX_MAX = 3;
@@ -43,8 +44,10 @@ public:
 
 void CheckFileNameValidity(const TCHAR* file_name);
 bool IsFileValid(const TCHAR* file_name);
-void FlipImage(HDC scene_dc, const RECT& bit_rect, const Image* const image, int x, int y, int width, int height);
-HBITMAP RotateImage(HDC scene_dc, Image* image, float angle);
+HBITMAP FlipImage(HDC scene_dc, const Image* const image);
+void DrawFlip(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos, int width, int height);
+HBITMAP RotateImage(HDC scene_dc, const Image* image, float angle);
+void RedImage(HDC scene_dc, const RECT& bit_rect, const Image* image, POINT pos, int width, int height, BOOL flip);
 void Str2Tstr(const std::string& str, TCHAR t_str[]);
 void Tstr2Str(const TCHAR* t_str, std::string& str);
 float Degree(const POINT& point1, const POINT& point2);

@@ -127,6 +127,7 @@ namespace DB {
 
 		void RegisterField(const std::string& field_name, void* const field_addr);
 
+		void Init();
 		void Load();
 		void Load(const int id);
 	};

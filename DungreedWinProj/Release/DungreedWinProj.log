@@ -1,0 +1,102 @@
+﻿  Animation.cpp
+  Camera.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Character.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(28,26): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(37,28): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(60,27): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(68,28): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(188,16): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Character.cpp(212,16): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Crosshair.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Crosshair.cpp(17,35): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Crosshair.cpp(26,71): warning C4244: '*=': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Crosshair.cpp(27,72): warning C4244: '*=': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  DataBase.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(81,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(89,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\DataBase.cpp(151,3): warning C4002: 함수 같은 매크로 호출 'assert'에 대해 인수가 너무 많습니다.
+  Dungeon.cpp
+  Effect.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Effect.cpp(50,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Effect.cpp(58,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  FileUtility.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(53,3): warning C4996: '_itow': This function or variable may be unsafe. Consider using _itow_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(250,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(259,17): warning C4244: '인수': 'const TCHAR'에서 '_Elem'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(266,17): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\FileUtility.cpp(269,12): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  HitScan.cpp
+  MainFrame.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.h(75,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  Missile.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Missile.cpp(25,59): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Missile.cpp(109,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Missile.cpp(134,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Monster.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.h(75,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.cpp(200,49): warning C4244: '*=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.cpp(201,50): warning C4244: '*=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.cpp(255,49): warning C4244: '*=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.cpp(256,50): warning C4244: '*=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  MonsterAI.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.h(75,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  MonsterAttackSpecific.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.h(75,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(38,31): warning C4305: '인수': 'double'에서 'const float'(으)로 잘립니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(37,8): warning C4244: '인수': 'double'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(93,36): warning C4305: '인수': 'double'에서 'const float'(으)로 잘립니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(92,9): warning C4244: '인수': 'double'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(104,74): warning C4305: '인수': 'double'에서 'const float'(으)로 잘립니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\MonsterAttackSpecific.cpp(114,74): warning C4305: '인수': 'double'에서 'const float'(으)로 잘립니다.
+  Player.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(21,39): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(22,40): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(72,29): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(74,28): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(93,30): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(93,30): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(93,61): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(93,61): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(99,30): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(99,30): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(99,61): warning C4838: 'double'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(99,61): warning C4244: '초기화 중': 'double'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(135,90): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(138,90): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(145,32): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(148,32): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.cpp(151,44): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Scene.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Monster.h(75,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+  InstantDCSet.cpp
+  Weapon.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(44,33): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Player.h(43,51): warning C4244: '인수': 'double'에서 'const int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Sound.cpp
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Sound.cpp(40,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\include\Sound.cpp(53,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  코드를 생성하고 있습니다.
+  Previous IPDB not found, fall back to full compilation.
+  All 1345 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  코드를 생성했습니다.
+  DungreedWinProj.vcxproj -> C:\Users\아트라이프\Desktop\2학년 1학기\윈팀플\WinTeam\DungreedWinProj\Release\DungreedWinProj.exe

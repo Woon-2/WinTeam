@@ -6,6 +6,8 @@
 #include <map>
 #include <vector>
 
+class AnimationManager;
+
 class Animation {
 private:
 	std::string name;
@@ -17,17 +19,24 @@ private:
 	BOOL is_playing = FALSE;
 
 public:
+	Animation() = default;
+	~Animation() = default;
 	Animation(const std::string& name, const int frame_per_cnt, const int end_cnt, const BOOL will_loop) : name{ name }, frame_per_cnt{ frame_per_cnt }, end_cnt{ end_cnt }, will_loop{ will_loop } {}
+	
+	void Replay();
 	void Update();
+	void Play();
+	void Stop();
+	void LoadAnimation(AnimationManager* animation_manager, const std::string& animation_name);
+	const Image* GetImage(AnimationManager* animation_manager) const;
+	BOOL IsEnd() const;
+	BOOL IsPlaying() const;
 
 	friend class AnimationManager;
 };
 
 class AnimationManager {
 private:
-	std::map<const std::string, Animation> animations;
-	ImageContainer images;
-
 	TCHAR folder_path[FILE_NAME_LEN] = L"animation";
 	TCHAR animation_name_tstr[FILE_NAME_LEN];
 	std::string animation_name_cmp;
@@ -35,14 +44,14 @@ private:
 	int animation_cnt;
 	int animation_end_cnt;
 	BOOL animation_will_loop;
+
 	std::shared_ptr<DB::DataBase> BuildDB();
 public:
+	std::map<const std::string, Animation> animations;
+	ImageContainer images;
+
 	void Insert(const std::string& animation_name);
 	void Delete(const std::string& animation_name);
-	void Play(const std::string& animation_name);
-	void Stop(const std::string& animation_name);
-	void Update();
-	const Image& GetImage(const std::string& animation_name) const;
 };
 
 #endif

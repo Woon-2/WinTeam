@@ -14,42 +14,290 @@ animation_will_loop 1
 
 8000003
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssBansheeAttack
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 0
 
 8000004
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssBansheeStand
+animation_frame_per_cnt 4
+animation_end_cnt 6
+animation_will_loop 1
 
 8000005
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssGuardianAttack
+animation_frame_per_cnt 10
+animation_end_cnt 8
+animation_will_loop 0
 
 8000006
 
-animation_name
-animation_frame_per_cnt
-animation_end_cnt
-animation_will_loop
+animation_name AbyssGuardianStand
+animation_frame_per_cnt 10
+animation_end_cnt 4
+animation_will_loop 1
 
 8000007
 
+animation_name Bat_RedAttack
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 0
+
+8000008
+
+animation_name Bat_RedStand
+animation_frame_per_cnt 4
+animation_end_cnt 6
+animation_will_loop 1
+
+8000009
+
+animation_name BigWhiteSkelMove
+animation_frame_per_cnt 8
+animation_end_cnt 6
+animation_will_loop 1
+
+8000010
+
+animation_name BigWhiteSkelAttack
+animation_frame_per_cnt 5
+animation_end_cnt 12
+animation_will_loop 0
+
+8000011
+
+animation_name BigWhiteSkelStand
+animation_frame_per_cnt 8
+animation_end_cnt 6
+animation_will_loop 1
+
+8000012
+
+animation_name DevilChurchArcherMove
+animation_frame_per_cnt 4
+animation_end_cnt 3
+animation_will_loop 1
+
+8000013
+
+animation_name DevilChurchArcherAttack
+animation_frame_per_cnt 6
+animation_end_cnt 13
+animation_will_loop 0
+
+8000014
+
+animation_name DevilChurchArcherStand
+animation_frame_per_cnt 8
+animation_end_cnt 3
+animation_will_loop 1
+
+8000015
+
+animation_name DevilChurchKnightMove
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000016
+
+animation_name DevilChurchKnightAttack
+animation_frame_per_cnt 5
+animation_end_cnt 12
+animation_will_loop 0
+
+8000017
+
+animation_name DevilChurchKnightStand
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000018
+
+animation_name GiantBatAttack
+animation_frame_per_cnt 8
+animation_end_cnt 10
+animation_will_loop 0
+
+8000019
+
+animation_name GiantBatStand
+animation_frame_per_cnt 6
+animation_end_cnt 7
+animation_will_loop 1
+
+8000020
+
+animation_name HellHoundMove
+animation_frame_per_cnt 5
+animation_end_cnt 8
+animation_will_loop 1
+
+8000021
+
+animation_name HellHoundAttack
+animation_frame_per_cnt 5
+animation_end_cnt 7
+animation_will_loop 0
+
+8000022
+
+animation_name HellHoundStand
+animation_frame_per_cnt 5
+animation_end_cnt 8
+animation_will_loop 1
+
+8000023
+
+animation_name LizadManCenturionMove
+animation_frame_per_cnt 8
+animation_end_cnt 8
+animation_will_loop 1
+
+8000024
+
+animation_name LizadManCenturionAttack
+animation_frame_per_cnt 8
+animation_end_cnt 12
+animation_will_loop 0
+
+8000025
+
+animation_name LizadManCenturionStand
+animation_frame_per_cnt 8
+animation_end_cnt 10
+animation_will_loop 1
+
+8000026
+
+animation_name LizadManScoutMove
+animation_frame_per_cnt 6
+animation_end_cnt 6
+animation_will_loop 1
+
+8000027
+
+animation_name LizadManScoutAttack
+animation_frame_per_cnt 6
+animation_end_cnt 12
+animation_will_loop 0
+
+8000028
+
+animation_name LizadManScoutStand
+animation_frame_per_cnt 6
+animation_end_cnt 10
+animation_will_loop 1
+
+8000029
+
+animation_name MinotaursAttack
+animation_frame_per_cnt 6
+animation_end_cnt 7
+animation_will_loop 0
+
+8000030
+
+animation_name MinotaursStand
+animation_frame_per_cnt 10
+animation_end_cnt 6
+animation_will_loop 1
+
+8000031
+
+animation_name WyvernAttack
+animation_frame_per_cnt 7
+animation_end_cnt 20
+animation_will_loop 0
+
+8000032
+
+animation_name WyvernStand
+animation_frame_per_cnt 7
+animation_end_cnt 9
+animation_will_loop 1
+
+8000033
+
+animation_name RustyGreatSwordAttack
+animation_frame_per_cnt 2
+animation_end_cnt 15
+animation_will_loop 0
+
+8000034
+
+animation_name SwordMissile
+animation_frame_per_cnt 10
+animation_end_cnt 1
+animation_will_loop 1
+
+8000035
+
+animation_name Dust
+animation_frame_per_cnt 2
+animation_end_cnt 5
+animation_will_loop 0
+
+8000036
+
+animation_name BansheeBullet
+animation_frame_per_cnt 4
+animation_end_cnt 4
+animation_will_loop 1
+
+8000037
+
+animation_name SkellBossAttack
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 0
+
+8000038
+
+animation_name SkellBossStand
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 1
+
+8000039
+
+animation_name SkellBossBullet
+animation_frame_per_cnt 4
+animation_end_cnt 10
+animation_will_loop 1
+
+8000040
+
+animation_name CerberosMove
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000041
+
+animation_name CerberosAttack
+animation_frame_per_cnt 4
+animation_end_cnt 11
+animation_will_loop 0
+
+
+8000042
+
+animation_name CerberosStand
+animation_frame_per_cnt 4
+animation_end_cnt 8
+animation_will_loop 1
+
+8000043
+
 animation_name
 animation_frame_per_cnt
 animation_end_cnt
 animation_will_loop
-
-8000008
-
-animation_name
-animation_frame_per_cnt
 animation_end_cnt
 animation_will_loop

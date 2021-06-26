@@ -5,10 +5,14 @@
 #include "DataBase.h"
 #include "Uncopyable.h"
 #include "FileUtility.h"
+#include <string>
+#include <sstream>
 
 extern HDC buf_dc;
 extern RECT client;
 extern HWND h_wnd;
+
+constexpr int MAX_MONSTER_KIND_IN_DUNGEON = 6;
 
 class Dungeon : private Uncopyable
 {
@@ -38,12 +42,17 @@ public:
 	int camera_x_half_range;
 	int camera_y_half_range;
 
+	int monster_ids[MAX_MONSTER_KIND_IN_DUNGEON];
+	int monster_nums[MAX_MONSTER_KIND_IN_DUNGEON];
+
 	Dungeon();
 	Dungeon(const int dungeon_id);
 	~Dungeon();
 
 	bool CanGoPrev() const;
 	bool CanGoNext() const;
+
+	int x;
 
 	void Render(HDC scene_dc, const RECT& bit_rect) const;
 };

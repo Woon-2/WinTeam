@@ -20,23 +20,26 @@ void Player::Init(const Dungeon* dungeon, AnimationManager* animation_manager)
 	dash_radian = 0;
 	width = dungeon->camera_x_half_range / PLAYER_WIDTH_PER_CAMERA_X_HALF_RANGE;
 	height = dungeon->camera_x_half_range / PLAYER_HEIGHT_PER_CAMERA_Y_HALF_RANGE;
-	cur_animation_name = "player_stand";
+	animation_name = "player_stand";
+	animation.LoadAnimation(animation_manager, "player_stand");
+	animation.Play();
 }
 
-void Player::Update(const Dungeon* dungeon, const Crosshair* crosshair, AnimationManager* animation_manager)
+void Player::Update(const Dungeon* dungeon, Weapon* weapon, const Crosshair* crosshair, MissileManager* missile_manager, AnimationManager* animation_manager, SoundManager* sound_manager, EffectManager* effect_manager)
 {	
 	if (dash_power <= 0) {
-		KeyProc(dungeon);
+		KeyProc(dungeon, missile_manager, sound_manager);
+		AttackProc(weapon, crosshair, missile_manager, animation_manager, sound_manager);
 		ForceGravity(dungeon);
 		ForceGravity(dungeon);
 		Look(crosshair->pos);
 	}
-	DashProc(Degree(pos, crosshair->pos), dungeon, dungeon->camera_x_half_range / 16);
-	MatchStateAndAnimation(animation_manager);
+	DashProc(Degree(crosshair->pos, pos), dungeon, dungeon->camera_x_half_range / 16, sound_manager);
+	MatchStateAndAnimation(animation_manager, sound_manager, effect_manager);
 	UpdateAnimation(animation_manager);
 }
 
-void Player::KeyProc(const Dungeon* dungeon)
+void Player::KeyProc(const Dungeon* dungeon, MissileManager* missile_manager, SoundManager* sound_manager)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
@@ -44,7 +47,6 @@ void Player::KeyProc(const Dungeon* dungeon)
 
 	if (state == State::MOVING && !GetAsyncKeyState('A') && !GetAsyncKeyState('D') && !GetAsyncKeyState('S') && !GetAsyncKeyState(VK_SPACE)) {
 		Stand();
-		cur_animation_name = "player_stand";
 		return;
 	}
 
@@ -61,8 +63,10 @@ void Player::KeyProc(const Dungeon* dungeon)
 			DownJump();
 	}
 	else if (GetAsyncKeyState(VK_SPACE))
-		if (CanJump(state))
+		if (CanJump(state)) {
+			sound_manager->Play("sound\\jump.mp3");
 			Jump();
+		}
 
 	if (IsOut_Left(dungeon) && !dungeon->CanGoPrev())
 		MovePos(Direction::RIGHT, x_move_px);
@@ -70,7 +74,7 @@ void Player::KeyProc(const Dungeon* dungeon)
 		MovePos(Direction::LEFT, x_move_px);
 }
 
-void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
+void Player::DashProc(float radian, const Dungeon* dungeon, const int px, SoundManager* sound_manager)
 {
 	InstantDCSet dc_set(RECT{ 0, 0, dungeon->dungeon_width, dungeon->dungeon_height });
 
@@ -79,6 +83,7 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 	if (dash_power == 0 && GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
 		dash_power = dungeon->camera_y_half_range / 24.0f;
 		dash_radian = radian;
+		sound_manager->Play("sound\\dash.mp3");
 	}
 
 	if (dash_power > 0) {
@@ -100,7 +105,7 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 
 		if (dash_power < 0) {
 			dash_power = -50;
-			state == State::DOWN;
+			state = State::DOWN;
 		}
 
 		if (IsOut_Left(dungeon) && !dungeon->CanGoPrev())
@@ -118,10 +123,78 @@ void Player::DashProc(float radian, const Dungeon* dungeon, const int px)
 	}
 }
 
-void Player::MatchStateAndAnimation(AnimationManager* animation_manager)
+void Player::AttackProc(Weapon* weapon, const Crosshair* crosshair, MissileManager* missile_manager, AnimationManager* animation_manager, SoundManager* sound_manager)
 {
-	if (state == State::MOVING)
-		cur_animation_name = "player_move";
-	else if (state == State::STANDING || state == State::DOWN)
-		cur_animation_name = "player_stand";
+	if (is_attacking || atk_delay) {
+		if (is_attacking) {
+
+			if (is_doing_missile_attack && former_atk_delay == 0) {
+				float radian = Degree(crosshair->pos, pos);
+
+				if (looking_direction)
+					missile_manager->Insert(new Missile(this, pos, width, height / 2, radian, x_move_px * 2, 300, TRUE, 3, 70,
+						L"animation/SwordMissile1.png", "SwordMissile", animation_manager, "sound\\Slash8.ogg", 0.4f));
+				else
+					missile_manager->Insert(new Missile(this, pos, width, height / 2, radian, x_move_px * 2, 300, FALSE, 3, 70,
+						L"animation/SwordMissile1.png", "SwordMissile", animation_manager, "sound\\Slash8.ogg", 0.4f));
+			}
+			else if (!is_doing_missile_attack) {
+				int atk_rect_center_x;
+				int atk_rect_center_y;
+				if (looking_direction) {
+					atk_rect_center_x = pos.x + width * 1.5 * cos(atk_radian);
+				}
+				else {
+					atk_rect_center_x = pos.x - width * 0.5 * cos(atk_radian);
+				}
+
+				atk_rect_center_y = pos.y + height / 2 - width * sin(atk_radian);
+
+				atk_rect = RECT{ atk_rect_center_x - width / 2, atk_rect_center_y - height / 2, atk_rect_center_x + width / 2, atk_rect_center_y + height / 2 };
+			}
+
+			--former_atk_delay;
+
+			if (weapon->IsAttackFinished())
+				FinishAttack();
+		}
+		else 
+			--atk_delay;
+	}
+	else if (GetAsyncKeyState(VK_MBUTTON) & 0x8000) {
+		sound_manager->Play("sound\\swing1.mp3");
+		weapon->StartAttack();
+
+		is_doing_missile_attack = true;
+		
+		StartAttack(10, 20, RECT{});
+	}
+	else if (GetAsyncKeyState(VK_LBUTTON) & 0x8000) {
+		sound_manager->Play("sound\\swing1.mp3");
+		weapon->StartAttack();
+		atk_radian = Degree(crosshair->pos, pos);
+
+		is_doing_missile_attack = false;
+
+		StartAttack(10, 3, RECT{  });
+	}
+}
+
+void Player::MatchStateAndAnimation(AnimationManager* animation_manager, SoundManager* sound_manager, EffectManager* effect_manager)
+{
+	if (state == State::MOVING) {
+		if (animation_name == "player_stand") {
+			animation_name = "player_move";
+			is_animation_load_requested = true;
+		}
+		if (++walk_cnt % 10 == 0) {
+			effect_manager->Insert(animation_manager, POINT{ pos.x + width / 6, pos.y + height / 3 * 2 }, width / 3 * 2, height / 3, "Dust", L"animation/Dust1.png");
+			if (walk_cnt % 30 == 0)
+				sound_manager->Play("sound\\walk.mp3");
+		}
+	}
+	else if ((state == State::STANDING || state == State::DOWN) && animation_name == "player_move") {
+		animation_name = "player_stand";
+		is_animation_load_requested = true;
+	}
 }

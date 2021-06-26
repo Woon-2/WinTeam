@@ -21,6 +21,12 @@ Dungeon::Dungeon(const int dungeon_id) : dungeon_id{ dungeon_id }
 	dungeon_terrain_image = new Image(map_terrain_path);
 }
 
+Dungeon::~Dungeon()
+{
+	delete dungeon_image;
+	delete dungeon_terrain_image;
+}
+
 
 // -------------------------------------------------------------------
 // DB와 던전의 멤버 변수를 수정하게 된다면 반드시 이 함수도 수정해야 함!!
@@ -41,14 +47,20 @@ std::shared_ptr<DB::DataBase> Dungeon::BuildDB()
 	db->RegisterField("prev_dungeon_id", &prev_dungeon_id);
 	db->RegisterField("camera_x_half_range", &camera_x_half_range);
 	db->RegisterField("camera_y_half_range", &camera_y_half_range);
+	db->RegisterField("x", &x);
+
+	for (int i = 0; i < MAX_MONSTER_KIND_IN_DUNGEON; ++i) {
+		std::string id_field_str = "monster_id";
+		std::string num_field_str = "monster_num";
+		std::stringstream idx;
+		idx << i;
+		id_field_str += idx.str();
+		num_field_str += idx.str();
+		db->RegisterField(id_field_str, &monster_ids[i]);
+		db->RegisterField(num_field_str, &monster_nums[i]);
+	}
 
 	return db;
-}
-
-Dungeon::~Dungeon()
-{
-	delete dungeon_image;
-	delete dungeon_terrain_image;
 }
 
 bool Dungeon::CanGoNext() const
